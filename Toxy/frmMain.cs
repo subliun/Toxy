@@ -59,6 +59,7 @@ namespace Toxy
                 }
             }
 
+
             bool bootstrap_success = false;
             foreach (ToxNode node in Nodes)
                 if (tox.BootstrapFromNode(node))
@@ -208,9 +209,10 @@ namespace Toxy
                     Friend friend = (Friend)control;
 
                     if (friend.FriendNumber == friendnumber)
+                    {
                         friend.IsOnline = status != 0;
-
-                    friend.Invalidate();
+                        friend.Invalidate();
+                    }
                 }
             }
 
@@ -229,9 +231,10 @@ namespace Toxy
                     Friend friend = (Friend)control;
 
                     if (friend.FriendNumber == friendnumber)
+                    {
                         friend.SetUsername(newname);
-
-                    friend.Invalidate();
+                        friend.Invalidate();
+                    }            
                 }
             }
 
@@ -250,9 +253,10 @@ namespace Toxy
                     Friend friend = (Friend)control;
 
                     if (friend.FriendNumber == friendnumber)
+                    {
                         friend.SetStatusMessage(newstatus);
-
-                    friend.Invalidate();
+                        friend.Invalidate();
+                    }
                 }
             }
 
@@ -299,9 +303,10 @@ namespace Toxy
                     Friend friend = (Friend)control;
 
                     if (friend.FriendNumber == friendnumber)
+                    {
                         friend.Status = status;
-
-                    friend.Invalidate();
+                        friend.Invalidate();
+                    }
                 }
             }
 
