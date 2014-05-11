@@ -19,6 +19,8 @@ namespace Toxy
             GroupNumber = groupnumber;
 
             InitializeComponent();
+
+            Text = "Groupchat #" + groupnumber.ToString();
         }
 
         public void AppendMessage(int friendgroupnumber, string message)
@@ -81,6 +83,12 @@ namespace Toxy
 
                 e.Handled = true;
             }
+        }
+
+        private void btnLeave_Click(object sender, EventArgs e)
+        {
+            tox.DeleteGroupChat(GroupNumber);
+            Close();
         }
     }
 }

@@ -35,6 +35,7 @@
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.lblGroupMembers = new MetroFramework.Controls.MetroLabel();
+            this.btnLeave = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -93,26 +94,39 @@
             // 
             this.metroLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(597, 63);
+            this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.metroLabel1.Location = new System.Drawing.Point(597, 38);
             this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(109, 19);
+            this.metroLabel1.Size = new System.Drawing.Size(72, 19);
             this.metroLabel1.TabIndex = 3;
-            this.metroLabel1.Text = "Group members:";
+            this.metroLabel1.Text = "Members";
             // 
             // lblGroupMembers
             // 
             this.lblGroupMembers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblGroupMembers.AutoSize = true;
-            this.lblGroupMembers.Location = new System.Drawing.Point(597, 93);
+            this.lblGroupMembers.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.lblGroupMembers.Location = new System.Drawing.Point(597, 57);
             this.lblGroupMembers.Name = "lblGroupMembers";
             this.lblGroupMembers.Size = new System.Drawing.Size(0, 0);
             this.lblGroupMembers.TabIndex = 4;
+            // 
+            // btnLeave
+            // 
+            this.btnLeave.Location = new System.Drawing.Point(407, 34);
+            this.btnLeave.Name = "btnLeave";
+            this.btnLeave.Size = new System.Drawing.Size(75, 23);
+            this.btnLeave.TabIndex = 5;
+            this.btnLeave.Text = "Leave group";
+            this.btnLeave.UseSelectable = true;
+            this.btnLeave.Click += new System.EventHandler(this.btnLeave_Click);
             // 
             // frmGroupChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(716, 471);
+            this.Controls.Add(this.btnLeave);
             this.Controls.Add(this.lblGroupMembers);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.metroButton1);
@@ -136,5 +150,6 @@
         private MetroFramework.Controls.MetroButton metroButton1;
         private MetroFramework.Controls.MetroLabel lblGroupMembers;
         private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroButton btnLeave;
     }
 }
