@@ -39,16 +39,18 @@ namespace Toxy
 
         public void NamelistChange(int peernumber, ToxChatChange change)
         {
-            switch (change)
+            string[] names = tox.GetGroupNames(GroupNumber);
+
+            string label = "";
+            foreach (string name in names)
             {
-                case ToxChatChange.PEER_ADD:
-                    break;
-                case ToxChatChange.PEER_DEL:
-                    break;
-                case ToxChatChange.PEER_NAME:
-                    lblGroupMembers.Text += tox.GetGroupMemberName(GroupNumber, peernumber) + "\n";
-                    break;
+                if (string.IsNullOrEmpty(name))
+                    label += "Unknown\n";
+                else
+                    label += name + "\n";
             }
+
+            lblGroupMembers.Text = label;
         }
 
         private void metroButton1_Click(object sender, EventArgs e)

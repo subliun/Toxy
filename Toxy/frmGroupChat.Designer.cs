@@ -101,6 +101,7 @@
             // 
             // lblGroupMembers
             // 
+            this.lblGroupMembers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblGroupMembers.AutoSize = true;
             this.lblGroupMembers.Location = new System.Drawing.Point(597, 93);
             this.lblGroupMembers.Name = "lblGroupMembers";
