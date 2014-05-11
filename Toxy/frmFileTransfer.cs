@@ -47,7 +47,7 @@ namespace Toxy
         private void btnCancel_Click(object sender, EventArgs e)
         {
             if (!finished)
-                tox.FileSendControl(FriendNumber, send_receive, FileNumber, (int)ToxFileControl.KILL, new byte[0]);
+                tox.FileSendControl(FriendNumber, send_receive, FileNumber, ToxFileControl.KILL, new byte[0]);
 
             Close();
         }
@@ -116,7 +116,7 @@ namespace Toxy
                                 }
                             }
 
-                            tox.FileSendControl(FriendNumber, 0, FileNumber, (int)ToxFileControl.FINISHED, new byte[0]);
+                            tox.FileSendControl(FriendNumber, 0, FileNumber, ToxFileControl.FINISHED, new byte[0]);
 
                             Invoke(((Action)(() => lblStatus.Text = "Finished.")));
 
@@ -132,11 +132,11 @@ namespace Toxy
             if (stream == null)
                 throw new Exception("Unexpectedly received data");
 
-            int remaining = tox.FileDataRemaining(FriendNumber, FileNumber, 1);
+            ulong remaining = tox.FileDataRemaining(FriendNumber, FileNumber, 1);
             double value = (double)tox.FileDataRemaining(FriendNumber, FileNumber, 1) / (double)filesize;
 
             metroProgressBar1.Value = 100 - (int)(value * 100);
-            lblStatus.Text = string.Format("Transferring...   {0}/{1}", filesize - (ulong)remaining, filesize);
+            lblStatus.Text = string.Format("Transferring...   {0}/{1}", filesize - remaining, filesize);
 
             stream.Write(data, 0, data.Length);
         }
