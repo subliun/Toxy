@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tabFriends = new MetroFramework.Controls.MetroTabPage();
+            this.panelFriends = new MetroFramework.Controls.MetroPanel();
             this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.tabGroups = new MetroFramework.Controls.MetroTabPage();
@@ -38,7 +39,6 @@
             this.tabRequests = new MetroFramework.Controls.MetroTabPage();
             this.panelRequests = new MetroFramework.Controls.MetroPanel();
             this.tabOptions = new MetroFramework.Controls.MetroTabPage();
-            this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
             this.toggleEncryption = new MetroFramework.Controls.MetroToggle();
             this.metroLabel9 = new MetroFramework.Controls.MetroLabel();
@@ -49,7 +49,6 @@
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.comboColor = new MetroFramework.Controls.MetroComboBox();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
-            this.comboTheme = new MetroFramework.Controls.MetroComboBox();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.btnIDClipboard = new MetroFramework.Controls.MetroButton();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
@@ -62,7 +61,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.panelFriends = new MetroFramework.Controls.MetroPanel();
             this.tabFriends.SuspendLayout();
             this.metroTabControl1.SuspendLayout();
             this.tabGroups.SuspendLayout();
@@ -89,6 +87,22 @@
             this.tabFriends.VerticalScrollbarHighlightOnWheel = false;
             this.tabFriends.VerticalScrollbarSize = 10;
             // 
+            // panelFriends
+            // 
+            this.panelFriends.AutoScroll = true;
+            this.panelFriends.HorizontalScrollbar = true;
+            this.panelFriends.HorizontalScrollbarBarColor = true;
+            this.panelFriends.HorizontalScrollbarHighlightOnWheel = false;
+            this.panelFriends.HorizontalScrollbarSize = 10;
+            this.panelFriends.Location = new System.Drawing.Point(3, 16);
+            this.panelFriends.Name = "panelFriends";
+            this.panelFriends.Size = new System.Drawing.Size(332, 381);
+            this.panelFriends.TabIndex = 3;
+            this.panelFriends.VerticalScrollbar = true;
+            this.panelFriends.VerticalScrollbarBarColor = true;
+            this.panelFriends.VerticalScrollbarHighlightOnWheel = false;
+            this.panelFriends.VerticalScrollbarSize = 10;
+            // 
             // metroButton2
             // 
             this.metroButton2.Location = new System.Drawing.Point(630, 16);
@@ -111,7 +125,7 @@
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Multiline = true;
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 3;
+            this.metroTabControl1.SelectedIndex = 2;
             this.metroTabControl1.Size = new System.Drawing.Size(726, 442);
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
@@ -177,7 +191,6 @@
             // 
             // tabOptions
             // 
-            this.tabOptions.Controls.Add(this.metroLabel11);
             this.tabOptions.Controls.Add(this.metroLabel10);
             this.tabOptions.Controls.Add(this.toggleEncryption);
             this.tabOptions.Controls.Add(this.metroLabel9);
@@ -188,7 +201,6 @@
             this.tabOptions.Controls.Add(this.metroButton1);
             this.tabOptions.Controls.Add(this.comboColor);
             this.tabOptions.Controls.Add(this.metroLabel5);
-            this.tabOptions.Controls.Add(this.comboTheme);
             this.tabOptions.Controls.Add(this.metroLabel4);
             this.tabOptions.Controls.Add(this.btnIDClipboard);
             this.tabOptions.Controls.Add(this.metroLabel3);
@@ -207,15 +219,6 @@
             this.tabOptions.VerticalScrollbarBarColor = true;
             this.tabOptions.VerticalScrollbarHighlightOnWheel = false;
             this.tabOptions.VerticalScrollbarSize = 10;
-            // 
-            // metroLabel11
-            // 
-            this.metroLabel11.AutoSize = true;
-            this.metroLabel11.Location = new System.Drawing.Point(367, 57);
-            this.metroLabel11.Name = "metroLabel11";
-            this.metroLabel11.Size = new System.Drawing.Size(36, 19);
-            this.metroLabel11.TabIndex = 17;
-            this.metroLabel11.Text = "Style";
             // 
             // metroLabel10
             // 
@@ -319,7 +322,7 @@
             "Purple",
             "Red",
             "Yellow"});
-            this.comboColor.Location = new System.Drawing.Point(367, 146);
+            this.comboColor.Location = new System.Drawing.Point(367, 79);
             this.comboColor.Name = "comboColor";
             this.comboColor.Size = new System.Drawing.Size(177, 29);
             this.comboColor.TabIndex = 9;
@@ -328,24 +331,11 @@
             // metroLabel5
             // 
             this.metroLabel5.AutoSize = true;
-            this.metroLabel5.Location = new System.Drawing.Point(367, 124);
+            this.metroLabel5.Location = new System.Drawing.Point(367, 57);
             this.metroLabel5.Name = "metroLabel5";
             this.metroLabel5.Size = new System.Drawing.Size(42, 19);
             this.metroLabel5.TabIndex = 2;
             this.metroLabel5.Text = "Color";
-            // 
-            // comboTheme
-            // 
-            this.comboTheme.FormattingEnabled = true;
-            this.comboTheme.ItemHeight = 23;
-            this.comboTheme.Items.AddRange(new object[] {
-            "Light",
-            "Dark"});
-            this.comboTheme.Location = new System.Drawing.Point(367, 79);
-            this.comboTheme.Name = "comboTheme";
-            this.comboTheme.Size = new System.Drawing.Size(177, 29);
-            this.comboTheme.TabIndex = 8;
-            this.comboTheme.UseSelectable = true;
             // 
             // metroLabel4
             // 
@@ -477,21 +467,6 @@
             this.metroStyleManager1.Owner = this;
             this.metroStyleManager1.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // panelFriends
-            // 
-            this.panelFriends.AutoScroll = true;
-            this.panelFriends.HorizontalScrollbarBarColor = true;
-            this.panelFriends.HorizontalScrollbarHighlightOnWheel = false;
-            this.panelFriends.HorizontalScrollbarSize = 10;
-            this.panelFriends.Location = new System.Drawing.Point(3, 16);
-            this.panelFriends.Name = "panelFriends";
-            this.panelFriends.Size = new System.Drawing.Size(332, 381);
-            this.panelFriends.TabIndex = 3;
-            this.panelFriends.VerticalScrollbar = true;
-            this.panelFriends.VerticalScrollbarBarColor = true;
-            this.panelFriends.VerticalScrollbarHighlightOnWheel = false;
-            this.panelFriends.VerticalScrollbarSize = 10;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -528,7 +503,6 @@
         private MetroFramework.Controls.MetroTabControl metroTabControl1;
         private MetroFramework.Controls.MetroTabPage tabOptions;
         private MetroFramework.Controls.MetroTabPage tabAbout;
-        private MetroFramework.Components.MetroStyleManager metroStyleManager1;
         private MetroFramework.Controls.MetroLabel metroLabel3;
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroTextBox txtStatus;
@@ -536,7 +510,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroTabPage tabGroups;
         private MetroFramework.Controls.MetroButton btnIDClipboard;
-        private MetroFramework.Controls.MetroComboBox comboTheme;
         private MetroFramework.Controls.MetroLabel metroLabel4;
         private MetroFramework.Controls.MetroButton metroButton1;
         private MetroFramework.Controls.MetroComboBox comboColor;
@@ -550,13 +523,13 @@
         private MetroFramework.Controls.MetroToggle toggleTypeDetection;
         private MetroFramework.Controls.MetroLabel metroLabel10;
         private MetroFramework.Controls.MetroToggle toggleEncryption;
-        private MetroFramework.Controls.MetroLabel metroLabel11;
         private MetroFramework.Controls.MetroPanel panelRequests;
         private MetroFramework.Controls.MetroButton btnNewGroup;
         private System.Windows.Forms.PictureBox pictureBox1;
         private MetroFramework.Controls.MetroButton metroButton2;
         private MetroFramework.Controls.MetroLink linkGithub;
         private MetroFramework.Controls.MetroPanel panelFriends;
+        private MetroFramework.Components.MetroStyleManager metroStyleManager1;
 
     }
 }

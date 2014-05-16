@@ -422,7 +422,6 @@ namespace Toxy
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            comboTheme.SelectedIndex = 1;
             comboColor.SelectedIndex = 3;
 
             int[] friends = tox.GetFriendlist();
@@ -523,7 +522,6 @@ namespace Toxy
         private void metroButton1_Click(object sender, EventArgs e)
         {
             metroStyleManager1.Style = (MetroColorStyle)comboColor.SelectedIndex + 1;
-            metroStyleManager1.Theme = comboTheme.SelectedIndex == 0 ? MetroThemeStyle.Light : MetroThemeStyle.Dark;
 
             tox.SetName(txtName.Text);
             tox.SetStatusMessage(txtStatus.Text);
