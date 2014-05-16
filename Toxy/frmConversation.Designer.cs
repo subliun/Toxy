@@ -35,6 +35,7 @@
             this.txtToSend = new MetroFramework.Controls.MetroTextBox();
             this.lblTyping = new MetroFramework.Controls.MetroLabel();
             this.btnSendFile = new MetroFramework.Controls.MetroButton();
+            this.btnCall = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,11 +107,22 @@
             this.btnSendFile.UseSelectable = true;
             this.btnSendFile.Click += new System.EventHandler(this.btnSendFile_Click);
             // 
+            // btnCall
+            // 
+            this.btnCall.Location = new System.Drawing.Point(465, 59);
+            this.btnCall.Name = "btnCall";
+            this.btnCall.Size = new System.Drawing.Size(75, 23);
+            this.btnCall.TabIndex = 5;
+            this.btnCall.Text = "Call";
+            this.btnCall.UseSelectable = true;
+            this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
+            // 
             // frmConversation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(659, 435);
+            this.Controls.Add(this.btnCall);
             this.Controls.Add(this.btnSendFile);
             this.Controls.Add(this.lblTyping);
             this.Controls.Add(this.txtToSend);
@@ -134,5 +146,6 @@
         private MetroFramework.Controls.MetroTextBox txtConversation;
         private MetroFramework.Controls.MetroLabel lblTyping;
         private MetroFramework.Controls.MetroButton btnSendFile;
+        private MetroFramework.Controls.MetroButton btnCall;
     }
 }

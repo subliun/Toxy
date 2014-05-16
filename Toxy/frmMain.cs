@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
 
 using MetroFramework;
 using MetroFramework.Forms;
@@ -19,12 +21,16 @@ namespace Toxy
     public partial class frmMain : MetroForm
     {
         private Tox tox;
+        private ToxAv toxav;
+
         private string id;
         private Thread connloop;
 
         private Dictionary<int, frmConversation> convdic = new Dictionary<int, frmConversation>();
         private Dictionary<int, frmGroupChat> groupdic = new Dictionary<int, frmGroupChat>();
         private Dictionary<ToxFile, frmFileTransfer> filetdic = new Dictionary<ToxFile, frmFileTransfer>();
+
+        uint AUDIO_FRAME_SIZE;
 
         public frmMain()
         {
@@ -59,7 +65,6 @@ namespace Toxy
                 }
             }
 
-
             bool bootstrap_success = false;
             foreach (ToxNode node in Nodes)
                 if (tox.BootstrapFromNode(node))
@@ -74,6 +79,173 @@ namespace Toxy
             tox.Start();
 
             id = tox.GetAddress();
+
+            toxav = new ToxAv(tox.GetPointer(), ToxAv.DefaultCodecSettings);
+            toxav.Invoker = BeginInvoke;
+            toxav.OnInvite += toxav_OnInvite;
+            toxav.OnStart += toxav_OnStart;
+
+            AUDIO_FRAME_SIZE = toxav.CodecSettings.audio_sample_rate * toxav.CodecSettings.audio_frame_duration / 1000;
+        }
+
+        private void InitializeAudio()
+        {
+            List<string> capt_devices = GetStringsFromMem(OpenAL.alcGetString(IntPtr.Zero, 0x310));
+            string default_capt_device = Marshal.PtrToStringAnsi(OpenAL.alcGetString(IntPtr.Zero, 0x311));
+
+            List<string> out_devices = GetStringsFromMem(OpenAL.alcGetString(IntPtr.Zero, 0x1005));
+            string default_out_device = Marshal.PtrToStringAnsi(OpenAL.alcGetString(IntPtr.Zero, 0x1004));
+
+            if (!(capt_devices.Count > 0 && out_devices.Count > 0))
+                throw new Exception("Insufficient audio devices");
+        }
+
+        public List<string> GetStringsFromMem(IntPtr ptr)
+        {
+            List<string> result = new List<string>();
+
+            if (ptr != IntPtr.Zero)
+            {
+                StringBuilder sb = new StringBuilder();
+                int offset = 0;
+                do
+                {
+                    byte b = Marshal.ReadByte(ptr, offset++);
+                    if (b != 0)
+                    {
+                        sb.Append((char)b);
+                    }
+                    else
+                    {
+                        result.Add(sb.ToString());
+
+                        if (Marshal.ReadByte(ptr, offset) == 0)
+                            break;
+                        else
+                            sb.Remove(0, sb.Length);
+                    }
+                }
+                while (true);
+            }
+
+            return result;
+        }
+
+        private void toxav_OnStart(IntPtr args)
+        {
+            Thread thread = new Thread(delegate()
+            {
+                unsafe
+                {
+                    List<string> capt_devices = GetStringsFromMem(OpenAL.alcGetString(IntPtr.Zero, 0x310));
+                    string default_capt_device = Marshal.PtrToStringAnsi(OpenAL.alcGetString(IntPtr.Zero, 0x311));
+
+                    List<string> out_devices = GetStringsFromMem(OpenAL.alcGetString(IntPtr.Zero, 0x1005));
+                    string default_out_device = Marshal.PtrToStringAnsi(OpenAL.alcGetString(IntPtr.Zero, 0x1004));
+
+                    if (!(capt_devices.Count > 0 && out_devices.Count > 0))
+                        throw new Exception("Insufficient audio devices");
+
+                    IntPtr capt_device_pointer = OpenAL.alcCaptureOpenDevice(default_capt_device, toxav.CodecSettings.audio_sample_rate, 0x1101, (int)AUDIO_FRAME_SIZE * 4);
+
+                    if (OpenAL.alcGetError(capt_device_pointer) != 0)
+                        throw new Exception("Could not open capture device");
+
+                    IntPtr out_device_pointer = OpenAL.alcOpenDevice(out_devices[0]);
+
+                    if (OpenAL.alcGetError(out_device_pointer) != 0)
+                        throw new Exception("Could not open output device");
+
+                    IntPtr out_device_context = OpenAL.alcCreateContext(out_device_pointer, null);
+
+                    OpenAL.alcCaptureStart(capt_device_pointer);
+                    OpenAL.alcMakeContextCurrent(out_device_context);
+
+                    int dec_frame_len;
+                    ushort[] frame = new ushort[4096];
+                    int sample = 0;
+                    uint buffer = 0;
+                    int ready = 0;
+                    int openal_buffers = 5;
+                    uint source = 0;
+                    uint[] buffers = new uint[openal_buffers];
+
+                    OpenAL.alGenBuffers(openal_buffers, out buffers[0]);
+                    OpenAL.alGenSources(1, &source);
+                    OpenAL.alSourcei(source, 0x1007, 0);
+
+                    ushort[] zeros = new ushort[AUDIO_FRAME_SIZE];
+                    ushort[] PCM = new ushort[AUDIO_FRAME_SIZE];
+
+                    for (int i = 0; i < openal_buffers; i++)
+                        OpenAL.alBufferData(buffers[i], 0x1101, zeros, (int)AUDIO_FRAME_SIZE, (uint)48000);
+
+                    OpenAL.alSourceQueueBuffers(source, openal_buffers, buffers);
+                    OpenAL.alSourcePlay(source);
+
+                    if (OpenAL.alGetError() != 0)
+                        throw new Exception("Could not init audio");
+
+                    while (true)
+                    {
+                        OpenAL.alcGetIntegerv(capt_device_pointer, 0x312, sizeof(int), ref sample);
+
+                        if (sample >= AUDIO_FRAME_SIZE)
+                        {
+                            GCHandle handle = GCHandle.Alloc(frame, GCHandleType.Pinned);
+                            IntPtr pointer = handle.AddrOfPinnedObject();
+                            try { OpenAL.alcCaptureSamples(capt_device_pointer, pointer, (int)AUDIO_FRAME_SIZE); }
+                            finally { handle.Free(); }
+
+                            if (ToxAvFunctions.SendAudio(toxav.GetPointer(), ref frame, (int)AUDIO_FRAME_SIZE) != ToxAvError.None)
+                                Console.WriteLine("Failed to send audio");
+                        }
+                        else
+                        {
+                            Thread.Sleep(1000);
+                        }
+
+                        OpenAL.alGetSourcei(source, 0x1016, out ready);
+
+                        if (ready <= 0)
+                            continue;
+
+                        dec_frame_len = ToxAvFunctions.ReceiveAudio(toxav.GetPointer(), (int)AUDIO_FRAME_SIZE, PCM);
+                        if (dec_frame_len > 0)
+                        {
+                            OpenAL.alSourceUnqueueBuffers(source, 1, new uint[] { buffer });
+                            OpenAL.alBufferData(buffer, 0x1101, PCM, dec_frame_len * 2, 48000);
+
+                            if (OpenAL.alGetError() != 0)
+                                break; //could not set buffer
+
+                            OpenAL.alSourceQueueBuffers(source, 1, new uint[] { buffer });
+
+                            if (OpenAL.alGetError() != 0)
+                                break; //could not buffer audio
+
+                            if (ready != 0x1012)
+                                OpenAL.alSourcePlay(source);
+                        }
+                    }
+
+                    OpenAL.alDeleteSources(1, new uint[] { source });
+                    OpenAL.alDeleteBuffers(openal_buffers, buffers);
+                }
+
+            });
+
+            thread.Start();
+        }
+
+        private void toxav_OnInvite(IntPtr args)
+        {
+            ToxAvError error = toxav.Answer(ToxAvCallType.Audio);
+            if (error != ToxAvError.None)
+            {
+                string err = error.ToString();
+                MessageBox.Show("Could not answer call! " + err);
+            }
         }
 
         private void OnFileControl(int friendnumber, int receive_send, int filenumber, int control_type, byte[] data)
@@ -224,7 +396,7 @@ namespace Toxy
 
         private void OnNameChange(int friendnumber, string newname)
         {
-            foreach(Control control in panelFriends.Controls)
+            foreach (Control control in panelFriends.Controls)
             {
                 if (control.GetType() == typeof(Friend))
                 {
@@ -234,7 +406,7 @@ namespace Toxy
                     {
                         friend.SetUsername(newname);
                         friend.Invalidate();
-                    }            
+                    }
                 }
             }
 
@@ -328,7 +500,7 @@ namespace Toxy
         {
             if (!convdic.ContainsKey(friendnumber))
             {
-                frmConversation form = new frmConversation(tox, friendnumber);
+                frmConversation form = new frmConversation(tox, toxav, friendnumber);
                 form.FormClosed += convform_FormClosed;
                 form.Show();
                 form.AppendAction(action);
@@ -345,7 +517,7 @@ namespace Toxy
         {
             if (!convdic.ContainsKey(friendnumber))
             {
-                frmConversation form = new frmConversation(tox, friendnumber);
+                frmConversation form = new frmConversation(tox, toxav, friendnumber);
                 form.FormClosed += convform_FormClosed;
                 form.Show();
                 form.AppendMessage(message);
@@ -452,7 +624,7 @@ namespace Toxy
             }
             else
             {
-                frmConversation form = new frmConversation(tox, friend.FriendNumber);
+                frmConversation form = new frmConversation(tox, toxav, friend.FriendNumber);
                 form.FormClosed += convform_FormClosed;
                 form.Show();
 
@@ -474,7 +646,7 @@ namespace Toxy
                 }
                 else
                 {
-                    frmConversation form = new frmConversation(tox, friendnumber);
+                    frmConversation form = new frmConversation(tox, toxav, friendnumber);
                     form.FormClosed += convform_FormClosed;
                     convdic[friendnumber] = form;
 
@@ -483,7 +655,7 @@ namespace Toxy
             }
             else
             {
-                frmConversation form = new frmConversation(tox, friendnumber);
+                frmConversation form = new frmConversation(tox, toxav, friendnumber);
                 form.FormClosed += convform_FormClosed;
                 convdic.Add(friendnumber, form);
 

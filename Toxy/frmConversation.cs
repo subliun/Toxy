@@ -14,15 +14,18 @@ namespace Toxy
     {
         public int FriendNumber;
         private Tox tox;
+        private ToxAv toxav;
+
         private ToxUserStatus status = ToxUserStatus.NONE;
 
         private frmFileTransfer transferform = null;
 
         private bool typing = false;
 
-        public frmConversation(Tox tox, int friendnumber)
+        public frmConversation(Tox tox, ToxAv toxav, int friendnumber)
         {
             this.tox = tox;
+            this.toxav = toxav;
             FriendNumber = friendnumber;
 
             InitializeComponent();
@@ -205,6 +208,11 @@ namespace Toxy
                     tox.SetUserIsTyping(FriendNumber, false);
                 }
             }
+        }
+
+        private void btnCall_Click(object sender, EventArgs e)
+        {
+            toxav.Call(FriendNumber, ToxAvCallType.Video, 30);
         }
     }
 }
