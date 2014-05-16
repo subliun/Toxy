@@ -187,6 +187,9 @@ namespace Toxy
 
         private void txtToSend_TextChanged(object sender, EventArgs e)
         {
+            if (!Config.TypingDetection)
+                return;
+
             MetroTextBox box = (MetroTextBox)sender;
 
             if (!string.IsNullOrEmpty(box.Text))

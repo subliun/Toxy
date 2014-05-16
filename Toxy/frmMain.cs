@@ -50,6 +50,12 @@ namespace Toxy
             tox.OnFileData += OnFileData;
             tox.OnFileControl += OnFileControl;
 
+            if (!Config.Load("toxy.cfg"))
+            {
+                MessageBox.Show("Could not load toxy.cfg, this program will now exit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+            }
+
             if (File.Exists("data"))
             {
                 if (!tox.Load("data"))
@@ -58,7 +64,6 @@ namespace Toxy
                     Close();
                 }
             }
-
 
             bool bootstrap_success = false;
             foreach (ToxNode node in Nodes)
@@ -108,8 +113,8 @@ namespace Toxy
         private void OnTransferComplete(object sender, EventArgs e)
         {
             frmFileTransfer form = ((frmFileTransfer)sender);
-            int filenumber = ((frmFileTransfer)sender).FileNumber;
-            int friendnumber = ((frmFileTransfer)sender).FriendNumber;
+            int filenumber = form.FileNumber;
+            int friendnumber = form.FriendNumber;
 
             ToxFile file = new ToxFile(friendnumber, filenumber);
 
@@ -122,8 +127,8 @@ namespace Toxy
         private void fileform_FormClosed(object sender, FormClosedEventArgs e)
         {
             frmFileTransfer form = ((frmFileTransfer)sender);
-            int filenumber = ((frmFileTransfer)sender).FileNumber;
-            int friendnumber = ((frmFileTransfer)sender).FriendNumber;
+            int filenumber = form.FileNumber;
+            int friendnumber = form.FriendNumber;
 
             ToxFile file = new ToxFile(friendnumber, filenumber);
 
@@ -427,7 +432,6 @@ namespace Toxy
             int[] friends = tox.GetFriendlist();
             for (int i = 0; i < friends.Length; i++)
                 AddFriendControl(friends[i]);
-
 
             txtName.Text = tox.GetSelfName();
             txtStatus.Text = tox.GetSelfStatusMessage();
