@@ -56,10 +56,10 @@
             this.txtConversation.Name = "txtConversation";
             this.txtConversation.PasswordChar = '\0';
             this.txtConversation.ReadOnly = true;
-            this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtConversation.SelectedText = "";
             this.txtConversation.Size = new System.Drawing.Size(568, 356);
-            this.txtConversation.TabIndex = 0;
+            this.txtConversation.TabIndex = 1;
             this.txtConversation.UseSelectable = true;
             // 
             // txtToSend
@@ -75,7 +75,7 @@
             this.txtToSend.SelectedText = "";
             this.txtToSend.Size = new System.Drawing.Size(568, 23);
             this.txtToSend.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtToSend.TabIndex = 1;
+            this.txtToSend.TabIndex = 0;
             this.txtToSend.UseSelectable = true;
             this.txtToSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToSend_KeyPress);
             // 
