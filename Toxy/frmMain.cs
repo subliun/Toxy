@@ -23,12 +23,12 @@ namespace Toxy
         private Thread connloop;
 
         private Dictionary<int, string> convdic = new Dictionary<int, string>();
-        private Dictionary<int, frmGroupChat> groupdic = new Dictionary<int, frmGroupChat>();
+        private Dictionary<int, string> groupdic = new Dictionary<int, string>();
         private Dictionary<ToxFile, frmFileTransfer> filetdic = new Dictionary<ToxFile, frmFileTransfer>();
 
         private Config config;
 
-        private int current_friend;
+        private int current_number; //can either be a groupnumber or a friendnumber
         private bool typing = false;
 
         public frmMain()
@@ -154,42 +154,45 @@ namespace Toxy
                 }
             }
 
-            if (groupdic.ContainsKey(groupnumber))
-                groupdic[groupnumber].NamelistChange(peernumber, change);
+            if (tabControl.SelectedTab == tabGroups)
+                if (current_number == groupnumber)
+                    lblUserstatus.Text = "Members: " + string.Join(", ", tox.GetGroupNames(groupnumber));
         }
 
         private void OnGroupAction(int groupnumber, int friendgroupnumber, string action)
         {
-            if (!groupdic.ContainsKey(groupnumber))
-            {
-                frmGroupChat form = new frmGroupChat(tox, groupnumber);
-                form.FormClosed += groupform_FormClosed;
-                form.Show();
-                form.AppendAction(friendgroupnumber, action);
+            action = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetGroupMemberName(groupnumber, friendgroupnumber), action);
 
-                groupdic.Add(groupnumber, form);
-            }
+            if (groupdic.ContainsKey(groupnumber))
+                groupdic[groupnumber] += action;
             else
-            {
-                groupdic[groupnumber].AppendAction(friendgroupnumber, action);
-            }
+                groupdic.Add(groupnumber, action);
+
+            if (tabControl.SelectedTab != tabGroups)
+                return;
+
+            if (current_number != groupnumber)
+                return;
+
+            txtConversation.AppendText(action);
         }
 
         private void OnGroupMessage(int groupnumber, int friendgroupnumber, string message)
         {
-            if (!groupdic.ContainsKey(groupnumber))
-            {
-                frmGroupChat form = new frmGroupChat(tox, groupnumber);
-                form.FormClosed += groupform_FormClosed;
-                form.Show();
-                form.AppendMessage(friendgroupnumber, message);
+            message = string.Format("<{0}> {1}" + Environment.NewLine, tox.GetGroupMemberName(groupnumber, friendgroupnumber), message);
 
-                groupdic.Add(groupnumber, form);
-            }
+            if (groupdic.ContainsKey(groupnumber))
+                groupdic[groupnumber] += message;
             else
-            {
-                groupdic[groupnumber].AppendMessage(friendgroupnumber, message);
-            }
+                groupdic.Add(groupnumber, message);
+
+            if (tabControl.SelectedTab != tabGroups)
+                return;
+
+            if (current_number != groupnumber)
+                return;
+
+            txtConversation.AppendText(message);
         }
 
         private void groupform_FormClosed(object sender, FormClosedEventArgs e)
@@ -246,8 +249,9 @@ namespace Toxy
                 }
             }
 
-            if (current_friend == friendnumber)
-                lblUsername.Text = newname;
+            if (tabControl.SelectedTab == tabFriends)
+                if (current_number == friendnumber)
+                    lblUsername.Text = newname;
         }
 
         private void OnStatusMessage(int friendnumber, string newstatus)
@@ -266,8 +270,9 @@ namespace Toxy
                 }
             }
 
-            if (current_friend == friendnumber)
-                lblUserstatus.Text = newstatus;
+            if (tabControl.SelectedTab == tabFriends)
+                if (current_number == friendnumber)
+                    lblUserstatus.Text = newstatus;
         }
 
         private void ConnectLoop()
@@ -317,7 +322,10 @@ namespace Toxy
 
         private void OnTypingChange(int friendnumber, bool is_typing)
         {
-            if (current_friend != friendnumber)
+            if (tabControl.SelectedTab != tabFriends)
+                return;
+
+            if (current_number != friendnumber)
                 return;
 
             if (is_typing)
@@ -335,15 +343,13 @@ namespace Toxy
             else
                 convdic.Add(friendnumber, action);
 
-            if (current_friend != friendnumber)
+            if (tabControl.SelectedTab != tabFriends)
+                return;
+
+            if (current_number != friendnumber)
                 return;
 
             txtConversation.AppendText(action);
-
-            if (convdic.ContainsKey(friendnumber))
-                convdic[friendnumber] = txtConversation.Text;
-            else
-                convdic.Add(friendnumber, txtConversation.Text);
         }
 
         private void OnFriendMessage(int friendnumber, string message)
@@ -355,15 +361,13 @@ namespace Toxy
             else
                 convdic.Add(friendnumber, message);
 
-            if (current_friend != friendnumber)
+            if (tabControl.SelectedTab != tabFriends)
+                return;
+
+            if (current_number != friendnumber)
                 return;
 
             txtConversation.AppendText(message);
-
-            if (convdic.ContainsKey(friendnumber))
-                convdic[friendnumber] = txtConversation.Text;
-            else
-                convdic.Add(friendnumber, txtConversation.Text);
         }
 
         private void OnFriendRequest(string id, string message)
@@ -442,12 +446,12 @@ namespace Toxy
             lblUsername.Text = tox.GetName(friend.FriendNumber);
             lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
 
-            current_friend = friend.FriendNumber;
+            current_number = friend.FriendNumber;
 
             txtConversation.Text = "";
 
-            if (convdic.ContainsKey(current_friend))
-                txtConversation.Text = convdic[current_friend];
+            if (convdic.ContainsKey(current_number))
+                txtConversation.Text = convdic[current_number];
 
             if (e.Button == MouseButtons.Right)
                 ctxMenuFriend.Show(Cursor.Position);
@@ -479,7 +483,7 @@ namespace Toxy
                     lblUsername.Text = tox.GetName(friend.FriendNumber);
                     lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
 
-                    current_friend = friend.FriendNumber;
+                    current_number = friend.FriendNumber;
                     break;
                 }
             }
@@ -512,6 +516,8 @@ namespace Toxy
 
             int friendnumber = tox.AddFriend(form.ID, form.Message);
             AddFriendControl(friendnumber);
+
+            tabControl.SelectedTab = tabFriends;
         }
 
         private void btnNewGroup_Click_1(object sender, EventArgs e)
@@ -559,17 +565,17 @@ namespace Toxy
             group.Invalidate();
 
             lblUsername.Text = group.GroupName;
-            lblUserstatus.Text = tox.GetGroupMemberCount(group.GroupNumber) + " peers online";
+            lblUserstatus.Text = "Members: " + string.Join(", ", tox.GetGroupNames(group.GroupNumber));
 
-            /*current_friend = friend.FriendNumber;
+            current_number = group.GroupNumber;
 
             txtConversation.Text = "";
 
-            if (convdic.ContainsKey(current_friend))
-                txtConversation.Text = convdic[current_friend];
+            if (groupdic.ContainsKey(current_number))
+                txtConversation.Text = groupdic[current_number];
 
-            if (e.Button == MouseButtons.Right)
-                ctxMenuGroup.Show(Cursor.Position);*/
+            //if (e.Button == MouseButtons.Right)
+                //ctxMenuGroup.Show(Cursor.Position);
         }
 
         private int GetGroupCount()
@@ -590,31 +596,62 @@ namespace Toxy
             if (e.KeyChar != Convert.ToChar(Keys.Return))
                 return;
 
-            if (tox.GetFriendConnectionStatus(current_friend) != 1)
-                return;
-
-            if (box.Text.StartsWith("/me "))
+            if (tabControl.SelectedTab == tabFriends)
             {
-                string action = box.Text.Substring(4);
-                tox.SendAction(current_friend, action);
+                if (tox.GetFriendConnectionStatus(current_number) != 1)
+                    return;
 
-                string line = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetSelfName(), action);
+                if (box.Text.StartsWith("/me "))
+                {
+                    string action = box.Text.Substring(4);
+                    tox.SendAction(current_number, action);
 
-                txtConversation.AppendText(line);
-                box.Text = "";
+                    string line = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetSelfName(), action);
 
-                e.Handled = true;
+                    txtConversation.AppendText(line);
+                    box.Text = "";
+
+                    if (convdic.ContainsKey(current_number))
+                        convdic[current_number] += line;
+                    else
+                        convdic.Add(current_number, line);
+
+                    e.Handled = true;
+                }
+                else
+                {
+                    tox.SendMessage(current_number, txtToSend.Text);
+
+                    string line = string.Format("<{0}> {1}" + Environment.NewLine, tox.GetSelfName(), txtToSend.Text);
+
+                    txtConversation.AppendText(line);
+                    txtToSend.Text = "";
+
+                    if (convdic.ContainsKey(current_number))
+                        convdic[current_number] += line;
+                    else
+                        convdic.Add(current_number, line);
+
+                    e.Handled = true;
+                }
             }
-            else
+            else if (tabControl.SelectedTab == tabGroups)
             {
-                tox.SendMessage(current_friend, txtToSend.Text);
+                if (box.Text.StartsWith("/me "))
+                {
+                    string action = box.Text.Substring(4);
+                    tox.SendGroupAction(current_number, action);
 
-                string line = string.Format("<{0}> {1}" + Environment.NewLine, tox.GetSelfName(), txtToSend.Text);
+                    box.Text = "";
+                    e.Handled = true;
+                }
+                else
+                {
+                    tox.SendGroupMessage(current_number, txtToSend.Text);
 
-                txtConversation.AppendText(line);
-                txtToSend.Text = "";
-
-                e.Handled = true;
+                    box.Text = "";
+                    e.Handled = true;
+                }
             }
         }
 
@@ -675,6 +712,9 @@ namespace Toxy
             if (!config["typing_detection"])
                 return;
 
+            if (tabControl.SelectedTab != tabFriends)
+                return;
+
             MetroTextBox box = (MetroTextBox)sender;
 
             if (!string.IsNullOrEmpty(box.Text))
@@ -682,7 +722,7 @@ namespace Toxy
                 if (!typing)
                 {
                     typing = true;
-                    tox.SetUserIsTyping(current_friend, true);
+                    tox.SetUserIsTyping(current_number, true);
                 }
             }
             else
@@ -690,7 +730,7 @@ namespace Toxy
                 if (typing)
                 {
                     typing = false;
-                    tox.SetUserIsTyping(current_friend, false);
+                    tox.SetUserIsTyping(current_number, false);
                 }
             }
         }
@@ -698,6 +738,81 @@ namespace Toxy
         private void btnSendFile_Click(object sender, EventArgs e)
         {
             MessageBox.Show("This functionality has not been implemented yet. Friends can send files to you though.");
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MetroTabControl control = (MetroTabControl)sender;
+
+            if (control.SelectedTab == tabGroups)
+            {
+                foreach (Control ctrl in panelGroups.Controls)
+                {
+                    if (ctrl.GetType() == typeof(Group))
+                    {
+                        //this doesn't make any sense, I know, will fix this later
+                        foreach(Control c in panelGroups.Controls)
+                        {
+                            if (c.GetType() == typeof(Group))
+                            {
+                                Group g = (Group)c;
+                                g.Selected = false;
+                                g.Invalidate();
+                            }
+                        }
+
+                        Group group = (Group)ctrl;
+                        group.Selected = true;
+                        group.Invalidate();
+
+                        lblUsername.Text = group.GroupName;
+                        lblUserstatus.Text = tox.GetGroupMemberCount(group.GroupNumber).ToString() + " peers online";
+
+                        current_number = group.GroupNumber;
+
+                        break;
+                    }
+                }
+            }
+            else if (tabControl.SelectedTab == tabFriends)
+            {
+                foreach (Control ctrl in panelFriends.Controls)
+                {
+                    if (ctrl.GetType() == typeof(Friend))
+                    {
+                        //this doesn't make any sense, I know, will fix this later
+                        foreach (Control c in panelFriends.Controls)
+                        {
+                            if (c.GetType() == typeof(Friend))
+                            {
+                                Friend f = (Friend)c;
+                                f.Selected = false;
+                                f.Invalidate();
+                            }
+                        }
+
+                        Friend friend = (Friend)ctrl;
+                        friend.Selected = true;
+                        friend.Invalidate();
+
+                        lblUsername.Text = tox.GetName(friend.FriendNumber);
+                        lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
+
+                        current_number = friend.FriendNumber;
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void btnInviteAll_Click(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab != tabGroups)
+                return;
+
+            foreach (int friend in tox.GetFriendlist())
+                tox.InviteFriend(friend, current_number);
         }
     }
 }

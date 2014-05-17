@@ -48,6 +48,7 @@
             this.ClientSize = new System.Drawing.Size(486, 308);
             this.Controls.Add(this.btnCopyID);
             this.Name = "frmOptions";
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.Text = "Options";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);

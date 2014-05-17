@@ -37,6 +37,7 @@
             this.tabFriends = new MetroFramework.Controls.MetroTabPage();
             this.tabRequests = new MetroFramework.Controls.MetroTabPage();
             this.tabGroups = new MetroFramework.Controls.MetroTabPage();
+            this.panelGroups = new MetroFramework.Controls.MetroPanel();
             this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
             this.txtConversation = new MetroFramework.Controls.MetroTextBox();
             this.txtToSend = new MetroFramework.Controls.MetroTextBox();
@@ -49,7 +50,7 @@
             this.ctxMenuFriend = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.ctxMenuCopyID = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuFriendDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.panelGroups = new MetroFramework.Controls.MetroPanel();
+            this.btnInviteAll = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabFriends.SuspendLayout();
@@ -115,6 +116,7 @@
             this.tabControl.Size = new System.Drawing.Size(346, 442);
             this.tabControl.TabIndex = 2;
             this.tabControl.UseSelectable = true;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tabFriends
             // 
@@ -160,6 +162,25 @@
             this.tabGroups.VerticalScrollbarBarColor = true;
             this.tabGroups.VerticalScrollbarHighlightOnWheel = false;
             this.tabGroups.VerticalScrollbarSize = 10;
+            // 
+            // panelGroups
+            // 
+            this.panelGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelGroups.AutoScroll = true;
+            this.panelGroups.HorizontalScrollbar = true;
+            this.panelGroups.HorizontalScrollbarBarColor = true;
+            this.panelGroups.HorizontalScrollbarHighlightOnWheel = false;
+            this.panelGroups.HorizontalScrollbarSize = 10;
+            this.panelGroups.Location = new System.Drawing.Point(0, 12);
+            this.panelGroups.Name = "panelGroups";
+            this.panelGroups.Size = new System.Drawing.Size(338, 392);
+            this.panelGroups.TabIndex = 3;
+            this.panelGroups.VerticalScrollbar = true;
+            this.panelGroups.VerticalScrollbarBarColor = true;
+            this.panelGroups.VerticalScrollbarHighlightOnWheel = false;
+            this.panelGroups.VerticalScrollbarSize = 10;
             // 
             // metroTabPage4
             // 
@@ -295,24 +316,15 @@
             this.ctxMenuFriendDelete.Text = "Delete";
             this.ctxMenuFriendDelete.Click += new System.EventHandler(this.ctxMenuFriendDelete_Click);
             // 
-            // panelGroups
+            // btnInviteAll
             // 
-            this.panelGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelGroups.AutoScroll = true;
-            this.panelGroups.HorizontalScrollbar = true;
-            this.panelGroups.HorizontalScrollbarBarColor = true;
-            this.panelGroups.HorizontalScrollbarHighlightOnWheel = false;
-            this.panelGroups.HorizontalScrollbarSize = 10;
-            this.panelGroups.Location = new System.Drawing.Point(0, 12);
-            this.panelGroups.Name = "panelGroups";
-            this.panelGroups.Size = new System.Drawing.Size(338, 392);
-            this.panelGroups.TabIndex = 3;
-            this.panelGroups.VerticalScrollbar = true;
-            this.panelGroups.VerticalScrollbarBarColor = true;
-            this.panelGroups.VerticalScrollbarHighlightOnWheel = false;
-            this.panelGroups.VerticalScrollbarSize = 10;
+            this.btnInviteAll.Location = new System.Drawing.Point(984, 95);
+            this.btnInviteAll.Name = "btnInviteAll";
+            this.btnInviteAll.Size = new System.Drawing.Size(98, 23);
+            this.btnInviteAll.TabIndex = 11;
+            this.btnInviteAll.Text = "Invite all friends";
+            this.btnInviteAll.UseSelectable = true;
+            this.btnInviteAll.Click += new System.EventHandler(this.btnInviteAll_Click);
             // 
             // frmMain
             // 
@@ -322,6 +334,7 @@
             this.BackImagePadding = new System.Windows.Forms.Padding(170, 15, 0, 0);
             this.BackMaxSize = 40;
             this.ClientSize = new System.Drawing.Size(1178, 561);
+            this.Controls.Add(this.btnInviteAll);
             this.Controls.Add(this.btnSendFile);
             this.Controls.Add(this.lblUserstatus);
             this.Controls.Add(this.lblUsername);
@@ -371,6 +384,7 @@
         private System.Windows.Forms.ToolStripMenuItem ctxMenuFriendDelete;
         private System.Windows.Forms.ToolStripMenuItem ctxMenuCopyID;
         private MetroFramework.Controls.MetroPanel panelGroups;
+        private MetroFramework.Controls.MetroButton btnInviteAll;
 
     }
 }
