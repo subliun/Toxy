@@ -143,6 +143,17 @@ namespace Toxy
 
         private void OnGroupNamelistChange(int groupnumber, int peernumber, ToxChatChange change)
         {
+            foreach (Control control in panelGroups.Controls)
+            {
+                if (control.GetType() == typeof(Group))
+                {
+                    Group group = (Group)control;
+
+                    if (group.GroupNumber == groupnumber)
+                        group.ChangePeerCount(tox.GetGroupMemberCount(groupnumber));
+                }
+            }
+
             if (groupdic.ContainsKey(groupnumber))
                 groupdic[groupnumber].NamelistChange(peernumber, change);
         }
@@ -198,13 +209,7 @@ namespace Toxy
                 int groupnumber = tox.JoinGroup(friendnumber, group_public_key);
 
                 if (groupnumber != -1)
-                {
-                    frmGroupChat form = new frmGroupChat(tox, groupnumber);
-                    form.FormClosed += groupform_FormClosed;
-                    form.Show();
-
-                    groupdic.Add(groupnumber, form);
-                }
+                    AddGroupControl(groupnumber);
             }
         }
 
@@ -398,7 +403,6 @@ namespace Toxy
             friend.StyleManager = metroStyleManager1;
             friend.SetUsername(tox.GetName(friendnumber));
             friend.Status = tox.GetUserStatus(friendnumber);
-            //friend.Location = new Point(0, 0 + (panelFriends.Controls.Count - 2) * 80);
             friend.MouseClick += friend_MouseClick;
 
             if (tox.GetFriendConnectionStatus(friendnumber) == 0)
@@ -412,6 +416,8 @@ namespace Toxy
             }
 
             panelFriends.Controls.Add(friend);
+
+            ReorganizePanel(panelFriends, typeof(Friend));
         }
 
         private void friend_MouseClick(object sender, MouseEventArgs e)
@@ -462,8 +468,6 @@ namespace Toxy
             for (int i = 0; i < friends.Length; i++)
                 AddFriendControl(friends[i]);
 
-            ReorganizePanel(panelFriends, typeof(Friend));
-
             foreach(Control control in panelFriends.Controls)
             {
                 if (control.GetType() == typeof(Friend))
@@ -508,25 +512,75 @@ namespace Toxy
 
             int friendnumber = tox.AddFriend(form.ID, form.Message);
             AddFriendControl(friendnumber);
-
-            ReorganizePanel(panelFriends, typeof(Friend));
         }
 
         private void btnNewGroup_Click_1(object sender, EventArgs e)
         {
             int groupnumber = tox.NewGroup();
 
-            if (groupnumber != -1)
+            if (groupnumber == -1)
+                return;
+
+            tabControl.SelectedTab = tabGroups;
+            lblUsername.Text = "Groupchat #" + groupnumber.ToString();
+            lblUserstatus.Text = "Members: ";
+
+            AddGroupControl(groupnumber);
+        }
+
+        private void AddGroupControl(int groupnumber)
+        {
+            Group group = new Group(groupnumber);
+            group.StyleManager = metroStyleManager1;
+            group.MouseClick += group_MouseClick;
+
+            panelGroups.Controls.Add(group);
+
+            ReorganizePanel(panelGroups, typeof(Group));
+        }
+
+        private void group_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (!(e.Button == MouseButtons.Left || e.Button == MouseButtons.Right))
+                return;
+
+            foreach (Control control in panelGroups.Controls)
             {
-                frmGroupChat form = new frmGroupChat(tox, groupnumber);
-                form.FormClosed += groupform_FormClosed;
-                form.Show();
-                groupdic.Add(groupnumber, form);
+                if (control.GetType() == typeof(Group))
+                {
+                    Group g = (Group)control;
+                    g.Selected = false;
+                    g.Invalidate();
+                }
             }
-            else
-            {
-                MessageBox.Show("Could not create group");
-            }
+
+            Group group = (Group)sender;
+            group.Selected = true;
+            group.Invalidate();
+
+            lblUsername.Text = group.GroupName;
+            lblUserstatus.Text = tox.GetGroupMemberCount(group.GroupNumber) + " peers online";
+
+            /*current_friend = friend.FriendNumber;
+
+            txtConversation.Text = "";
+
+            if (convdic.ContainsKey(current_friend))
+                txtConversation.Text = convdic[current_friend];
+
+            if (e.Button == MouseButtons.Right)
+                ctxMenuGroup.Show(Cursor.Position);*/
+        }
+
+        private int GetGroupCount()
+        {
+            int count = 0;
+
+            foreach (Control control in panelGroups.Controls)
+                if (control.GetType() == typeof(Group))
+                    count++;
+
+            return count;
         }
 
         private void txtToSend_KeyPress(object sender, KeyPressEventArgs e)
@@ -639,6 +693,11 @@ namespace Toxy
                     tox.SetUserIsTyping(current_friend, false);
                 }
             }
+        }
+
+        private void btnSendFile_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This functionality has not been implemented yet. Friends can send files to you though.");
         }
     }
 }

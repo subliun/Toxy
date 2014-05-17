@@ -98,6 +98,12 @@
     <Compile Include="frmOptions.Designer.cs">
       <DependentUpon>frmOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Group.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Group.Designer.cs">
+      <DependentUpon>Group.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FriendRequest.cs">
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmOptions.resx">
       <DependentUpon>frmOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Group.resx">
+      <DependentUpon>Group.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
