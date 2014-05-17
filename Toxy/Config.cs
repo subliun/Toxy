@@ -1,19 +1,64 @@
-﻿namespace Toxy
-{
-    static class Config
-    {
-        public static bool TypingDetection = false;
-        public static bool Encrypted = false;
-        public static int Style = 3;
+﻿using System.IO;
+using System.Collections.Generic;
 
-        public static bool Save(string loc)
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+
+namespace Toxy
+{
+    class Config : Dictionary<string, dynamic>
+    {
+        private Config() { }
+        private static Config instance;
+
+        public static Config Instance
         {
-            return true;
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Config();
+
+                    //just filling the config with some default values
+                    instance["typing_detection"] = true;
+                    instance["enable_encryption"] = false;
+                    instance["form_style"] = 3;
+                }
+
+                return instance;
+            }
         }
 
-        public static bool Load(string loc)
+        public bool Save(string loc)
         {
-            return true;
+            try
+            {
+                JObject obj = new JObject();
+
+                foreach (string key in Keys)
+                    obj.Add(key, this[key]);
+
+                string s = obj.ToString();
+                StreamWriter writer = new StreamWriter(loc, false);
+                writer.Write(s);
+                writer.Close();
+
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool Load(string loc)
+        {
+            try
+            {
+                StreamReader reader = new StreamReader(loc);
+                string conf = reader.ReadToEnd();
+                JObject obj = (JObject)JsonConvert.DeserializeObject(conf);
+
+                return true;
+            }
+            catch { return false; }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 using SharpTox;
 
@@ -83,12 +84,14 @@ namespace Toxy
             else
                 bordercolor = Color.White;
 
-            //bordercolor = MetroPaint.BackColor.Button.Normal(Theme);
             e.Graphics.DrawRectangle(new Pen(bordercolor, 5f), new Rectangle(new Point(0, 0), Size));
         }
 
         private void Friend_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Left)
+                return;
+
             Selected = !Selected;
             Invalidate();
         }

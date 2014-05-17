@@ -26,6 +26,8 @@ namespace Toxy
         private Dictionary<int, frmGroupChat> groupdic = new Dictionary<int, frmGroupChat>();
         private Dictionary<ToxFile, frmFileTransfer> filetdic = new Dictionary<ToxFile, frmFileTransfer>();
 
+        private Config config;
+
         public frmMain()
         {
             InitializeComponent();
@@ -50,11 +52,9 @@ namespace Toxy
             tox.OnFileData += OnFileData;
             tox.OnFileControl += OnFileControl;
 
-            if (!Config.Load("toxy.cfg"))
-            {
-                MessageBox.Show("Could not load toxy.cfg, this program will now exit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
-            }
+            config = Config.Instance;
+            if (!config.Load("toxy.cfg"))
+                MessageBox.Show("Could not load toxy.cfg, using defaults", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             if (File.Exists("data"))
             {
@@ -442,6 +442,9 @@ namespace Toxy
 
         private void friendcontrol_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Left)
+                return;
+
             Friend friend = (Friend)sender;
 
             if (convdic.ContainsKey(friend.FriendNumber))
@@ -518,6 +521,8 @@ namespace Toxy
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             connloop.Abort();
+
+            config.Save("toxy.cfg");
 
             tox.Save("data");
             tox.Kill();

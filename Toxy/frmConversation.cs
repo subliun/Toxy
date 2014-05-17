@@ -20,10 +20,13 @@ namespace Toxy
 
         private bool typing = false;
 
+        private Config config;
+
         public frmConversation(Tox tox, int friendnumber)
         {
             this.tox = tox;
             FriendNumber = friendnumber;
+            config = Config.Instance;
 
             InitializeComponent();
 
@@ -187,7 +190,7 @@ namespace Toxy
 
         private void txtToSend_TextChanged(object sender, EventArgs e)
         {
-            if (!Config.TypingDetection)
+            if (!config["typing_detection"])
                 return;
 
             MetroTextBox box = (MetroTextBox)sender;
