@@ -398,7 +398,6 @@ namespace Toxy
             friend.SetUsername(tox.GetName(friendnumber));
             friend.Status = tox.GetUserStatus(friendnumber);
             friend.Location = new Point(0, 0 + (panelFriends.Controls.Count - 2) * 80);
-            //friend.MouseDoubleClick += friendcontrol_MouseDoubleClick;
             friend.MouseClick += friend_MouseClick;
 
             if (tox.GetFriendConnectionStatus(friendnumber) == 0)
@@ -416,7 +415,7 @@ namespace Toxy
 
         private void friend_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left)
+            if (!(e.Button == MouseButtons.Left || e.Button == MouseButtons.Right))
                 return;
 
             foreach (Control control in panelFriends.Controls)
@@ -442,6 +441,9 @@ namespace Toxy
 
             if (convdic.ContainsKey(current_friend))
                 txtConversation.Text = convdic[current_friend];
+
+            if (e.Button == MouseButtons.Right)
+                ctxMenuFriend.Show(Cursor.Position);
         }
 
         private void RefreshFriendRequestCount()
@@ -555,6 +557,32 @@ namespace Toxy
 
                 e.Handled = true;
             }
+        }
+
+        private void btnOptions_Click(object sender, EventArgs e)
+        {
+            frmOptions form = new frmOptions(tox);
+            form.Show();
+        }
+
+        private Friend GetSelectedFriend()
+        {
+            foreach(Control control in panelFriends.Controls)
+                if (control.GetType() == typeof(Friend))
+                    if (((Friend)control).Selected)
+                        return (Friend)control;
+
+            return null;
+        }
+
+        private void ctxMenuFriendDelete_Click(object sender, EventArgs e)
+        {
+            Friend friend = GetSelectedFriend();
+            if (friend == null)
+                return;
+
+            tox.DeleteFriend(friend.FriendNumber);
+            panelFriends.Controls.Remove(friend);
         }
     }
 }

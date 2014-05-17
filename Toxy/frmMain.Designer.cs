@@ -33,23 +33,26 @@
             this.panelFriends = new MetroFramework.Controls.MetroPanel();
             this.panelRequests = new MetroFramework.Controls.MetroPanel();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.tabRequests = new MetroFramework.Controls.MetroTabControl();
+            this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
-            this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
+            this.tabRequests = new MetroFramework.Controls.MetroTabPage();
+            this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
+            this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
             this.txtConversation = new MetroFramework.Controls.MetroTextBox();
             this.txtToSend = new MetroFramework.Controls.MetroTextBox();
             this.btnAddFriend = new MetroFramework.Controls.MetroButton();
-            this.metroButton4 = new MetroFramework.Controls.MetroButton();
+            this.btnOptions = new MetroFramework.Controls.MetroButton();
             this.btnNewGroup = new MetroFramework.Controls.MetroButton();
             this.lblUsername = new MetroFramework.Controls.MetroLabel();
             this.lblUserstatus = new MetroFramework.Controls.MetroLabel();
             this.metroButton6 = new MetroFramework.Controls.MetroButton();
-            this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
-            this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
+            this.ctxMenuFriend = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.ctxMenuFriendDelete = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
-            this.tabRequests.SuspendLayout();
+            this.tabControl.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
-            this.metroTabPage2.SuspendLayout();
+            this.tabRequests.SuspendLayout();
+            this.ctxMenuFriend.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelFriends
@@ -94,21 +97,21 @@
             this.metroStyleManager1.Owner = this;
             this.metroStyleManager1.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // tabRequests
+            // tabControl
             // 
-            this.tabRequests.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.tabRequests.Controls.Add(this.metroTabPage1);
-            this.tabRequests.Controls.Add(this.metroTabPage2);
-            this.tabRequests.Controls.Add(this.metroTabPage3);
-            this.tabRequests.Controls.Add(this.metroTabPage4);
-            this.tabRequests.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
-            this.tabRequests.Location = new System.Drawing.Point(23, 63);
-            this.tabRequests.Name = "tabRequests";
-            this.tabRequests.SelectedIndex = 0;
-            this.tabRequests.Size = new System.Drawing.Size(346, 442);
-            this.tabRequests.TabIndex = 2;
-            this.tabRequests.UseSelectable = true;
+            this.tabControl.Controls.Add(this.metroTabPage1);
+            this.tabControl.Controls.Add(this.tabRequests);
+            this.tabControl.Controls.Add(this.metroTabPage3);
+            this.tabControl.Controls.Add(this.metroTabPage4);
+            this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
+            this.tabControl.Location = new System.Drawing.Point(23, 63);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(346, 442);
+            this.tabControl.TabIndex = 2;
+            this.tabControl.UseSelectable = true;
             // 
             // metroTabPage1
             // 
@@ -125,20 +128,48 @@
             this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage1.VerticalScrollbarSize = 10;
             // 
-            // metroTabPage2
+            // tabRequests
             // 
-            this.metroTabPage2.Controls.Add(this.panelRequests);
-            this.metroTabPage2.HorizontalScrollbarBarColor = true;
-            this.metroTabPage2.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage2.HorizontalScrollbarSize = 10;
-            this.metroTabPage2.Location = new System.Drawing.Point(4, 38);
-            this.metroTabPage2.Name = "metroTabPage2";
-            this.metroTabPage2.Size = new System.Drawing.Size(338, 400);
-            this.metroTabPage2.TabIndex = 1;
-            this.metroTabPage2.Text = "Requests";
-            this.metroTabPage2.VerticalScrollbarBarColor = true;
-            this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage2.VerticalScrollbarSize = 10;
+            this.tabRequests.Controls.Add(this.panelRequests);
+            this.tabRequests.HorizontalScrollbarBarColor = true;
+            this.tabRequests.HorizontalScrollbarHighlightOnWheel = false;
+            this.tabRequests.HorizontalScrollbarSize = 10;
+            this.tabRequests.Location = new System.Drawing.Point(4, 38);
+            this.tabRequests.Name = "tabRequests";
+            this.tabRequests.Size = new System.Drawing.Size(338, 400);
+            this.tabRequests.TabIndex = 1;
+            this.tabRequests.Text = "Requests";
+            this.tabRequests.VerticalScrollbarBarColor = true;
+            this.tabRequests.VerticalScrollbarHighlightOnWheel = false;
+            this.tabRequests.VerticalScrollbarSize = 10;
+            // 
+            // metroTabPage3
+            // 
+            this.metroTabPage3.HorizontalScrollbarBarColor = true;
+            this.metroTabPage3.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage3.HorizontalScrollbarSize = 10;
+            this.metroTabPage3.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage3.Name = "metroTabPage3";
+            this.metroTabPage3.Size = new System.Drawing.Size(338, 400);
+            this.metroTabPage3.TabIndex = 2;
+            this.metroTabPage3.Text = "Groups";
+            this.metroTabPage3.VerticalScrollbarBarColor = true;
+            this.metroTabPage3.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage3.VerticalScrollbarSize = 10;
+            // 
+            // metroTabPage4
+            // 
+            this.metroTabPage4.HorizontalScrollbarBarColor = true;
+            this.metroTabPage4.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage4.HorizontalScrollbarSize = 10;
+            this.metroTabPage4.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage4.Name = "metroTabPage4";
+            this.metroTabPage4.Size = new System.Drawing.Size(338, 400);
+            this.metroTabPage4.TabIndex = 3;
+            this.metroTabPage4.Text = "Transfers";
+            this.metroTabPage4.VerticalScrollbarBarColor = true;
+            this.metroTabPage4.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage4.VerticalScrollbarSize = 10;
             // 
             // txtConversation
             // 
@@ -186,15 +217,16 @@
             this.btnAddFriend.UseSelectable = true;
             this.btnAddFriend.Click += new System.EventHandler(this.btnAddFriend_Click);
             // 
-            // metroButton4
+            // btnOptions
             // 
-            this.metroButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.metroButton4.Location = new System.Drawing.Point(265, 511);
-            this.metroButton4.Name = "metroButton4";
-            this.metroButton4.Size = new System.Drawing.Size(100, 36);
-            this.metroButton4.TabIndex = 6;
-            this.metroButton4.Text = "Options";
-            this.metroButton4.UseSelectable = true;
+            this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOptions.Location = new System.Drawing.Point(265, 511);
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(100, 36);
+            this.btnOptions.TabIndex = 6;
+            this.btnOptions.Text = "Options";
+            this.btnOptions.UseSelectable = true;
+            this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
             // 
             // btnNewGroup
             // 
@@ -237,33 +269,19 @@
             this.metroButton6.Text = "Send file";
             this.metroButton6.UseSelectable = true;
             // 
-            // metroTabPage3
+            // ctxMenuFriend
             // 
-            this.metroTabPage3.HorizontalScrollbarBarColor = true;
-            this.metroTabPage3.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage3.HorizontalScrollbarSize = 10;
-            this.metroTabPage3.Location = new System.Drawing.Point(4, 38);
-            this.metroTabPage3.Name = "metroTabPage3";
-            this.metroTabPage3.Size = new System.Drawing.Size(338, 400);
-            this.metroTabPage3.TabIndex = 2;
-            this.metroTabPage3.Text = "Groups";
-            this.metroTabPage3.VerticalScrollbarBarColor = true;
-            this.metroTabPage3.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage3.VerticalScrollbarSize = 10;
+            this.ctxMenuFriend.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxMenuFriendDelete});
+            this.ctxMenuFriend.Name = "ctxMenuFriend";
+            this.ctxMenuFriend.Size = new System.Drawing.Size(153, 48);
             // 
-            // metroTabPage4
+            // ctxMenuFriendDelete
             // 
-            this.metroTabPage4.HorizontalScrollbarBarColor = true;
-            this.metroTabPage4.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage4.HorizontalScrollbarSize = 10;
-            this.metroTabPage4.Location = new System.Drawing.Point(4, 38);
-            this.metroTabPage4.Name = "metroTabPage4";
-            this.metroTabPage4.Size = new System.Drawing.Size(338, 400);
-            this.metroTabPage4.TabIndex = 3;
-            this.metroTabPage4.Text = "Transfers";
-            this.metroTabPage4.VerticalScrollbarBarColor = true;
-            this.metroTabPage4.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage4.VerticalScrollbarSize = 10;
+            this.ctxMenuFriendDelete.Name = "ctxMenuFriendDelete";
+            this.ctxMenuFriendDelete.Size = new System.Drawing.Size(152, 22);
+            this.ctxMenuFriendDelete.Text = "Delete";
+            this.ctxMenuFriendDelete.Click += new System.EventHandler(this.ctxMenuFriendDelete_Click);
             // 
             // frmMain
             // 
@@ -277,11 +295,11 @@
             this.Controls.Add(this.lblUserstatus);
             this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.btnNewGroup);
-            this.Controls.Add(this.metroButton4);
+            this.Controls.Add(this.btnOptions);
             this.Controls.Add(this.txtToSend);
             this.Controls.Add(this.btnAddFriend);
             this.Controls.Add(this.txtConversation);
-            this.Controls.Add(this.tabRequests);
+            this.Controls.Add(this.tabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
@@ -290,9 +308,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
-            this.tabRequests.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);
-            this.metroTabPage2.ResumeLayout(false);
+            this.tabRequests.ResumeLayout(false);
+            this.ctxMenuFriend.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,12 +322,12 @@
         private MetroFramework.Controls.MetroPanel panelRequests;
         private MetroFramework.Controls.MetroPanel panelFriends;
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
-        private MetroFramework.Controls.MetroTabControl tabRequests;
+        private MetroFramework.Controls.MetroTabControl tabControl;
         private MetroFramework.Controls.MetroTabPage metroTabPage1;
-        private MetroFramework.Controls.MetroTabPage metroTabPage2;
+        private MetroFramework.Controls.MetroTabPage tabRequests;
         private MetroFramework.Controls.MetroTextBox txtToSend;
         private MetroFramework.Controls.MetroTextBox txtConversation;
-        private MetroFramework.Controls.MetroButton metroButton4;
+        private MetroFramework.Controls.MetroButton btnOptions;
         private MetroFramework.Controls.MetroButton btnAddFriend;
         private MetroFramework.Controls.MetroButton btnNewGroup;
         private MetroFramework.Controls.MetroLabel lblUserstatus;
@@ -316,6 +335,8 @@
         private MetroFramework.Controls.MetroButton metroButton6;
         private MetroFramework.Controls.MetroTabPage metroTabPage3;
         private MetroFramework.Controls.MetroTabPage metroTabPage4;
+        private MetroFramework.Controls.MetroContextMenu ctxMenuFriend;
+        private System.Windows.Forms.ToolStripMenuItem ctxMenuFriendDelete;
 
     }
 }
