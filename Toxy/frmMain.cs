@@ -474,6 +474,8 @@ namespace Toxy
 
                     lblUsername.Text = tox.GetName(friend.FriendNumber);
                     lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
+
+                    current_friend = friend.FriendNumber;
                     break;
                 }
             }
@@ -559,6 +561,41 @@ namespace Toxy
             else
             {
                 MessageBox.Show("Could not create group");
+            }
+        }
+
+        private void txtToSend_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            MetroTextBox box = (MetroTextBox)sender;
+
+            if (e.KeyChar != Convert.ToChar(Keys.Return))
+                return;
+
+            if (tox.GetFriendConnectionStatus(current_friend) != 1)
+                return;
+
+            if (box.Text.StartsWith("/me "))
+            {
+                string action = box.Text.Substring(4);
+                tox.SendAction(current_friend, action);
+
+                string line = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetSelfName(), action);
+
+                txtConversation.AppendText(line);
+                box.Text = "";
+
+                e.Handled = true;
+            }
+            else
+            {
+                tox.SendMessage(current_friend, txtToSend.Text);
+
+                string line = string.Format("<{0}> {1}" + Environment.NewLine, tox.GetSelfName(), txtToSend.Text);
+
+                txtConversation.AppendText(line);
+                txtToSend.Text = "";
+
+                e.Handled = true;
             }
         }
     }

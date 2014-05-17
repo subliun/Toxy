@@ -100,7 +100,7 @@
             this.tabRequests.Controls.Add(this.metroTabPage2);
             this.tabRequests.Location = new System.Drawing.Point(23, 63);
             this.tabRequests.Name = "tabRequests";
-            this.tabRequests.SelectedIndex = 1;
+            this.tabRequests.SelectedIndex = 0;
             this.tabRequests.Size = new System.Drawing.Size(346, 442);
             this.tabRequests.TabIndex = 2;
             this.tabRequests.UseSelectable = true;
@@ -167,6 +167,8 @@
             this.txtToSend.Style = MetroFramework.MetroColorStyle.Blue;
             this.txtToSend.TabIndex = 0;
             this.txtToSend.UseSelectable = true;
+            this.txtToSend.UseStyleColors = true;
+            this.txtToSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToSend_KeyPress);
             // 
             // btnAddFriend
             // 
