@@ -28,7 +28,7 @@ namespace Toxy
 
         private Config config;
 
-        private int current_number; //can either be a groupnumber or a friendnumber
+        private int current_number; //can be a groupnumber or a friendnumber
         private bool typing = false;
 
         public frmMain()
@@ -197,16 +197,6 @@ namespace Toxy
                 return;
 
             txtConversation.AppendText(message);
-        }
-
-        private void groupform_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            int groupnumber = ((frmGroupChat)sender).GroupNumber;
-
-            if (!groupdic.ContainsKey(groupnumber))
-                return; //this shouldn't happen
-
-            groupdic.Remove(groupnumber);
         }
 
         private void OnGroupInvite(int friendnumber, string group_public_key)
