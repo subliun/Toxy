@@ -29,6 +29,7 @@ namespace Toxy
         private Config config;
 
         private int current_friend;
+        private bool typing = false;
 
         public frmMain()
         {
@@ -613,6 +614,31 @@ namespace Toxy
                 return;
 
             Clipboard.SetText(tox.GetClientID(friend.FriendNumber));
+        }
+
+        private void txtToSend_TextChanged(object sender, EventArgs e)
+        {
+            if (!config["typing_detection"])
+                return;
+
+            MetroTextBox box = (MetroTextBox)sender;
+
+            if (!string.IsNullOrEmpty(box.Text))
+            {
+                if (!typing)
+                {
+                    typing = true;
+                    tox.SetUserIsTyping(current_friend, true);
+                }
+            }
+            else
+            {
+                if (typing)
+                {
+                    typing = false;
+                    tox.SetUserIsTyping(current_friend, false);
+                }
+            }
         }
     }
 }

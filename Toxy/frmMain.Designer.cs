@@ -65,9 +65,9 @@
             this.panelFriends.HorizontalScrollbarBarColor = true;
             this.panelFriends.HorizontalScrollbarHighlightOnWheel = false;
             this.panelFriends.HorizontalScrollbarSize = 10;
-            this.panelFriends.Location = new System.Drawing.Point(0, 3);
+            this.panelFriends.Location = new System.Drawing.Point(0, 13);
             this.panelFriends.Name = "panelFriends";
-            this.panelFriends.Size = new System.Drawing.Size(338, 401);
+            this.panelFriends.Size = new System.Drawing.Size(338, 391);
             this.panelFriends.TabIndex = 3;
             this.panelFriends.VerticalScrollbar = true;
             this.panelFriends.VerticalScrollbarBarColor = true;
@@ -205,6 +205,7 @@
             this.txtToSend.TabIndex = 0;
             this.txtToSend.UseSelectable = true;
             this.txtToSend.UseStyleColors = true;
+            this.txtToSend.TextChanged += new System.EventHandler(this.txtToSend_TextChanged);
             this.txtToSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToSend_KeyPress);
             // 
             // btnAddFriend
@@ -276,7 +277,7 @@
             this.ctxMenuCopyID,
             this.ctxMenuFriendDelete});
             this.ctxMenuFriend.Name = "ctxMenuFriend";
-            this.ctxMenuFriend.Size = new System.Drawing.Size(153, 70);
+            this.ctxMenuFriend.Size = new System.Drawing.Size(153, 48);
             // 
             // ctxMenuFriendDelete
             // 
