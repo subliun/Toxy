@@ -742,6 +742,7 @@ namespace Toxy
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
+            txtConversation.Text = "";
             MetroTabControl control = (MetroTabControl)sender;
 
             if (control.SelectedTab == tabGroups)
@@ -769,6 +770,9 @@ namespace Toxy
                         lblUserstatus.Text = tox.GetGroupMemberCount(group.GroupNumber).ToString() + " peers online";
 
                         current_number = group.GroupNumber;
+
+                        if (groupdic.ContainsKey(current_number))
+                            txtConversation.Text = groupdic[current_number];
 
                         break;
                     }
@@ -799,6 +803,9 @@ namespace Toxy
                         lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
 
                         current_number = friend.FriendNumber;
+
+                        if (convdic.ContainsKey(current_number))
+                            txtConversation.Text = convdic[current_number];
 
                         break;
                     }
