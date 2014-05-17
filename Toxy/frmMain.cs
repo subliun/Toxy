@@ -451,14 +451,12 @@ namespace Toxy
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            comboColor.SelectedIndex = 3;
-
             int[] friends = tox.GetFriendlist();
             for (int i = 0; i < friends.Length; i++)
                 AddFriendControl(friends[i]);
 
-            txtName.Text = tox.GetSelfName();
-            txtStatus.Text = tox.GetSelfStatusMessage();
+            //txtName.Text = tox.GetSelfName();
+            //txtStatus.Text = tox.GetSelfStatusMessage();
 
             connloop = new Thread(ConnectLoop);
             connloop.Start();
@@ -554,20 +552,18 @@ namespace Toxy
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            metroStyleManager1.Style = (MetroColorStyle)comboColor.SelectedIndex + 1;
-
-            tox.SetName(txtName.Text);
-            tox.SetStatusMessage(txtStatus.Text);
+            //tox.SetName(txtName.Text);
+            //tox.SetStatusMessage(txtStatus.Text);
         }
 
         private void toggleEncryption_CheckedChanged(object sender, EventArgs e)
         {
             MetroToggle toggle = (MetroToggle)sender;
 
-            if (!toggle.Checked)
+            /*if (!toggle.Checked)
                 txtKey.Enabled = false;
             else
-                txtKey.Enabled = true;
+                txtKey.Enabled = true;*/
         }
 
         private void btnNewGroup_Click(object sender, EventArgs e)
@@ -580,7 +576,12 @@ namespace Toxy
             groupdic.Add(groupnumber, form);
         }
 
-        private void metroButton2_Click(object sender, EventArgs e)
+        private void linkGithub_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/Impyy/Toxy");
+        }
+
+        private void btnAddFriend_Click(object sender, EventArgs e)
         {
             frmAddFriend form = new frmAddFriend();
             if (form.ShowDialog() != DialogResult.OK)
@@ -590,9 +591,19 @@ namespace Toxy
             AddFriendControl(friendnumber);
         }
 
-        private void linkGithub_Click(object sender, EventArgs e)
+        private void btnNewGroup_Click_1(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Impyy/Toxy");
+            int groupnumber = tox.NewGroup();
+
+            if (groupnumber != -1)
+            {
+                frmGroupChat groupchat = new frmGroupChat(tox, groupnumber);
+                groupchat.Show();
+            }
+            else
+            {
+                MessageBox.Show("Could not create group");
+            }
         }
     }
 }

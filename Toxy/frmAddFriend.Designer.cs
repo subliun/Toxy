@@ -120,6 +120,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(590, 267);
             this.Name = "frmAddFriend";
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.Text = "Add a friend";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
