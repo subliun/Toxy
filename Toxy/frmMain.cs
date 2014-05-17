@@ -605,5 +605,14 @@ namespace Toxy
 
             ReorganizePanel(panelFriends, typeof(Friend));
         }
+
+        private void ctxMenuCopyID_Click(object sender, EventArgs e)
+        {
+            Friend friend = GetSelectedFriend();
+            if (friend == null)
+                return;
+
+            Clipboard.SetText(tox.GetClientID(friend.FriendNumber));
+        }
     }
 }

@@ -48,6 +48,7 @@
             this.metroButton6 = new MetroFramework.Controls.MetroButton();
             this.ctxMenuFriend = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.ctxMenuFriendDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxMenuCopyID = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
@@ -272,9 +273,10 @@
             // ctxMenuFriend
             // 
             this.ctxMenuFriend.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxMenuCopyID,
             this.ctxMenuFriendDelete});
             this.ctxMenuFriend.Name = "ctxMenuFriend";
-            this.ctxMenuFriend.Size = new System.Drawing.Size(153, 48);
+            this.ctxMenuFriend.Size = new System.Drawing.Size(153, 70);
             // 
             // ctxMenuFriendDelete
             // 
@@ -282,6 +284,13 @@
             this.ctxMenuFriendDelete.Size = new System.Drawing.Size(152, 22);
             this.ctxMenuFriendDelete.Text = "Delete";
             this.ctxMenuFriendDelete.Click += new System.EventHandler(this.ctxMenuFriendDelete_Click);
+            // 
+            // ctxMenuCopyID
+            // 
+            this.ctxMenuCopyID.Name = "ctxMenuCopyID";
+            this.ctxMenuCopyID.Size = new System.Drawing.Size(152, 22);
+            this.ctxMenuCopyID.Text = "Copy public ID";
+            this.ctxMenuCopyID.Click += new System.EventHandler(this.ctxMenuCopyID_Click);
             // 
             // frmMain
             // 
@@ -337,6 +346,7 @@
         private MetroFramework.Controls.MetroTabPage metroTabPage4;
         private MetroFramework.Controls.MetroContextMenu ctxMenuFriend;
         private System.Windows.Forms.ToolStripMenuItem ctxMenuFriendDelete;
+        private System.Windows.Forms.ToolStripMenuItem ctxMenuCopyID;
 
     }
 }
