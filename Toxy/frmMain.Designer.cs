@@ -44,6 +44,8 @@
             this.lblUsername = new MetroFramework.Controls.MetroLabel();
             this.lblUserstatus = new MetroFramework.Controls.MetroLabel();
             this.metroButton6 = new MetroFramework.Controls.MetroButton();
+            this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
+            this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabRequests.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
@@ -78,9 +80,9 @@
             this.panelRequests.HorizontalScrollbarBarColor = true;
             this.panelRequests.HorizontalScrollbarHighlightOnWheel = false;
             this.panelRequests.HorizontalScrollbarSize = 10;
-            this.panelRequests.Location = new System.Drawing.Point(3, 12);
+            this.panelRequests.Location = new System.Drawing.Point(0, 3);
             this.panelRequests.Name = "panelRequests";
-            this.panelRequests.Size = new System.Drawing.Size(332, 385);
+            this.panelRequests.Size = new System.Drawing.Size(338, 401);
             this.panelRequests.TabIndex = 2;
             this.panelRequests.VerticalScrollbar = true;
             this.panelRequests.VerticalScrollbarBarColor = true;
@@ -98,6 +100,9 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabRequests.Controls.Add(this.metroTabPage1);
             this.tabRequests.Controls.Add(this.metroTabPage2);
+            this.tabRequests.Controls.Add(this.metroTabPage3);
+            this.tabRequests.Controls.Add(this.metroTabPage4);
+            this.tabRequests.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
             this.tabRequests.Location = new System.Drawing.Point(23, 63);
             this.tabRequests.Name = "tabRequests";
             this.tabRequests.SelectedIndex = 0;
@@ -115,7 +120,7 @@
             this.metroTabPage1.Name = "metroTabPage1";
             this.metroTabPage1.Size = new System.Drawing.Size(338, 400);
             this.metroTabPage1.TabIndex = 0;
-            this.metroTabPage1.Text = "Chats";
+            this.metroTabPage1.Text = "Friends";
             this.metroTabPage1.VerticalScrollbarBarColor = true;
             this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage1.VerticalScrollbarSize = 10;
@@ -232,6 +237,34 @@
             this.metroButton6.Text = "Send file";
             this.metroButton6.UseSelectable = true;
             // 
+            // metroTabPage3
+            // 
+            this.metroTabPage3.HorizontalScrollbarBarColor = true;
+            this.metroTabPage3.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage3.HorizontalScrollbarSize = 10;
+            this.metroTabPage3.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage3.Name = "metroTabPage3";
+            this.metroTabPage3.Size = new System.Drawing.Size(338, 400);
+            this.metroTabPage3.TabIndex = 2;
+            this.metroTabPage3.Text = "Groups";
+            this.metroTabPage3.VerticalScrollbarBarColor = true;
+            this.metroTabPage3.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage3.VerticalScrollbarSize = 10;
+            // 
+            // metroTabPage4
+            // 
+            this.metroTabPage4.HorizontalScrollbarBarColor = true;
+            this.metroTabPage4.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage4.HorizontalScrollbarSize = 10;
+            this.metroTabPage4.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage4.Name = "metroTabPage4";
+            this.metroTabPage4.Size = new System.Drawing.Size(338, 400);
+            this.metroTabPage4.TabIndex = 3;
+            this.metroTabPage4.Text = "Transfers";
+            this.metroTabPage4.VerticalScrollbarBarColor = true;
+            this.metroTabPage4.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage4.VerticalScrollbarSize = 10;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -281,6 +314,8 @@
         private MetroFramework.Controls.MetroLabel lblUserstatus;
         private MetroFramework.Controls.MetroLabel lblUsername;
         private MetroFramework.Controls.MetroButton metroButton6;
+        private MetroFramework.Controls.MetroTabPage metroTabPage3;
+        private MetroFramework.Controls.MetroTabPage metroTabPage4;
 
     }
 }

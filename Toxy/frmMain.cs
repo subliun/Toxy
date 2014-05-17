@@ -222,11 +222,6 @@ namespace Toxy
                     }
                 }
             }
-
-            /*if (!convdic.ContainsKey(friendnumber))
-                return;
-
-            convdic[friendnumber].ChangeConnectionStatus(status);*/
         }
 
         private void OnNameChange(int friendnumber, string newname)
@@ -480,9 +475,6 @@ namespace Toxy
                 }
             }
 
-            //txtName.Text = tox.GetSelfName();
-            //txtStatus.Text = tox.GetSelfStatusMessage();
-
             connloop = new Thread(ConnectLoop);
             connloop.Start();
         }
@@ -493,11 +485,6 @@ namespace Toxy
             new ToxNode("37.187.46.132", 33445, "C021232F9AC83914A45DFCF242129B216FED5ED34683F385D932A66BC9178270", false),
         };
 
-        private void btnIDClipboard_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(id);
-        }
-
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             connloop.Abort();
@@ -506,37 +493,6 @@ namespace Toxy
 
             tox.Save("data");
             tox.Kill();
-        }
-
-        private void metroButton1_Click(object sender, EventArgs e)
-        {
-            //tox.SetName(txtName.Text);
-            //tox.SetStatusMessage(txtStatus.Text);
-        }
-
-        private void toggleEncryption_CheckedChanged(object sender, EventArgs e)
-        {
-            MetroToggle toggle = (MetroToggle)sender;
-
-            /*if (!toggle.Checked)
-                txtKey.Enabled = false;
-            else
-                txtKey.Enabled = true;*/
-        }
-
-        private void btnNewGroup_Click(object sender, EventArgs e)
-        {
-            int groupnumber = tox.NewGroup();
-            frmGroupChat form = new frmGroupChat(tox, groupnumber);
-            form.FormClosed += groupform_FormClosed;
-            form.Show();
-
-            groupdic.Add(groupnumber, form);
-        }
-
-        private void linkGithub_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://github.com/Impyy/Toxy");
         }
 
         private void btnAddFriend_Click(object sender, EventArgs e)
@@ -555,8 +511,10 @@ namespace Toxy
 
             if (groupnumber != -1)
             {
-                frmGroupChat groupchat = new frmGroupChat(tox, groupnumber);
-                groupchat.Show();
+                frmGroupChat form = new frmGroupChat(tox, groupnumber);
+                form.FormClosed += groupform_FormClosed;
+                form.Show();
+                groupdic.Add(groupnumber, form);
             }
             else
             {
