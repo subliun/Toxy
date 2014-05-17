@@ -30,6 +30,6 @@ Things you'll need
 
 * Libraries of the [MetroFramework](https://github.com/viperneo/winforms-modernui "MetroFramework GitHub repo")
 
-* Libraries from [Newtonsof.Json](https://github.com/JamesNK/Newtonsoft.Json)
+* Libraries from [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 
 * The [SharpTox library](https://github.com/Impyy/SharpTox "SharpTox GitHub repo") and its dependencies.
