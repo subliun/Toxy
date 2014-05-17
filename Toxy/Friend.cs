@@ -86,14 +86,5 @@ namespace Toxy
 
             e.Graphics.DrawRectangle(new Pen(bordercolor, 5f), new Rectangle(new Point(0, 0), Size));
         }
-
-        private void Friend_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-                return;
-
-            Selected = !Selected;
-            Invalidate();
-        }
     }
 }

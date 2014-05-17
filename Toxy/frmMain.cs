@@ -401,7 +401,8 @@ namespace Toxy
             friend.SetUsername(tox.GetName(friendnumber));
             friend.Status = tox.GetUserStatus(friendnumber);
             friend.Location = new Point(0, 0 + (panelFriends.Controls.Count - 2) * 80);
-            friend.MouseDoubleClick += friendcontrol_MouseDoubleClick;
+            //friend.MouseDoubleClick += friendcontrol_MouseDoubleClick;
+            friend.MouseClick += friend_MouseClick;
 
             if (tox.GetFriendConnectionStatus(friendnumber) == 0)
             {
@@ -414,6 +415,29 @@ namespace Toxy
             }
 
             panelFriends.Controls.Add(friend);
+        }
+
+        private void friend_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            foreach (Control control in panelFriends.Controls)
+            {
+                if (control.GetType() == typeof(Friend))
+                {
+                    Friend f = (Friend)control;
+                    f.Selected = false;
+                    f.Invalidate();
+                }
+            }
+
+            Friend friend = (Friend)sender;
+            friend.Selected = true;
+            friend.Invalidate();
+
+            lblUsername.Text = tox.GetName(friend.FriendNumber);
+            lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
         }
 
         private void RefreshFriendRequestCount()

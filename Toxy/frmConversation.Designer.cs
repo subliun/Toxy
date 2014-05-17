@@ -64,7 +64,7 @@
             this.txtConversation.Name = "txtConversation";
             this.txtConversation.PasswordChar = '\0';
             this.txtConversation.ReadOnly = true;
-            this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtConversation.SelectedText = "";
             this.txtConversation.Size = new System.Drawing.Size(613, 281);
             this.txtConversation.TabIndex = 1;
@@ -98,6 +98,7 @@
             // 
             // btnSendFile
             // 
+            this.btnSendFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSendFile.Location = new System.Drawing.Point(546, 59);
             this.btnSendFile.Name = "btnSendFile";
             this.btnSendFile.Size = new System.Drawing.Size(90, 23);

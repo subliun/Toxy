@@ -76,8 +76,7 @@
             this.Controls.Add(this.lblUsername);
             this.DoubleBuffered = true;
             this.Name = "Friend";
-            this.Size = new System.Drawing.Size(315, 77);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Friend_MouseClick);
+            this.Size = new System.Drawing.Size(325, 77);
             ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
