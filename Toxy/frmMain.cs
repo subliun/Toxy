@@ -397,7 +397,7 @@ namespace Toxy
             friend.StyleManager = metroStyleManager1;
             friend.SetUsername(tox.GetName(friendnumber));
             friend.Status = tox.GetUserStatus(friendnumber);
-            friend.Location = new Point(0, 0 + (panelFriends.Controls.Count - 2) * 80);
+            //friend.Location = new Point(0, 0 + (panelFriends.Controls.Count - 2) * 80);
             friend.MouseClick += friend_MouseClick;
 
             if (tox.GetFriendConnectionStatus(friendnumber) == 0)
@@ -461,6 +461,8 @@ namespace Toxy
             for (int i = 0; i < friends.Length; i++)
                 AddFriendControl(friends[i]);
 
+            ReorganizePanel(panelFriends, typeof(Friend));
+
             foreach(Control control in panelFriends.Controls)
             {
                 if (control.GetType() == typeof(Friend))
@@ -505,6 +507,8 @@ namespace Toxy
 
             int friendnumber = tox.AddFriend(form.ID, form.Message);
             AddFriendControl(friendnumber);
+
+            ReorganizePanel(panelFriends, typeof(Friend));
         }
 
         private void btnNewGroup_Click_1(object sender, EventArgs e)
@@ -575,6 +579,21 @@ namespace Toxy
             return null;
         }
 
+        private void ReorganizePanel(MetroPanel panel, Type type)
+        {
+            int count = 0;
+            foreach(Control control in panel.Controls)
+            {
+                if (control.GetType() == type)
+                {
+                    control.Location = new Point(0, 0 + count * 80);
+                    count++;
+                }
+            }
+
+            //panel.Invalidate();
+        }
+
         private void ctxMenuFriendDelete_Click(object sender, EventArgs e)
         {
             Friend friend = GetSelectedFriend();
@@ -583,6 +602,8 @@ namespace Toxy
 
             tox.DeleteFriend(friend.FriendNumber);
             panelFriends.Controls.Remove(friend);
+
+            ReorganizePanel(panelFriends, typeof(Friend));
         }
     }
 }
