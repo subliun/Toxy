@@ -54,6 +54,8 @@ namespace Toxy
             {
                 StreamReader reader = new StreamReader(loc);
                 string conf = reader.ReadToEnd();
+                reader.Close();
+
                 JObject obj = (JObject)JsonConvert.DeserializeObject(conf);
 
                 return true;
