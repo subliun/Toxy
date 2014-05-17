@@ -168,6 +168,8 @@ namespace Toxy
             else
                 groupdic.Add(groupnumber, action);
 
+            this.Flash();
+
             if (tabControl.SelectedTab != tabGroups)
                 return;
 
@@ -185,6 +187,8 @@ namespace Toxy
                 groupdic[groupnumber] += message;
             else
                 groupdic.Add(groupnumber, message);
+
+            this.Flash();
 
             if (tabControl.SelectedTab != tabGroups)
                 return;
@@ -343,6 +347,8 @@ namespace Toxy
             else
                 convdic.Add(friendnumber, action);
 
+            this.Flash();
+
             if (tabControl.SelectedTab != tabFriends)
                 return;
 
@@ -360,6 +366,8 @@ namespace Toxy
                 convdic[friendnumber] += message;
             else
                 convdic.Add(friendnumber, message);
+
+            this.Flash();
 
             if (tabControl.SelectedTab != tabFriends)
                 return;
