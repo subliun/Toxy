@@ -211,6 +211,8 @@ namespace Toxy
 
         private void OnGroupInvite(int friendnumber, string group_public_key)
         {
+            this.Flash();
+
             if (MetroMessageBox.Show(this, "You have received an invite to join a group from \"" + tox.GetName(friendnumber) + "\". Would you like to join?", "Group invite received", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int groupnumber = tox.JoinGroup(friendnumber, group_public_key);
@@ -390,6 +392,8 @@ namespace Toxy
             panelRequests.Controls.Add(req);
 
             RefreshFriendRequestCount();
+
+            this.Flash();
         }
 
         private void req_OnDecline(object sender, EventArgs e)
