@@ -36,8 +36,8 @@
             this.tabRequests = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
-            this.metroTextBox2 = new MetroFramework.Controls.MetroTextBox();
+            this.txtConversation = new MetroFramework.Controls.MetroTextBox();
+            this.txtToSend = new MetroFramework.Controls.MetroTextBox();
             this.btnAddFriend = new MetroFramework.Controls.MetroButton();
             this.metroButton4 = new MetroFramework.Controls.MetroButton();
             this.btnNewGroup = new MetroFramework.Controls.MetroButton();
@@ -135,38 +135,38 @@
             this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.VerticalScrollbarSize = 10;
             // 
-            // metroTextBox1
+            // txtConversation
             // 
-            this.metroTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.txtConversation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroTextBox1.Lines = new string[0];
-            this.metroTextBox1.Location = new System.Drawing.Point(375, 124);
-            this.metroTextBox1.MaxLength = 32767;
-            this.metroTextBox1.Multiline = true;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.Size = new System.Drawing.Size(788, 394);
-            this.metroTextBox1.TabIndex = 3;
-            this.metroTextBox1.UseSelectable = true;
+            this.txtConversation.Lines = new string[0];
+            this.txtConversation.Location = new System.Drawing.Point(375, 124);
+            this.txtConversation.MaxLength = 32767;
+            this.txtConversation.Multiline = true;
+            this.txtConversation.Name = "txtConversation";
+            this.txtConversation.PasswordChar = '\0';
+            this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtConversation.SelectedText = "";
+            this.txtConversation.Size = new System.Drawing.Size(788, 394);
+            this.txtConversation.TabIndex = 3;
+            this.txtConversation.UseSelectable = true;
             // 
-            // metroTextBox2
+            // txtToSend
             // 
-            this.metroTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroTextBox2.Lines = new string[0];
-            this.metroTextBox2.Location = new System.Drawing.Point(375, 524);
-            this.metroTextBox2.MaxLength = 32767;
-            this.metroTextBox2.Name = "metroTextBox2";
-            this.metroTextBox2.PasswordChar = '\0';
-            this.metroTextBox2.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox2.SelectedText = "";
-            this.metroTextBox2.Size = new System.Drawing.Size(788, 23);
-            this.metroTextBox2.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox2.TabIndex = 0;
-            this.metroTextBox2.UseSelectable = true;
+            this.txtToSend.Lines = new string[0];
+            this.txtToSend.Location = new System.Drawing.Point(375, 524);
+            this.txtToSend.MaxLength = 32767;
+            this.txtToSend.Name = "txtToSend";
+            this.txtToSend.PasswordChar = '\0';
+            this.txtToSend.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtToSend.SelectedText = "";
+            this.txtToSend.Size = new System.Drawing.Size(788, 23);
+            this.txtToSend.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtToSend.TabIndex = 0;
+            this.txtToSend.UseSelectable = true;
             // 
             // btnAddFriend
             // 
@@ -243,9 +243,9 @@
             this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.btnNewGroup);
             this.Controls.Add(this.metroButton4);
-            this.Controls.Add(this.metroTextBox2);
+            this.Controls.Add(this.txtToSend);
             this.Controls.Add(this.btnAddFriend);
-            this.Controls.Add(this.metroTextBox1);
+            this.Controls.Add(this.txtConversation);
             this.Controls.Add(this.tabRequests);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
@@ -271,8 +271,8 @@
         private MetroFramework.Controls.MetroTabControl tabRequests;
         private MetroFramework.Controls.MetroTabPage metroTabPage1;
         private MetroFramework.Controls.MetroTabPage metroTabPage2;
-        private MetroFramework.Controls.MetroTextBox metroTextBox2;
-        private MetroFramework.Controls.MetroTextBox metroTextBox1;
+        private MetroFramework.Controls.MetroTextBox txtToSend;
+        private MetroFramework.Controls.MetroTextBox txtConversation;
         private MetroFramework.Controls.MetroButton metroButton4;
         private MetroFramework.Controls.MetroButton btnAddFriend;
         private MetroFramework.Controls.MetroButton btnNewGroup;

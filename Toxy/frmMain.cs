@@ -22,11 +22,13 @@ namespace Toxy
         private string id;
         private Thread connloop;
 
-        private Dictionary<int, frmConversation> convdic = new Dictionary<int, frmConversation>();
+        private Dictionary<int, string> convdic = new Dictionary<int, string>();
         private Dictionary<int, frmGroupChat> groupdic = new Dictionary<int, frmGroupChat>();
         private Dictionary<ToxFile, frmFileTransfer> filetdic = new Dictionary<ToxFile, frmFileTransfer>();
 
         private Config config;
+
+        private int current_friend;
 
         public frmMain()
         {
@@ -88,8 +90,8 @@ namespace Toxy
             if (filetdic.ContainsKey(file))
                 filetdic[file].ProcessFileControl((ToxFileControl)control_type);
 
-            if (convdic.ContainsKey(friendnumber))
-                convdic[friendnumber].ProcessFileControl((ToxFileControl)control_type);
+            //if (convdic.ContainsKey(friendnumber))
+             //   convdic[friendnumber].ProcessFileControl((ToxFileControl)control_type);
         }
 
         private void OnFileData(int friendnumber, int filenumber, byte[] data)
@@ -221,10 +223,10 @@ namespace Toxy
                 }
             }
 
-            if (!convdic.ContainsKey(friendnumber))
+            /*if (!convdic.ContainsKey(friendnumber))
                 return;
 
-            convdic[friendnumber].ChangeConnectionStatus(status);
+            convdic[friendnumber].ChangeConnectionStatus(status);*/
         }
 
         private void OnNameChange(int friendnumber, string newname)
@@ -243,10 +245,8 @@ namespace Toxy
                 }
             }
 
-            if (!convdic.ContainsKey(friendnumber))
-                return;
-
-            convdic[friendnumber].UpdateName(newname);
+            if (current_friend == friendnumber)
+                lblUsername.Text = newname;
         }
 
         private void OnStatusMessage(int friendnumber, string newstatus)
@@ -265,10 +265,8 @@ namespace Toxy
                 }
             }
 
-            if (!convdic.ContainsKey(friendnumber))
-                return;
-
-            convdic[friendnumber].UpdateStatusMessage(newstatus);
+            if (current_friend == friendnumber)
+                lblUserstatus.Text = newstatus;
         }
 
         private void ConnectLoop()
@@ -314,53 +312,57 @@ namespace Toxy
                     }
                 }
             }
-
-            if (!convdic.ContainsKey(friendnumber))
-                return;
-
-            convdic[friendnumber].UpdateStatus(status);
         }
 
         private void OnTypingChange(int friendnumber, bool is_typing)
         {
-            if (!convdic.ContainsKey(friendnumber))
+            if (current_friend != friendnumber)
                 return;
 
-            convdic[friendnumber].ChangeTypingStatus(is_typing);
+            if (is_typing)
+                lblUsername.Text = tox.GetName(friendnumber) + " (typing...)";
+            else
+                lblUsername.Text = tox.GetName(friendnumber);
         }
 
         private void OnFriendAction(int friendnumber, string action)
         {
-            if (!convdic.ContainsKey(friendnumber))
-            {
-                frmConversation form = new frmConversation(tox, friendnumber);
-                form.FormClosed += convform_FormClosed;
-                form.Show();
-                form.AppendAction(action);
+            action = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetName(friendnumber), action);
 
-                convdic.Add(friendnumber, form);
-            }
+            if (convdic.ContainsKey(friendnumber))
+                convdic[friendnumber] += action;
             else
-            {
-                convdic[friendnumber].AppendAction(action);
-            }
+                convdic.Add(friendnumber, action);
+
+            if (current_friend != friendnumber)
+                return;
+
+            txtConversation.AppendText(action);
+
+            if (convdic.ContainsKey(friendnumber))
+                convdic[friendnumber] = txtConversation.Text;
+            else
+                convdic.Add(friendnumber, txtConversation.Text);
         }
 
         private void OnFriendMessage(int friendnumber, string message)
         {
-            if (!convdic.ContainsKey(friendnumber))
-            {
-                frmConversation form = new frmConversation(tox, friendnumber);
-                form.FormClosed += convform_FormClosed;
-                form.Show();
-                form.AppendMessage(message);
+            message = string.Format("<{0}> {1}" + Environment.NewLine, tox.GetName(friendnumber), message);
 
-                convdic.Add(friendnumber, form);
-            }
+            if (convdic.ContainsKey(friendnumber))
+                convdic[friendnumber] += message;
             else
-            {
-                convdic[friendnumber].AppendMessage(message);
-            }
+                convdic.Add(friendnumber, message);
+
+            if (current_friend != friendnumber)
+                return;
+
+            txtConversation.AppendText(message);
+
+            if (convdic.ContainsKey(friendnumber))
+                convdic[friendnumber] = txtConversation.Text;
+            else
+                convdic.Add(friendnumber, txtConversation.Text);
         }
 
         private void OnFriendRequest(string id, string message)
@@ -438,6 +440,13 @@ namespace Toxy
 
             lblUsername.Text = tox.GetName(friend.FriendNumber);
             lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
+
+            current_friend = friend.FriendNumber;
+
+            txtConversation.Text = "";
+
+            if (convdic.ContainsKey(current_friend))
+                txtConversation.Text = convdic[current_friend];
         }
 
         private void RefreshFriendRequestCount()
@@ -455,78 +464,25 @@ namespace Toxy
             for (int i = 0; i < friends.Length; i++)
                 AddFriendControl(friends[i]);
 
+            foreach(Control control in panelFriends.Controls)
+            {
+                if (control.GetType() == typeof(Friend))
+                {
+                    Friend friend = (Friend)control;
+                    friend.Selected = true;
+                    friend.Invalidate();
+
+                    lblUsername.Text = tox.GetName(friend.FriendNumber);
+                    lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
+                    break;
+                }
+            }
+
             //txtName.Text = tox.GetSelfName();
             //txtStatus.Text = tox.GetSelfStatusMessage();
 
             connloop = new Thread(ConnectLoop);
             connloop.Start();
-        }
-
-        private void friendcontrol_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-                return;
-
-            Friend friend = (Friend)sender;
-
-            if (convdic.ContainsKey(friend.FriendNumber))
-            {
-                frmConversation conv = convdic[friend.FriendNumber];
-
-                if (conv.WindowState == FormWindowState.Minimized)
-                    conv.WindowState = FormWindowState.Normal;
-                else
-                    conv.FocusMe();
-            }
-            else
-            {
-                frmConversation form = new frmConversation(tox, friend.FriendNumber);
-                form.FormClosed += convform_FormClosed;
-                form.Show();
-
-                convdic.Add(friend.FriendNumber, form);
-            }
-
-        }
-
-        private void friendtile_Click(object sender, EventArgs e)
-        {
-            int friendnumber = (int)((MetroTile)sender).Tag;
-
-            if (convdic.ContainsKey(friendnumber))
-            {
-                if (convdic[friendnumber] != null)
-                {
-                    convdic[friendnumber].WindowState = FormWindowState.Normal;
-                    convdic[friendnumber].Focus();
-                }
-                else
-                {
-                    frmConversation form = new frmConversation(tox, friendnumber);
-                    form.FormClosed += convform_FormClosed;
-                    convdic[friendnumber] = form;
-
-                    form.Show();
-                }
-            }
-            else
-            {
-                frmConversation form = new frmConversation(tox, friendnumber);
-                form.FormClosed += convform_FormClosed;
-                convdic.Add(friendnumber, form);
-
-                form.Show();
-            }
-        }
-
-        private void convform_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            int friendnumber = ((frmConversation)sender).FriendNumber;
-
-            if (!convdic.ContainsKey(friendnumber))
-                return; //this shouldn't happen
-
-            convdic.Remove(friendnumber);
         }
 
         private static ToxNode[] Nodes = new ToxNode[] {
