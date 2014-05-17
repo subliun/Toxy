@@ -775,7 +775,7 @@ namespace Toxy
                         group.Invalidate();
 
                         lblUsername.Text = group.GroupName;
-                        lblUserstatus.Text = tox.GetGroupMemberCount(group.GroupNumber).ToString() + " peers online";
+                        lblUserstatus.Text = "Members: " + string.Join(", ", tox.GetGroupNames(group.GroupNumber));
 
                         current_number = group.GroupNumber;
 
