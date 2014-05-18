@@ -52,6 +52,10 @@
             this.ctxMenuCopyID = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuFriendDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.btnInviteAll = new MetroFramework.Controls.MetroButton();
+            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.trayMenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.trayMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabFriends.SuspendLayout();
@@ -59,6 +63,7 @@
             this.tabGroups.SuspendLayout();
             this.tabTransfers.SuspendLayout();
             this.ctxMenuFriend.SuspendLayout();
+            this.trayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelFriends
@@ -342,6 +347,35 @@
             this.btnInviteAll.UseSelectable = true;
             this.btnInviteAll.Click += new System.EventHandler(this.btnInviteAll_Click);
             // 
+            // trayIcon
+            // 
+            this.trayIcon.ContextMenuStrip = this.trayMenu;
+            this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
+            this.trayIcon.Text = "Toxy";
+            this.trayIcon.Visible = true;
+            // 
+            // trayMenu
+            // 
+            this.trayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.trayMenuOpen,
+            this.trayMenuExit});
+            this.trayMenu.Name = "trayMenu";
+            this.trayMenu.Size = new System.Drawing.Size(153, 70);
+            // 
+            // trayMenuExit
+            // 
+            this.trayMenuExit.Name = "trayMenuExit";
+            this.trayMenuExit.Size = new System.Drawing.Size(152, 22);
+            this.trayMenuExit.Text = "Exit";
+            this.trayMenuExit.Click += new System.EventHandler(this.trayMenuExit_Click);
+            // 
+            // trayMenuOpen
+            // 
+            this.trayMenuOpen.Name = "trayMenuOpen";
+            this.trayMenuOpen.Size = new System.Drawing.Size(152, 22);
+            this.trayMenuOpen.Text = "Open Toxy";
+            this.trayMenuOpen.Click += new System.EventHandler(this.trayMenuOpen_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -374,6 +408,7 @@
             this.tabGroups.ResumeLayout(false);
             this.tabTransfers.ResumeLayout(false);
             this.ctxMenuFriend.ResumeLayout(false);
+            this.trayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -403,6 +438,10 @@
         private MetroFramework.Controls.MetroPanel panelGroups;
         private MetroFramework.Controls.MetroButton btnInviteAll;
         private MetroFramework.Controls.MetroPanel panelTransfers;
+        private System.Windows.Forms.NotifyIcon trayIcon;
+        private System.Windows.Forms.ContextMenuStrip trayMenu;
+        private System.Windows.Forms.ToolStripMenuItem trayMenuExit;
+        private System.Windows.Forms.ToolStripMenuItem trayMenuOpen;
 
     }
 }

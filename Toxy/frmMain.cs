@@ -171,20 +171,6 @@ namespace Toxy
             tabControl.SelectedTab = tabTransfers;
         }
 
-        private void fileform_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            frmFileTransfer form = ((frmFileTransfer)sender);
-            int filenumber = form.FileNumber;
-            int friendnumber = form.FriendNumber;
-
-            ToxFile file = new ToxFile(friendnumber, filenumber);
-
-            if (!filetdic.ContainsKey(file))
-                return; //this shouldn't happen
-
-            filetdic.Remove(file);
-        }
-
         private void OnGroupNamelistChange(int groupnumber, int peernumber, ToxChatChange change)
         {
             foreach (Control control in panelGroups.Controls)
@@ -573,12 +559,20 @@ namespace Toxy
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            connloop.Abort();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+            else
+            {
+                connloop.Abort();
 
-            config.Save("toxy.cfg");
+                config.Save("toxy.cfg");
 
-            tox.Save("data");
-            tox.Kill();
+                tox.Save("data");
+                tox.Kill();
+            }
         }
 
         private void btnAddFriend_Click(object sender, EventArgs e)
@@ -893,6 +887,16 @@ namespace Toxy
 
             foreach (int friend in tox.GetFriendlist())
                 tox.InviteFriend(friend, current_number);
+        }
+
+        private void trayMenuExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void trayMenuOpen_Click(object sender, EventArgs e)
+        {
+            Show();
         }
     }
 }

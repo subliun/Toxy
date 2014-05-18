@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 using Newtonsoft.Json.Linq;
@@ -23,6 +24,7 @@ namespace Toxy
                     instance["typing_detection"] = true;
                     instance["enable_encryption"] = false;
                     instance["form_style"] = 3;
+                    instance["form_color"] = 2;
                 }
 
                 return instance;
@@ -57,6 +59,13 @@ namespace Toxy
                 reader.Close();
 
                 JObject obj = (JObject)JsonConvert.DeserializeObject(conf);
+                foreach (JProperty prop in obj.Properties())
+                {
+                    if (!this.ContainsKey(prop.Name))
+                        Console.WriteLine("Option {0} is not recognized, ignoring...", prop.Name);
+                    else
+                        this[prop.Name] = prop.Value.ToObject(this[prop.Name].GetType());
+                }
 
                 return true;
             }
