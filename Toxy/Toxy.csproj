@@ -89,12 +89,6 @@
     <Compile Include="frmAddFriend.Designer.cs">
       <DependentUpon>frmAddFriend.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmFileTransfer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmFileTransfer.Designer.cs">
-      <DependentUpon>frmFileTransfer.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,9 +123,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmAddFriend.resx">
       <DependentUpon>frmAddFriend.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmFileTransfer.resx">
-      <DependentUpon>frmFileTransfer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
