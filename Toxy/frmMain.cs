@@ -105,6 +105,22 @@ namespace Toxy
                 filetdic[file].AddData(data);
         }
 
+        private void AddFileTransferControl(int friendnumber, int filenumber, ulong filesiz, string filename)
+        {
+            FileTransfer control = new FileTransfer(filenumber, friendnumber, filesiz, filename);
+            control.StyleManager = metroStyleManager1;
+            control.MouseClick += file_MouseClick;
+
+            panelTransfers.Controls.Add(control);
+
+            ReorganizePanel(panelTransfers, typeof(FileTransfer));
+        }
+
+        private void file_MouseClick(object sender, MouseEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
         private void OnFileSendRequest(int friendnumber, int filenumber, ulong filesiz, string filename)
         {
             frmFileTransfer form = new frmFileTransfer(tox, friendnumber, filenumber, filesiz, filename, 1);
@@ -491,6 +507,8 @@ namespace Toxy
                     break;
                 }
             }
+
+            tabControl.SelectedTab = tabFriends;
 
             connloop = new Thread(ConnectLoop);
             connloop.Start();

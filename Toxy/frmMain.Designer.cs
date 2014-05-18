@@ -39,6 +39,7 @@
             this.tabGroups = new MetroFramework.Controls.MetroTabPage();
             this.panelGroups = new MetroFramework.Controls.MetroPanel();
             this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
+            this.panelTransfers = new MetroFramework.Controls.MetroPanel();
             this.txtConversation = new MetroFramework.Controls.MetroTextBox();
             this.txtToSend = new MetroFramework.Controls.MetroTextBox();
             this.btnAddFriend = new MetroFramework.Controls.MetroButton();
@@ -56,6 +57,7 @@
             this.tabFriends.SuspendLayout();
             this.tabRequests.SuspendLayout();
             this.tabGroups.SuspendLayout();
+            this.metroTabPage4.SuspendLayout();
             this.ctxMenuFriend.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -112,7 +114,7 @@
             this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
             this.tabControl.Location = new System.Drawing.Point(23, 63);
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
+            this.tabControl.SelectedIndex = 3;
             this.tabControl.Size = new System.Drawing.Size(346, 442);
             this.tabControl.TabIndex = 2;
             this.tabControl.UseSelectable = true;
@@ -184,6 +186,7 @@
             // 
             // metroTabPage4
             // 
+            this.metroTabPage4.Controls.Add(this.panelTransfers);
             this.metroTabPage4.HorizontalScrollbarBarColor = true;
             this.metroTabPage4.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPage4.HorizontalScrollbarSize = 10;
@@ -195,6 +198,19 @@
             this.metroTabPage4.VerticalScrollbarBarColor = true;
             this.metroTabPage4.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage4.VerticalScrollbarSize = 10;
+            // 
+            // panelTransfers
+            // 
+            this.panelTransfers.HorizontalScrollbarBarColor = true;
+            this.panelTransfers.HorizontalScrollbarHighlightOnWheel = false;
+            this.panelTransfers.HorizontalScrollbarSize = 10;
+            this.panelTransfers.Location = new System.Drawing.Point(0, 13);
+            this.panelTransfers.Name = "panelTransfers";
+            this.panelTransfers.Size = new System.Drawing.Size(338, 391);
+            this.panelTransfers.TabIndex = 2;
+            this.panelTransfers.VerticalScrollbarBarColor = true;
+            this.panelTransfers.VerticalScrollbarHighlightOnWheel = false;
+            this.panelTransfers.VerticalScrollbarSize = 10;
             // 
             // txtConversation
             // 
@@ -356,6 +372,7 @@
             this.tabFriends.ResumeLayout(false);
             this.tabRequests.ResumeLayout(false);
             this.tabGroups.ResumeLayout(false);
+            this.metroTabPage4.ResumeLayout(false);
             this.ctxMenuFriend.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -385,6 +402,7 @@
         private System.Windows.Forms.ToolStripMenuItem ctxMenuCopyID;
         private MetroFramework.Controls.MetroPanel panelGroups;
         private MetroFramework.Controls.MetroButton btnInviteAll;
+        private MetroFramework.Controls.MetroPanel panelTransfers;
 
     }
 }

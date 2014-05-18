@@ -70,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="FileTransfer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileTransfer.Designer.cs">
+      <DependentUpon>FileTransfer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormExtensions.cs" />
     <Compile Include="Friend.cs">
       <SubType>UserControl</SubType>
@@ -116,6 +122,9 @@
       <DependentUpon>FriendRequest.cs</DependentUpon>
     </Compile>
     <Compile Include="ToxFile.cs" />
+    <EmbeddedResource Include="FileTransfer.resx">
+      <DependentUpon>FileTransfer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Friend.resx">
       <DependentUpon>Friend.cs</DependentUpon>
     </EmbeddedResource>
