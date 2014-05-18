@@ -12,6 +12,8 @@ using MetroFramework.Controls;
 using MetroFramework.Interfaces;
 using MetroMessageBox = MetroFramework.MetroMessageBox;
 
+using Microsoft.WindowsAPICodePack.Taskbar;
+
 using SharpTox;
 
 namespace Toxy
@@ -492,6 +494,31 @@ namespace Toxy
 
             connloop = new Thread(ConnectLoop);
             connloop.Start();
+
+            InitThumbButtons();
+        }
+
+        private void InitThumbButtons()
+        {
+            if (!TaskbarManager.IsPlatformSupported)
+                return;
+
+            ThumbnailToolBarManager manager = TaskbarManager.Instance.ThumbnailToolBars;
+            ThumbnailToolBarButton[] buttons = new ThumbnailToolBarButton[3];
+
+            ThumbnailToolBarButton online = new ThumbnailToolBarButton(Toxy.Properties.Resources.toxy_online, "Online");
+            online.Click += delegate(object sender, ThumbnailButtonClickedEventArgs args) { tox.SetUserStatus(ToxUserStatus.NONE); };
+            buttons[0] = online;
+
+            ThumbnailToolBarButton away = new ThumbnailToolBarButton(Toxy.Properties.Resources.toxy_away, "Away");
+            away.Click += delegate(object sender, ThumbnailButtonClickedEventArgs args) { tox.SetUserStatus(ToxUserStatus.AWAY); };
+            buttons[1] = away;
+
+            ThumbnailToolBarButton busy = new ThumbnailToolBarButton(Toxy.Properties.Resources.toxy_busy, "Busy");
+            busy.Click += delegate(object sender, ThumbnailButtonClickedEventArgs args) { tox.SetUserStatus(ToxUserStatus.BUSY); };
+            buttons[2] = busy;
+
+            manager.AddButtons(this.Handle, buttons);
         }
 
         private static ToxNode[] Nodes = new ToxNode[] {
