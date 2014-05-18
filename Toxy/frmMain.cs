@@ -26,7 +26,6 @@ namespace Toxy
 
         private Dictionary<int, string> convdic = new Dictionary<int, string>();
         private Dictionary<int, string> groupdic = new Dictionary<int, string>();
-        private Dictionary<ToxFile, frmFileTransfer> filetdic = new Dictionary<ToxFile, frmFileTransfer>();
 
         private Config config;
 
@@ -567,6 +566,7 @@ namespace Toxy
             else
             {
                 connloop.Abort();
+                connloop.Join();
 
                 config.Save("toxy.cfg");
 

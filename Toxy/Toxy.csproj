@@ -121,7 +121,6 @@
     <Compile Include="FriendRequest.Designer.cs">
       <DependentUpon>FriendRequest.cs</DependentUpon>
     </Compile>
-    <Compile Include="ToxFile.cs" />
     <EmbeddedResource Include="FileTransfer.resx">
       <DependentUpon>FileTransfer.cs</DependentUpon>
     </EmbeddedResource>
