@@ -74,6 +74,7 @@
             this.Controls.Add(this.picAvatar);
             this.Controls.Add(this.lblGroupStatus);
             this.Controls.Add(this.lblGroupname);
+            this.DoubleBuffered = true;
             this.Name = "Group";
             this.Size = new System.Drawing.Size(325, 77);
             ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).EndInit();

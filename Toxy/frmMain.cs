@@ -309,14 +309,14 @@ namespace Toxy
                 {
                     if (!connected)
                     {
-                        Invoke(((Action)(() => Text = "Toxy (Online)")));
+                        BeginInvoke(((Action)(() => Text = "Toxy (Online)")));
                         connected = true;
                     }
                 }
                 else
                 {
                     if (connected)
-                        Invoke(((Action)(() => Text = "Toxy (Offline)")));
+                        BeginInvoke(((Action)(() => Text = "Toxy (Offline)")));
 
                     connected = false;
 
@@ -551,9 +551,7 @@ namespace Toxy
         }
 
         private static ToxNode[] Nodes = new ToxNode[] {
-            new ToxNode("192.184.81.118", 33445, "5CD7EB176C19A2FD840406CD56177BB8E75587BB366F7BB3004B19E3EDC04143", false),
-            new ToxNode("107.161.21.13", 33445, "5848E6344856921AAF28DAB860C5816780FE0C8873AAC415C1B7FA7FAA4EF046", false),
-            new ToxNode("37.187.46.132", 33445, "C021232F9AC83914A45DFCF242129B216FED5ED34683F385D932A66BC9178270", false),
+            new ToxNode("144.76.60.215", 33445, "04119E835DF3E78BACF0F84235B300546AF8B936F035185E2A8E9E0A67C8924F", false)
         };
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -641,8 +639,8 @@ namespace Toxy
             if (groupdic.ContainsKey(current_number))
                 txtConversation.Text = groupdic[current_number];
 
-            //if (e.Button == MouseButtons.Right)
-                //ctxMenuGroup.Show(Cursor.Position);
+            if (e.Button == MouseButtons.Right)
+                ctxMenuGroup.Show(Cursor.Position);
         }
 
         private int GetGroupCount()
@@ -897,6 +895,28 @@ namespace Toxy
         private void trayMenuOpen_Click(object sender, EventArgs e)
         {
             Show();
+        }
+
+        private void ctxMenuGroupDelete_Click(object sender, EventArgs e)
+        {
+            Group group = GetSelectedGroup();
+            if (group == null)
+                return;
+
+            tox.DeleteGroupChat(group.GroupNumber);
+            panelGroups.Controls.Remove(group);
+
+            ReorganizePanel(panelGroups, typeof(Group));
+        }
+
+        private Group GetSelectedGroup()
+        {
+            foreach (Control control in panelFriends.Controls)
+                if (control.GetType() == typeof(Group))
+                    if (((Group)control).Selected)
+                        return (Group)control;
+
+            return null;
         }
     }
 }

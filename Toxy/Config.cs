@@ -25,6 +25,7 @@ namespace Toxy
                     instance["enable_encryption"] = false;
                     instance["form_style"] = 3;
                     instance["form_color"] = 2;
+                    instance["close_to_tray"] = false;
                 }
 
                 return instance;

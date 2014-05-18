@@ -78,6 +78,7 @@
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.progressBar);
+            this.DoubleBuffered = true;
             this.Name = "FileTransfer";
             this.Size = new System.Drawing.Size(325, 77);
             this.ResumeLayout(false);
