@@ -38,7 +38,7 @@
             this.tabRequests = new MetroFramework.Controls.MetroTabPage();
             this.tabGroups = new MetroFramework.Controls.MetroTabPage();
             this.panelGroups = new MetroFramework.Controls.MetroPanel();
-            this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
+            this.tabTransfers = new MetroFramework.Controls.MetroTabPage();
             this.panelTransfers = new MetroFramework.Controls.MetroPanel();
             this.txtConversation = new MetroFramework.Controls.MetroTextBox();
             this.txtToSend = new MetroFramework.Controls.MetroTextBox();
@@ -57,7 +57,7 @@
             this.tabFriends.SuspendLayout();
             this.tabRequests.SuspendLayout();
             this.tabGroups.SuspendLayout();
-            this.metroTabPage4.SuspendLayout();
+            this.tabTransfers.SuspendLayout();
             this.ctxMenuFriend.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -110,11 +110,11 @@
             this.tabControl.Controls.Add(this.tabFriends);
             this.tabControl.Controls.Add(this.tabRequests);
             this.tabControl.Controls.Add(this.tabGroups);
-            this.tabControl.Controls.Add(this.metroTabPage4);
+            this.tabControl.Controls.Add(this.tabTransfers);
             this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
             this.tabControl.Location = new System.Drawing.Point(23, 63);
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 3;
+            this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(346, 442);
             this.tabControl.TabIndex = 2;
             this.tabControl.UseSelectable = true;
@@ -184,20 +184,20 @@
             this.panelGroups.VerticalScrollbarHighlightOnWheel = false;
             this.panelGroups.VerticalScrollbarSize = 10;
             // 
-            // metroTabPage4
+            // tabTransfers
             // 
-            this.metroTabPage4.Controls.Add(this.panelTransfers);
-            this.metroTabPage4.HorizontalScrollbarBarColor = true;
-            this.metroTabPage4.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage4.HorizontalScrollbarSize = 10;
-            this.metroTabPage4.Location = new System.Drawing.Point(4, 38);
-            this.metroTabPage4.Name = "metroTabPage4";
-            this.metroTabPage4.Size = new System.Drawing.Size(338, 400);
-            this.metroTabPage4.TabIndex = 3;
-            this.metroTabPage4.Text = "Transfers";
-            this.metroTabPage4.VerticalScrollbarBarColor = true;
-            this.metroTabPage4.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage4.VerticalScrollbarSize = 10;
+            this.tabTransfers.Controls.Add(this.panelTransfers);
+            this.tabTransfers.HorizontalScrollbarBarColor = true;
+            this.tabTransfers.HorizontalScrollbarHighlightOnWheel = false;
+            this.tabTransfers.HorizontalScrollbarSize = 10;
+            this.tabTransfers.Location = new System.Drawing.Point(4, 38);
+            this.tabTransfers.Name = "tabTransfers";
+            this.tabTransfers.Size = new System.Drawing.Size(338, 400);
+            this.tabTransfers.TabIndex = 3;
+            this.tabTransfers.Text = "Transfers";
+            this.tabTransfers.VerticalScrollbarBarColor = true;
+            this.tabTransfers.VerticalScrollbarHighlightOnWheel = false;
+            this.tabTransfers.VerticalScrollbarSize = 10;
             // 
             // panelTransfers
             // 
@@ -372,7 +372,7 @@
             this.tabFriends.ResumeLayout(false);
             this.tabRequests.ResumeLayout(false);
             this.tabGroups.ResumeLayout(false);
-            this.metroTabPage4.ResumeLayout(false);
+            this.tabTransfers.ResumeLayout(false);
             this.ctxMenuFriend.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -396,7 +396,7 @@
         private MetroFramework.Controls.MetroLabel lblUsername;
         private MetroFramework.Controls.MetroButton btnSendFile;
         private MetroFramework.Controls.MetroTabPage tabGroups;
-        private MetroFramework.Controls.MetroTabPage metroTabPage4;
+        private MetroFramework.Controls.MetroTabPage tabTransfers;
         private MetroFramework.Controls.MetroContextMenu ctxMenuFriend;
         private System.Windows.Forms.ToolStripMenuItem ctxMenuFriendDelete;
         private System.Windows.Forms.ToolStripMenuItem ctxMenuCopyID;

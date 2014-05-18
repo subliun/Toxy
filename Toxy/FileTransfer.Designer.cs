@@ -36,16 +36,16 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(3, 51);
+            this.progressBar.Location = new System.Drawing.Point(11, 51);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(238, 23);
             this.progressBar.TabIndex = 0;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(247, 51);
+            this.btnCancel.Location = new System.Drawing.Point(255, 51);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(56, 23);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseSelectable = true;
@@ -53,7 +53,7 @@
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
-            this.lblDescription.Location = new System.Drawing.Point(3, 10);
+            this.lblDescription.Location = new System.Drawing.Point(11, 9);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(81, 19);
             this.lblDescription.TabIndex = 2;
@@ -63,7 +63,7 @@
             // lblProgress
             // 
             this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(3, 29);
+            this.lblProgress.Location = new System.Drawing.Point(11, 28);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(83, 19);
             this.lblProgress.TabIndex = 3;

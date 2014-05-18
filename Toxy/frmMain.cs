@@ -88,24 +88,57 @@ namespace Toxy
 
         private void OnFileControl(int friendnumber, int receive_send, int filenumber, int control_type, byte[] data)
         {
-            ToxFile file = new ToxFile(friendnumber, filenumber);
+            foreach(Control control in panelTransfers.Controls)
+            {
+                if (control.GetType() == typeof(FileTransfer))
+                {
+                    FileTransfer ft = (FileTransfer)control;
 
-            if (filetdic.ContainsKey(file))
-                filetdic[file].ProcessFileControl((ToxFileControl)control_type);
+                    if (!(ft.FileNumber == filenumber && ft.FriendNumber == friendnumber && !ft.Finished))
+                        continue;
 
-            //if (convdic.ContainsKey(friendnumber))
-             //   convdic[friendnumber].ProcessFileControl((ToxFileControl)control_type);
+                    switch ((ToxFileControl)control_type)
+                    {
+                        case ToxFileControl.FINISHED:
+                            {
+                                if (ft.Stream != null)
+                                    ft.Stream.Close();
+
+                                ft.TransferFinished(false);
+                                break;
+                            }
+                        case ToxFileControl.KILL:
+                            {
+                                if (ft.Stream != null)
+                                    ft.Stream.Close();
+
+                                ft.TransferFinished(true);
+                                break;
+                            }
+                        case ToxFileControl.ACCEPT:
+                            break;
+                    }
+                }
+            }
         }
 
         private void OnFileData(int friendnumber, int filenumber, byte[] data)
         {
-            ToxFile file = new ToxFile(friendnumber, filenumber);
+            foreach (Control control in panelTransfers.Controls)
+            {
+                if (control.GetType() == typeof(FileTransfer))
+                {
+                    FileTransfer ft = (FileTransfer)control;
 
-            if (filetdic.ContainsKey(file))
-                filetdic[file].AddData(data);
+                    if (!(ft.FileNumber == filenumber && ft.FriendNumber == friendnumber && !ft.Finished))
+                        continue;
+
+                    ft.AddData(data, tox.FileDataRemaining(friendnumber, filenumber, 1));
+                }
+            }
         }
 
-        private void AddFileTransferControl(int friendnumber, int filenumber, ulong filesiz, string filename)
+        private FileTransfer AddFileTransferControl(int friendnumber, int filenumber, ulong filesiz, string filename)
         {
             FileTransfer control = new FileTransfer(filenumber, friendnumber, filesiz, filename);
             control.StyleManager = metroStyleManager1;
@@ -114,6 +147,8 @@ namespace Toxy
             panelTransfers.Controls.Add(control);
 
             ReorganizePanel(panelTransfers, typeof(FileTransfer));
+
+            return control;
         }
 
         private void file_MouseClick(object sender, MouseEventArgs e)
@@ -123,26 +158,17 @@ namespace Toxy
 
         private void OnFileSendRequest(int friendnumber, int filenumber, ulong filesiz, string filename)
         {
-            frmFileTransfer form = new frmFileTransfer(tox, friendnumber, filenumber, filesiz, filename, 1);
-            form.FormClosed += fileform_FormClosed;
-            form.OnTransferComplete += OnTransferComplete;
-            form.Show();
+            DialogResult result = MetroMessageBox.Show(this, string.Format("{0} wants to share {1} ({2} bytes) with you. Would you like to accept this file transfer?", tox.GetName(friendnumber), filename, filesiz), "Incoming filetransfer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            filetdic.Add(new ToxFile(friendnumber, filenumber), form);
-        }
+            if (result != DialogResult.Yes)
+                return;
 
-        private void OnTransferComplete(object sender, EventArgs e)
-        {
-            frmFileTransfer form = ((frmFileTransfer)sender);
-            int filenumber = form.FileNumber;
-            int friendnumber = form.FriendNumber;
+            tox.FileSendControl(friendnumber, 1, filenumber, (int)ToxFileControl.ACCEPT, new byte[0]);
 
-            ToxFile file = new ToxFile(friendnumber, filenumber);
+            FileTransfer control = AddFileTransferControl(friendnumber, filenumber, filesiz, filename);
+            control.Stream = new FileStream(filename, FileMode.Create);
 
-            if (!filetdic.ContainsKey(file))
-                return; //this shouldn't happen
-
-            filetdic.Remove(file);
+            tabControl.SelectedTab = tabTransfers;
         }
 
         private void fileform_FormClosed(object sender, FormClosedEventArgs e)

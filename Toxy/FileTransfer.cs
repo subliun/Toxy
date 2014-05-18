@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 
 using MetroFramework.Controls;
 using MetroFramework.Drawing;
@@ -14,6 +15,10 @@ namespace Toxy
         public string FileName;
 
         public bool Selected = false;
+
+        public bool Finished = false;
+
+        public FileStream Stream;
 
         public FileTransfer(int filenumber, int friendnumber, ulong filesize, string filename)
         {
@@ -33,9 +38,10 @@ namespace Toxy
             progressBar.Value = value;
         }
 
-        public void TransferFinished()
+        public void TransferFinished(bool killed)
         {
-            
+            Finished = true;
+            Stream.Close();
         }
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
@@ -54,6 +60,19 @@ namespace Toxy
                 bordercolor = Color.White;
 
             e.Graphics.DrawRectangle(new Pen(bordercolor, 5f), new Rectangle(new Point(0, 0), Size));
+        }
+
+        public void AddData(byte[] data, ulong remaining)
+        {
+            if (Stream == null)
+                throw new Exception("Unexpectedly received data");
+
+            double value = (double)remaining / (double)FileSize;
+
+            progressBar.Value = 100 - (int)(value * 100);
+            lblProgress.Text = string.Format("{0}/{1}", FileSize - remaining, FileSize);
+
+            Stream.Write(data, 0, data.Length);
         }
     }
 }
