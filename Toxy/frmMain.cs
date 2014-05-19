@@ -31,6 +31,7 @@ namespace Toxy
 
         private int current_number; //can be a groupnumber or a friendnumber
         private bool typing = false;
+        private int unread = 0;
 
         public frmMain()
         {
@@ -199,6 +200,9 @@ namespace Toxy
 
             this.Flash();
 
+            unread++;
+            UpdateIcon(unread);
+
             if (tabControl.SelectedTab != tabGroups)
                 return;
 
@@ -218,6 +222,9 @@ namespace Toxy
                 groupdic.Add(groupnumber, message);
 
             this.Flash();
+
+            unread++;
+            UpdateIcon(unread);
 
             if (tabControl.SelectedTab != tabGroups)
                 return;
@@ -370,6 +377,9 @@ namespace Toxy
 
             this.Flash();
 
+            unread++;
+            UpdateIcon(unread);
+
             if (tabControl.SelectedTab != tabFriends)
                 return;
 
@@ -389,6 +399,9 @@ namespace Toxy
                 convdic.Add(friendnumber, message);
 
             this.Flash();
+
+            unread++;
+            UpdateIcon(unread);
 
             if (tabControl.SelectedTab != tabFriends)
                 return;
@@ -525,6 +538,25 @@ namespace Toxy
             connloop.Start();
 
             InitThumbButtons();
+        }
+
+        private void UpdateIcon(int messagecount)
+        {
+            if (messagecount != 0)
+            {
+                Bitmap bitmap = (Bitmap)Toxy.Properties.Resources.toxy;
+                Graphics g = Graphics.FromImage(bitmap);
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.FillEllipse(new SolidBrush(Color.FromArgb(35, 31, 30)), new Rectangle(new Point(bitmap.Size.Width - 180, bitmap.Size.Height - 275), new Size(115, 115)));
+                g.DrawString(messagecount.ToString(), new Font("Monospace", 115f, FontStyle.Bold), new SolidBrush(Color.White), new Point(bitmap.Size.Width - 178, bitmap.Size.Height - 285));
+                g.Dispose();
+
+                this.Icon = Icon.FromHandle(bitmap.GetHicon());
+            }
+            else
+            {
+                this.Icon = Icon.FromHandle(Toxy.Properties.Resources.toxy.GetHicon());
+            }
         }
 
         private void InitThumbButtons()
@@ -812,6 +844,9 @@ namespace Toxy
 
             if (control.SelectedTab == tabGroups)
             {
+                btnInviteAll.Visible = true;
+                btnSendFile.Visible = false;
+
                 foreach (Control ctrl in panelGroups.Controls)
                 {
                     if (ctrl.GetType() == typeof(Group))
@@ -845,6 +880,9 @@ namespace Toxy
             }
             else if (tabControl.SelectedTab == tabFriends)
             {
+                btnInviteAll.Visible = false;
+                btnSendFile.Visible = true;
+
                 foreach (Control ctrl in panelFriends.Controls)
                 {
                     if (ctrl.GetType() == typeof(Friend))
@@ -917,6 +955,16 @@ namespace Toxy
                         return (Group)control;
 
             return null;
+        }
+
+        private void frmMain_Resize(object sender, EventArgs e)
+        {
+            //gotta use this for now, apparently the gotfocus event doesn't even work
+            if (WindowState == FormWindowState.Normal)
+            {
+                unread = 0;
+                UpdateIcon(unread);
+            }
         }
     }
 }

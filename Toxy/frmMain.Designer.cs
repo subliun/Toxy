@@ -342,12 +342,14 @@
             // 
             // btnInviteAll
             // 
-            this.btnInviteAll.Location = new System.Drawing.Point(984, 95);
+            this.btnInviteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnInviteAll.Location = new System.Drawing.Point(1065, 95);
             this.btnInviteAll.Name = "btnInviteAll";
             this.btnInviteAll.Size = new System.Drawing.Size(98, 23);
             this.btnInviteAll.TabIndex = 11;
             this.btnInviteAll.Text = "Invite all friends";
             this.btnInviteAll.UseSelectable = true;
+            this.btnInviteAll.Visible = false;
             this.btnInviteAll.Click += new System.EventHandler(this.btnInviteAll_Click);
             // 
             // trayIcon
@@ -384,12 +386,12 @@
             this.ctxMenuGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctxMenuGroupDelete});
             this.ctxMenuGroup.Name = "ctxMenuGroup";
-            this.ctxMenuGroup.Size = new System.Drawing.Size(153, 48);
+            this.ctxMenuGroup.Size = new System.Drawing.Size(108, 26);
             // 
             // ctxMenuGroupDelete
             // 
             this.ctxMenuGroupDelete.Name = "ctxMenuGroupDelete";
-            this.ctxMenuGroupDelete.Size = new System.Drawing.Size(152, 22);
+            this.ctxMenuGroupDelete.Size = new System.Drawing.Size(107, 22);
             this.ctxMenuGroupDelete.Text = "Delete";
             this.ctxMenuGroupDelete.Click += new System.EventHandler(this.ctxMenuGroupDelete_Click);
             // 
@@ -418,6 +420,7 @@
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.Resize += new System.EventHandler(this.frmMain_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.tabFriends.ResumeLayout(false);
