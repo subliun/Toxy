@@ -36,18 +36,17 @@
             this.txtStatusMessage = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
             this.toggleTypeDetection = new MetroFramework.Controls.MetroToggle();
-            this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
-            this.toggleEncryption = new MetroFramework.Controls.MetroToggle();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
             this.comboStyle = new MetroFramework.Controls.MetroComboBox();
             this.comboColor = new MetroFramework.Controls.MetroComboBox();
             this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+            this.toggleCloseTray = new MetroFramework.Controls.MetroToggle();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,7 +64,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(648, 221);
+            this.btnCancel.Location = new System.Drawing.Point(389, 221);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -76,7 +75,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(567, 221);
+            this.btnSave.Location = new System.Drawing.Point(308, 221);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 2;
@@ -130,16 +129,6 @@
             this.metroLabel2.TabIndex = 6;
             this.metroLabel2.Text = "Username";
             // 
-            // metroLabel3
-            // 
-            this.metroLabel3.AutoSize = true;
-            this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel3.Location = new System.Drawing.Point(498, 94);
-            this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(130, 19);
-            this.metroLabel3.TabIndex = 7;
-            this.metroLabel3.Text = "Tox data encryption";
-            // 
             // metroLabel4
             // 
             this.metroLabel4.AutoSize = true;
@@ -176,27 +165,6 @@
             this.toggleTypeDetection.Text = "Off";
             this.toggleTypeDetection.UseSelectable = true;
             // 
-            // metroLabel6
-            // 
-            this.metroLabel6.AutoSize = true;
-            this.metroLabel6.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.metroLabel6.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.metroLabel6.Location = new System.Drawing.Point(498, 60);
-            this.metroLabel6.Name = "metroLabel6";
-            this.metroLabel6.Size = new System.Drawing.Size(81, 25);
-            this.metroLabel6.TabIndex = 11;
-            this.metroLabel6.Text = "Security";
-            // 
-            // toggleEncryption
-            // 
-            this.toggleEncryption.AutoSize = true;
-            this.toggleEncryption.Location = new System.Drawing.Point(643, 96);
-            this.toggleEncryption.Name = "toggleEncryption";
-            this.toggleEncryption.Size = new System.Drawing.Size(80, 17);
-            this.toggleEncryption.TabIndex = 12;
-            this.toggleEncryption.Text = "Off";
-            this.toggleEncryption.UseSelectable = true;
-            // 
             // metroLabel7
             // 
             this.metroLabel7.AutoSize = true;
@@ -204,9 +172,9 @@
             this.metroLabel7.FontWeight = MetroFramework.MetroLabelWeight.Bold;
             this.metroLabel7.Location = new System.Drawing.Point(280, 60);
             this.metroLabel7.Name = "metroLabel7";
-            this.metroLabel7.Size = new System.Drawing.Size(70, 25);
+            this.metroLabel7.Size = new System.Drawing.Size(134, 25);
             this.metroLabel7.TabIndex = 13;
-            this.metroLabel7.Text = "Theme";
+            this.metroLabel7.Text = "Customization";
             // 
             // metroLabel8
             // 
@@ -266,22 +234,41 @@
             this.metroLabel10.TabIndex = 16;
             this.metroLabel10.Text = "Color";
             // 
+            // metroLabel3
+            // 
+            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.metroLabel3.Location = new System.Drawing.Point(280, 165);
+            this.metroLabel3.Name = "metroLabel3";
+            this.metroLabel3.Size = new System.Drawing.Size(87, 19);
+            this.metroLabel3.TabIndex = 18;
+            this.metroLabel3.Text = "Close to tray";
+            // 
+            // toggleCloseTray
+            // 
+            this.toggleCloseTray.AutoSize = true;
+            this.toggleCloseTray.Location = new System.Drawing.Point(379, 167);
+            this.toggleCloseTray.Name = "toggleCloseTray";
+            this.toggleCloseTray.Size = new System.Drawing.Size(80, 17);
+            this.toggleCloseTray.TabIndex = 19;
+            this.toggleCloseTray.Text = "Off";
+            this.toggleCloseTray.UseSelectable = true;
+            // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(738, 267);
+            this.ClientSize = new System.Drawing.Size(482, 267);
+            this.Controls.Add(this.toggleCloseTray);
+            this.Controls.Add(this.metroLabel3);
             this.Controls.Add(this.comboColor);
             this.Controls.Add(this.metroLabel10);
             this.Controls.Add(this.comboStyle);
             this.Controls.Add(this.metroLabel8);
             this.Controls.Add(this.metroLabel7);
-            this.Controls.Add(this.toggleEncryption);
-            this.Controls.Add(this.metroLabel6);
             this.Controls.Add(this.toggleTypeDetection);
             this.Controls.Add(this.metroLabel5);
             this.Controls.Add(this.metroLabel4);
-            this.Controls.Add(this.metroLabel3);
             this.Controls.Add(this.metroLabel2);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.txtStatusMessage);
@@ -308,17 +295,16 @@
         private MetroFramework.Controls.MetroTextBox txtStatusMessage;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroLabel metroLabel2;
-        private MetroFramework.Controls.MetroLabel metroLabel3;
         private MetroFramework.Controls.MetroLabel metroLabel4;
         private MetroFramework.Controls.MetroLabel metroLabel5;
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
         private MetroFramework.Controls.MetroToggle toggleTypeDetection;
-        private MetroFramework.Controls.MetroToggle toggleEncryption;
-        private MetroFramework.Controls.MetroLabel metroLabel6;
         private MetroFramework.Controls.MetroComboBox comboStyle;
         private MetroFramework.Controls.MetroLabel metroLabel8;
         private MetroFramework.Controls.MetroLabel metroLabel7;
         private MetroFramework.Controls.MetroComboBox comboColor;
         private MetroFramework.Controls.MetroLabel metroLabel10;
+        private MetroFramework.Controls.MetroToggle toggleCloseTray;
+        private MetroFramework.Controls.MetroLabel metroLabel3;
     }
 }

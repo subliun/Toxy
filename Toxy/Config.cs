@@ -22,7 +22,6 @@ namespace Toxy
 
                     //just filling the config with some default values
                     instance["typing_detection"] = true;
-                    instance["enable_encryption"] = false;
                     instance["form_style"] = 3;
                     instance["form_color"] = 2;
                     instance["close_to_tray"] = false;

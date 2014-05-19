@@ -22,7 +22,7 @@ namespace Toxy
             txtStatusMessage.Text = tox.GetSelfStatusMessage();
 
             toggleTypeDetection.Checked = config["typing_detection"];
-            toggleEncryption.Checked = config["enable_encryption"];
+            toggleCloseTray.Checked = config["close_to_tray"];
 
             comboStyle.SelectedIndex = config["form_style"];
             comboColor.SelectedIndex = config["form_color"];
@@ -45,10 +45,10 @@ namespace Toxy
             tox.SetStatusMessage(txtStatusMessage.Text);
 
             config["typing_detection"] = toggleTypeDetection.Checked;
-            config["enable_encryption"] = toggleEncryption.Checked;
 
             config["form_style"] = comboStyle.SelectedIndex;
             config["form_color"] = comboColor.SelectedIndex;
+            config["close_to_tray"] = toggleCloseTray.Checked;
 
             config.Save("toxy.cfg");
 

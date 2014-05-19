@@ -556,7 +556,7 @@ namespace Toxy
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
+            if (e.CloseReason == CloseReason.UserClosing && config["close_to_tray"])
             {
                 e.Cancel = true;
                 Hide();
