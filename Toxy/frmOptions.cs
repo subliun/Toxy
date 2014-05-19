@@ -26,7 +26,6 @@ namespace Toxy
 
             comboStyle.SelectedIndex = config["form_style"];
             comboColor.SelectedIndex = config["form_color"];
-
         }
 
         private void btnCopyID_Click(object sender, EventArgs e)

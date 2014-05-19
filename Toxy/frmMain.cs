@@ -911,7 +911,7 @@ namespace Toxy
 
         private Group GetSelectedGroup()
         {
-            foreach (Control control in panelFriends.Controls)
+            foreach (Control control in panelGroups.Controls)
                 if (control.GetType() == typeof(Group))
                     if (((Group)control).Selected)
                         return (Group)control;
