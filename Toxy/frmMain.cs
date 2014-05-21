@@ -88,7 +88,7 @@ namespace Toxy
 
         private void OnFileControl(int friendnumber, int receive_send, int filenumber, int control_type, byte[] data)
         {
-            foreach(Control control in panelTransfers.Controls)
+            foreach (Control control in panelTransfers.Controls)
             {
                 if (control.GetType() == typeof(FileTransfer))
                 {
@@ -267,7 +267,7 @@ namespace Toxy
 
         private void OnNameChange(int friendnumber, string newname)
         {
-            foreach(Control control in panelFriends.Controls)
+            foreach (Control control in panelFriends.Controls)
             {
                 if (control.GetType() == typeof(Friend))
                 {
@@ -277,7 +277,7 @@ namespace Toxy
                     {
                         friend.SetUsername(newname);
                         friend.Invalidate();
-                    }            
+                    }
                 }
             }
 
@@ -516,7 +516,7 @@ namespace Toxy
             for (int i = 0; i < friends.Length; i++)
                 AddFriendControl(friends[i]);
 
-            foreach(Control control in panelFriends.Controls)
+            foreach (Control control in panelFriends.Controls)
             {
                 if (control.GetType() == typeof(Friend))
                 {
@@ -760,7 +760,7 @@ namespace Toxy
 
         private Friend GetSelectedFriend()
         {
-            foreach(Control control in panelFriends.Controls)
+            foreach (Control control in panelFriends.Controls)
                 if (control.GetType() == typeof(Friend))
                     if (((Friend)control).Selected)
                         return (Friend)control;
@@ -771,7 +771,7 @@ namespace Toxy
         private void ReorganizePanel(MetroPanel panel, Type type)
         {
             int count = 0;
-            foreach(Control control in panel.Controls)
+            foreach (Control control in panel.Controls)
             {
                 if (control.GetType() == type)
                 {
@@ -852,7 +852,7 @@ namespace Toxy
                     if (ctrl.GetType() == typeof(Group))
                     {
                         //this doesn't make any sense, I know, will fix this later
-                        foreach(Control c in panelGroups.Controls)
+                        foreach (Control c in panelGroups.Controls)
                         {
                             if (c.GetType() == typeof(Group))
                             {
