@@ -33,7 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MetroFramework">
-      <HintPath>..\..\winforms-modernui\MetroFramework\bin\Debug\MetroFramework.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\winforms-modernui-master\MetroFramework\bin\Debug\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design">
+      <HintPath>..\..\..\..\Desktop\winforms-modernui-master\MetroFramework.Design\bin\Debug\MetroFramework.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts">
+      <HintPath>..\..\..\..\Desktop\winforms-modernui-master\MetroFramework.Fonts\bin\Debug\MetroFramework.Fonts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack">
       <HintPath>..\packages\Microsoft.WindowsAPICodePack-Core.1.1.0.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
