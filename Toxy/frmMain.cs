@@ -48,6 +48,8 @@ namespace Toxy
             tox.OnNameChange += OnNameChange;
             tox.OnTypingChange += OnTypingChange;
 
+            tox.OnReadReceipt += OnReadReceipt;
+
             tox.OnGroupInvite += OnGroupInvite;
             tox.OnGroupMessage += OnGroupMessage;
             tox.OnGroupAction += OnGroupAction;
@@ -84,6 +86,11 @@ namespace Toxy
             tox.Start();
 
             id = tox.GetAddress();
+        }
+
+        private void OnReadReceipt(int friendnumber, uint receipt)
+        {
+            Console.WriteLine("{0} has received message #{1}", tox.GetName(friendnumber), receipt);
         }
 
         private void OnFileControl(int friendnumber, int receive_send, int filenumber, int control_type, byte[] data)
@@ -526,7 +533,10 @@ namespace Toxy
         {
             int[] friends = tox.GetFriendlist();
             for (int i = 0; i < friends.Length; i++)
+            {
+                tox.SetSendsReceipts(friends[i], true);
                 AddFriendControl(friends[i]);
+            }
 
             foreach (Control control in panelFriends.Controls)
             {
