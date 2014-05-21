@@ -844,7 +844,7 @@ namespace Toxy
 
             if (control.SelectedTab == tabGroups)
             {
-                btnInviteAll.Visible = true;
+                btnInvite.Visible = true;
                 btnSendFile.Visible = false;
 
                 foreach (Control ctrl in panelGroups.Controls)
@@ -880,7 +880,7 @@ namespace Toxy
             }
             else if (tabControl.SelectedTab == tabFriends)
             {
-                btnInviteAll.Visible = false;
+                btnInvite.Visible = false;
                 btnSendFile.Visible = true;
 
                 foreach (Control ctrl in panelFriends.Controls)
@@ -914,15 +914,6 @@ namespace Toxy
                     }
                 }
             }
-        }
-
-        private void btnInviteAll_Click(object sender, EventArgs e)
-        {
-            if (tabControl.SelectedTab != tabGroups)
-                return;
-
-            foreach (int friend in tox.GetFriendlist())
-                tox.InviteFriend(friend, current_number);
         }
 
         private void trayMenuExit_Click(object sender, EventArgs e)
@@ -965,6 +956,25 @@ namespace Toxy
                 unread = 0;
                 UpdateIcon(unread);
             }
+        }
+
+        private void btnInvite_Click(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab != tabGroups)
+                return;
+
+            ctxMenuInvite.Items.Clear();
+
+            foreach(int friend in tox.GetFriendlist())
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem(tox.GetName(friend));
+                item.Click += delegate(object s, EventArgs args) { if (!tox.InviteFriend(friend, current_number)) { MessageBox.Show("Could not send invite. Did you select a group?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } };
+                item.Tag = friend;
+
+                ctxMenuInvite.Items.Add(item);
+            }
+
+            ctxMenuInvite.Show(btnInvite, new Point(0, btnInvite.Height));
         }
     }
 }

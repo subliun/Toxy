@@ -51,13 +51,14 @@
             this.ctxMenuFriend = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.ctxMenuCopyID = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuFriendDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnInviteAll = new MetroFramework.Controls.MetroButton();
+            this.btnInvite = new MetroFramework.Controls.MetroButton();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.trayMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.trayMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuGroup = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.ctxMenuGroupDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxMenuInvite = new MetroFramework.Controls.MetroContextMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabFriends.SuspendLayout();
@@ -340,17 +341,17 @@
             this.ctxMenuFriendDelete.Text = "Delete";
             this.ctxMenuFriendDelete.Click += new System.EventHandler(this.ctxMenuFriendDelete_Click);
             // 
-            // btnInviteAll
+            // btnInvite
             // 
-            this.btnInviteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInviteAll.Location = new System.Drawing.Point(1065, 95);
-            this.btnInviteAll.Name = "btnInviteAll";
-            this.btnInviteAll.Size = new System.Drawing.Size(98, 23);
-            this.btnInviteAll.TabIndex = 11;
-            this.btnInviteAll.Text = "Invite all friends";
-            this.btnInviteAll.UseSelectable = true;
-            this.btnInviteAll.Visible = false;
-            this.btnInviteAll.Click += new System.EventHandler(this.btnInviteAll_Click);
+            this.btnInvite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnInvite.Location = new System.Drawing.Point(1065, 95);
+            this.btnInvite.Name = "btnInvite";
+            this.btnInvite.Size = new System.Drawing.Size(98, 23);
+            this.btnInvite.TabIndex = 11;
+            this.btnInvite.Text = "Invite a friend";
+            this.btnInvite.UseSelectable = true;
+            this.btnInvite.Visible = false;
+            this.btnInvite.Click += new System.EventHandler(this.btnInvite_Click);
             // 
             // trayIcon
             // 
@@ -395,6 +396,11 @@
             this.ctxMenuGroupDelete.Text = "Delete";
             this.ctxMenuGroupDelete.Click += new System.EventHandler(this.ctxMenuGroupDelete_Click);
             // 
+            // ctxMenuInvite
+            // 
+            this.ctxMenuInvite.Name = "ctxMenuInvite";
+            this.ctxMenuInvite.Size = new System.Drawing.Size(61, 4);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -403,7 +409,7 @@
             this.BackImagePadding = new System.Windows.Forms.Padding(170, 15, 0, 0);
             this.BackMaxSize = 40;
             this.ClientSize = new System.Drawing.Size(1178, 561);
-            this.Controls.Add(this.btnInviteAll);
+            this.Controls.Add(this.btnInvite);
             this.Controls.Add(this.btnSendFile);
             this.Controls.Add(this.lblUserstatus);
             this.Controls.Add(this.lblUsername);
@@ -457,7 +463,7 @@
         private System.Windows.Forms.ToolStripMenuItem ctxMenuFriendDelete;
         private System.Windows.Forms.ToolStripMenuItem ctxMenuCopyID;
         private MetroFramework.Controls.MetroPanel panelGroups;
-        private MetroFramework.Controls.MetroButton btnInviteAll;
+        private MetroFramework.Controls.MetroButton btnInvite;
         private MetroFramework.Controls.MetroPanel panelTransfers;
         private System.Windows.Forms.NotifyIcon trayIcon;
         private System.Windows.Forms.ContextMenuStrip trayMenu;
@@ -465,6 +471,7 @@
         private System.Windows.Forms.ToolStripMenuItem trayMenuOpen;
         private MetroFramework.Controls.MetroContextMenu ctxMenuGroup;
         private System.Windows.Forms.ToolStripMenuItem ctxMenuGroupDelete;
+        private MetroFramework.Controls.MetroContextMenu ctxMenuInvite;
 
     }
 }
