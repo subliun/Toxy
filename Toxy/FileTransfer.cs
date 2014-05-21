@@ -50,8 +50,6 @@ namespace Toxy
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            e.Graphics.FillEllipse(new SolidBrush(Color.LimeGreen), new Rectangle(new Point(Size.Width - 30, Size.Height / 2 - 10), new Size(15, 15)));
-
             //draw border
             Color bordercolor;
             if (!Selected)
