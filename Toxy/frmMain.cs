@@ -200,8 +200,11 @@ namespace Toxy
 
             this.Flash();
 
-            unread++;
-            UpdateIcon(unread);
+            if (WindowState != FormWindowState.Normal)
+            {
+                unread++;
+                UpdateIcon(unread);
+            }
 
             if (tabControl.SelectedTab != tabGroups)
                 return;
@@ -223,8 +226,11 @@ namespace Toxy
 
             this.Flash();
 
-            unread++;
-            UpdateIcon(unread);
+            if (WindowState != FormWindowState.Normal)
+            {
+                unread++;
+                UpdateIcon(unread);
+            }
 
             if (tabControl.SelectedTab != tabGroups)
                 return;
@@ -377,8 +383,11 @@ namespace Toxy
 
             this.Flash();
 
-            unread++;
-            UpdateIcon(unread);
+            if (WindowState != FormWindowState.Normal)
+            {
+                unread++;
+                UpdateIcon(unread);
+            }
 
             if (tabControl.SelectedTab != tabFriends)
                 return;
@@ -400,8 +409,11 @@ namespace Toxy
 
             this.Flash();
 
-            unread++;
-            UpdateIcon(unread);
+            if (WindowState != FormWindowState.Normal)
+            {
+                unread++;
+                UpdateIcon(unread);
+            }
 
             if (tabControl.SelectedTab != tabFriends)
                 return;
