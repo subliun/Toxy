@@ -457,8 +457,9 @@ namespace Toxy
         private void req_OnAccept(object sender, EventArgs e)
         {
             int friendnumber = tox.AddFriendNoRequest(((FriendRequest)sender).ID);
-            panelRequests.Controls.Remove((FriendRequest)sender);
+            tox.SetSendsReceipts(friendnumber, true);
 
+            panelRequests.Controls.Remove((FriendRequest)sender);
             RefreshFriendRequestCount();
 
             AddFriendControl(friendnumber);
@@ -634,8 +635,9 @@ namespace Toxy
                 return;
 
             int friendnumber = tox.AddFriend(form.ID, form.Message);
-            AddFriendControl(friendnumber);
+            tox.SetSendsReceipts(friendnumber, true);
 
+            AddFriendControl(friendnumber);
             tabControl.SelectedTab = tabFriends;
         }
 
