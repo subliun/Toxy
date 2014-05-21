@@ -792,6 +792,8 @@ namespace Toxy
 
         private void ReorganizePanel(MetroPanel panel, Type type)
         {
+            panel.VerticalScroll.Value = 0;
+
             int count = 0;
             foreach (Control control in panel.Controls)
             {
