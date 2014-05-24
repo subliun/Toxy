@@ -1,6 +1,6 @@
 ﻿namespace Toxy
 {
-    partial class Friend
+    partial class Group
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,54 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblUsername = new MetroFramework.Controls.MetroLabel();
-            this.lblStatus = new MetroFramework.Controls.MetroLabel();
+            this.lblGroupStatus = new MetroFramework.Controls.MetroLabel();
+            this.lblGroupname = new MetroFramework.Controls.MetroLabel();
             this.picAvatar = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblUsername
+            // lblGroupStatus
             // 
-            this.lblUsername.AutoSize = true;
-            this.lblUsername.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.lblUsername.Location = new System.Drawing.Point(68, 12);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(74, 19);
-            this.lblUsername.TabIndex = 0;
-            this.lblUsername.Text = "username";
-            this.lblUsername.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lblGroupStatus.AutoSize = true;
+            this.lblGroupStatus.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.lblGroupStatus.Location = new System.Drawing.Point(68, 32);
+            this.lblGroupStatus.Name = "lblGroupStatus";
+            this.lblGroupStatus.Size = new System.Drawing.Size(46, 19);
+            this.lblGroupStatus.TabIndex = 4;
+            this.lblGroupStatus.Text = "status";
+            this.lblGroupStatus.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // lblStatus
+            // lblGroupname
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.lblStatus.Location = new System.Drawing.Point(68, 31);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(46, 19);
-            this.lblStatus.TabIndex = 1;
-            this.lblStatus.Text = "status";
-            this.lblStatus.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lblGroupname.AutoSize = true;
+            this.lblGroupname.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.lblGroupname.Location = new System.Drawing.Point(68, 13);
+            this.lblGroupname.Name = "lblGroupname";
+            this.lblGroupname.Size = new System.Drawing.Size(87, 19);
+            this.lblGroupname.TabIndex = 3;
+            this.lblGroupname.Text = "groupname";
+            this.lblGroupname.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // picAvatar
             // 
             this.picAvatar.BackColor = System.Drawing.Color.Transparent;
             this.picAvatar.Image = global::Toxy.Properties.Resources.noavatar;
-            this.picAvatar.Location = new System.Drawing.Point(12, 12);
+            this.picAvatar.Location = new System.Drawing.Point(12, 13);
             this.picAvatar.Name = "picAvatar";
             this.picAvatar.Size = new System.Drawing.Size(50, 50);
             this.picAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picAvatar.TabIndex = 2;
+            this.picAvatar.TabIndex = 5;
             this.picAvatar.TabStop = false;
             // 
-            // Friend
+            // Group
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.picAvatar);
-            this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.lblUsername);
+            this.Controls.Add(this.lblGroupStatus);
+            this.Controls.Add(this.lblGroupname);
             this.DoubleBuffered = true;
-            this.Name = "Friend";
+            this.Name = "Group";
             this.Size = new System.Drawing.Size(325, 77);
             ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).EndInit();
             this.ResumeLayout(false);
@@ -85,8 +85,8 @@
 
         #endregion
 
-        private MetroFramework.Controls.MetroLabel lblUsername;
-        private MetroFramework.Controls.MetroLabel lblStatus;
         private System.Windows.Forms.PictureBox picAvatar;
+        private MetroFramework.Controls.MetroLabel lblGroupStatus;
+        private MetroFramework.Controls.MetroLabel lblGroupname;
     }
 }

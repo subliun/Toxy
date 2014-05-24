@@ -34,14 +34,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MetroFramework">
-      <HintPath>..\..\..\..\Desktop\winforms-modernui-master\MetroFramework\bin\Debug\MetroFramework.dll</HintPath>
+      <HintPath>..\..\winforms-modernui\MetroFramework\bin\Debug\MetroFramework.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework.Design">
-      <HintPath>..\..\..\..\Desktop\winforms-modernui-master\MetroFramework.Design\bin\Debug\MetroFramework.Design.dll</HintPath>
+      <HintPath>..\..\winforms-modernui\MetroFramework.Design\bin\Debug\MetroFramework.Design.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework.Fonts">
-      <HintPath>..\..\..\..\Desktop\winforms-modernui-master\MetroFramework.Fonts\bin\Debug\MetroFramework.Fonts.dll</HintPath>
+      <HintPath>..\..\winforms-modernui\MetroFramework.Fonts\bin\Debug\MetroFramework.Fonts.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Core.1.1.0.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SharpTox, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharpTox\SharpTox\bin\Debug\SharpTox.dll</HintPath>
@@ -56,8 +67,17 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
+    <Compile Include="FileTransfer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileTransfer.Designer.cs">
+      <DependentUpon>FileTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormExtensions.cs" />
     <Compile Include="Friend.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -70,29 +90,23 @@
     <Compile Include="frmAddFriend.Designer.cs">
       <DependentUpon>frmAddFriend.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmConversation.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConversation.Designer.cs">
-      <DependentUpon>frmConversation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmFileTransfer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmFileTransfer.Designer.cs">
-      <DependentUpon>frmFileTransfer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmGroupChat.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmGroupChat.Designer.cs">
-      <DependentUpon>frmGroupChat.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOptions.Designer.cs">
+      <DependentUpon>frmOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Group.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Group.Designer.cs">
+      <DependentUpon>Group.cs</DependentUpon>
     </Compile>
     <Compile Include="OpenAL.cs" />
     <Compile Include="Program.cs" />
@@ -103,24 +117,23 @@
     <Compile Include="FriendRequest.Designer.cs">
       <DependentUpon>FriendRequest.cs</DependentUpon>
     </Compile>
-    <Compile Include="ToxFile.cs" />
+    <EmbeddedResource Include="FileTransfer.resx">
+      <DependentUpon>FileTransfer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Friend.resx">
       <DependentUpon>Friend.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmAddFriend.resx">
       <DependentUpon>frmAddFriend.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConversation.resx">
-      <DependentUpon>frmConversation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmFileTransfer.resx">
-      <DependentUpon>frmFileTransfer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmGroupChat.resx">
-      <DependentUpon>frmGroupChat.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOptions.resx">
+      <DependentUpon>frmOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Group.resx">
+      <DependentUpon>Group.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -135,6 +148,7 @@
     <EmbeddedResource Include="FriendRequest.resx">
       <DependentUpon>FriendRequest.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -150,6 +164,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\noavatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toxy_away.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toxy_busy.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toxy_online.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toxy.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

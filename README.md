@@ -8,8 +8,28 @@ Some features may be missing or partially broken. Updates will arrive in time.
 
 Feel free to contribute.
 
-### Things you'll need
+### Features
+
+* Standard features like:
+  - Nickname customization
+  - Status customization
+  - Friendlist
+  - One to one conversations
+  - Friendrequest listing
+* Group chats
+* File transfers (only receiving works at this point)
+* Typing detection
+
+### Screenshots
+
+![Friend Tab](http://impy.me/i/9b3571.png)
+![Conversation Window](http://impy.me/i/b49dd6.png)
+
+Things you'll need
+===
 
 * Libraries of the [MetroFramework](https://github.com/viperneo/winforms-modernui "MetroFramework GitHub repo")
+
+* Libraries from [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 
 * The [SharpTox library](https://github.com/Impyy/SharpTox "SharpTox GitHub repo") and its dependencies.

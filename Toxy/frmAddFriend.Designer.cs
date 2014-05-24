@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.checkNoRequest = new MetroFramework.Controls.MetroCheckBox();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.txtID = new MetroFramework.Controls.MetroTextBox();
@@ -42,17 +41,6 @@
             // 
             this.metroStyleManager1.Owner = this;
             this.metroStyleManager1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // checkNoRequest
-            // 
-            this.checkNoRequest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkNoRequest.AutoSize = true;
-            this.checkNoRequest.Location = new System.Drawing.Point(324, 229);
-            this.checkNoRequest.Name = "checkNoRequest";
-            this.checkNoRequest.Size = new System.Drawing.Size(81, 15);
-            this.checkNoRequest.TabIndex = 0;
-            this.checkNoRequest.Text = "No request";
-            this.checkNoRequest.UseSelectable = true;
             // 
             // metroButton1
             // 
@@ -114,17 +102,16 @@
             this.Controls.Add(this.txtID);
             this.Controls.Add(this.metroButton2);
             this.Controls.Add(this.metroButton1);
-            this.Controls.Add(this.checkNoRequest);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(590, 267);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(590, 267);
             this.Name = "frmAddFriend";
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.Text = "Add a friend";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -133,7 +120,6 @@
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
         private MetroFramework.Controls.MetroButton metroButton2;
         private MetroFramework.Controls.MetroButton metroButton1;
-        private MetroFramework.Controls.MetroCheckBox checkNoRequest;
         private MetroFramework.Controls.MetroTextBox txtMessage;
         private MetroFramework.Controls.MetroTextBox txtID;
     }
