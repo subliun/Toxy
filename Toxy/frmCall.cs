@@ -81,9 +81,9 @@ namespace Toxy
             Buffer.BlockCopy(e.Buffer, 0, ushorts, 0, e.Buffer.Length);
 
             byte[] dest = new byte[65535];
-            int size = toxav.PrepareAudioFrame(dest, 65535, ushorts, e.BytesRecorded / 2);
+            int size = toxav.PrepareAudioFrame(dest, 65535, ushorts, ushorts.Length);
 
-            if (toxav.SendAudio(ref dest, e.BytesRecorded / 2) != ToxAvError.None)
+            if (toxav.SendAudio(ref dest, size) != ToxAvError.None)
                 Console.WriteLine("Could not send audio");
         }
 
