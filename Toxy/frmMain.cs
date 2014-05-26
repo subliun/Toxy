@@ -37,7 +37,7 @@ namespace Toxy
         private bool typing = false;
         private int unread = 0;
 
-        uint AUDIO_FRAME_SIZE;
+        private frmCall callform;
 
         public frmMain()
         {
@@ -93,166 +93,30 @@ namespace Toxy
 
             id = tox.GetAddress();
 
-            toxav = new ToxAv(tox.GetPointer(), ToxAv.DefaultCodecSettings);
+            toxav = new ToxAv(tox.GetPointer(), ToxAv.DefaultCodecSettings, 5);
             toxav.Invoker = BeginInvoke;
             toxav.OnInvite += toxav_OnInvite;
             toxav.OnStart += toxav_OnStart;
-
-            AUDIO_FRAME_SIZE = toxav.CodecSettings.audio_sample_rate * toxav.CodecSettings.audio_frame_duration / 1000;
         }
 
-        private void InitializeAudio()
+        private void toxav_OnStart(int call_index, IntPtr args)
         {
-            List<string> capt_devices = GetStringsFromMem(OpenAL.alcGetString(IntPtr.Zero, 0x310));
-            string default_capt_device = Marshal.PtrToStringAnsi(OpenAL.alcGetString(IntPtr.Zero, 0x311));
+            if (callform != null)
+                throw new Exception("There is still a call in progress!");
 
-            List<string> out_devices = GetStringsFromMem(OpenAL.alcGetString(IntPtr.Zero, 0x1005));
-            string default_out_device = Marshal.PtrToStringAnsi(OpenAL.alcGetString(IntPtr.Zero, 0x1004));
-
-            if (!(capt_devices.Count > 0 && out_devices.Count > 0))
-                throw new Exception("Insufficient audio devices");
+            callform = new frmCall(tox, toxav);
+            callform.Show();
         }
 
-        public List<string> GetStringsFromMem(IntPtr ptr)
+        private void toxav_OnInvite(int call_index, IntPtr args)
         {
-            List<string> result = new List<string>();
+            if (callform != null)
+                return;
 
-            if (ptr != IntPtr.Zero)
-            {
-                StringBuilder sb = new StringBuilder();
-                int offset = 0;
-                do
-                {
-                    byte b = Marshal.ReadByte(ptr, offset++);
-                    if (b != 0)
-                    {
-                        sb.Append((char)b);
-                    }
-                    else
-                    {
-                        result.Add(sb.ToString());
+            if (MetroMessageBox.Show(this, "Someone is calling you, would you like to answer this call?", "Incoming call", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
 
-                        if (Marshal.ReadByte(ptr, offset) == 0)
-                            break;
-                        else
-                            sb.Remove(0, sb.Length);
-                    }
-                }
-                while (true);
-            }
-
-            return result;
-        }
-
-        private void toxav_OnStart(IntPtr args)
-        {
-            Thread thread = new Thread(delegate()
-            {
-                unsafe
-                {
-                    List<string> capt_devices = GetStringsFromMem(OpenAL.alcGetString(IntPtr.Zero, 0x310));
-                    string default_capt_device = Marshal.PtrToStringAnsi(OpenAL.alcGetString(IntPtr.Zero, 0x311));
-
-                    List<string> out_devices = GetStringsFromMem(OpenAL.alcGetString(IntPtr.Zero, 0x1005));
-                    string default_out_device = Marshal.PtrToStringAnsi(OpenAL.alcGetString(IntPtr.Zero, 0x1004));
-
-                    if (!(capt_devices.Count > 0 && out_devices.Count > 0))
-                        throw new Exception("Insufficient audio devices");
-
-                    IntPtr capt_device_pointer = OpenAL.alcCaptureOpenDevice(default_capt_device, toxav.CodecSettings.audio_sample_rate, 0x1101, (int)AUDIO_FRAME_SIZE * 4);
-
-                    if (OpenAL.alcGetError(capt_device_pointer) != 0)
-                        throw new Exception("Could not open capture device");
-
-                    IntPtr out_device_pointer = OpenAL.alcOpenDevice(out_devices[0]);
-
-                    if (OpenAL.alcGetError(out_device_pointer) != 0)
-                        throw new Exception("Could not open output device");
-
-                    IntPtr out_device_context = OpenAL.alcCreateContext(out_device_pointer, null);
-
-                    OpenAL.alcCaptureStart(capt_device_pointer);
-                    OpenAL.alcMakeContextCurrent(out_device_context);
-
-                    int dec_frame_len;
-                    ushort[] frame = new ushort[4096];
-                    int sample = 0;
-                    uint buffer = 0;
-                    int ready = 0;
-                    int openal_buffers = 5;
-                    uint source = 0;
-                    uint[] buffers = new uint[openal_buffers];
-
-                    OpenAL.alGenBuffers(openal_buffers, out buffers[0]);
-                    OpenAL.alGenSources(1, &source);
-                    OpenAL.alSourcei(source, 0x1007, 0);
-
-                    ushort[] zeros = new ushort[AUDIO_FRAME_SIZE];
-                    ushort[] PCM = new ushort[AUDIO_FRAME_SIZE];
-
-                    for (int i = 0; i < openal_buffers; i++)
-                        OpenAL.alBufferData(buffers[i], 0x1101, zeros, (int)AUDIO_FRAME_SIZE, (uint)48000);
-
-                    OpenAL.alSourceQueueBuffers(source, openal_buffers, buffers);
-                    OpenAL.alSourcePlay(source);
-
-                    if (OpenAL.alGetError() != 0)
-                        throw new Exception("Could not init audio");
-
-                    while (true)
-                    {
-                        OpenAL.alcGetIntegerv(capt_device_pointer, 0x312, sizeof(int), ref sample);
-
-                        if (sample >= AUDIO_FRAME_SIZE)
-                        {
-                            GCHandle handle = GCHandle.Alloc(frame, GCHandleType.Pinned);
-                            IntPtr pointer = handle.AddrOfPinnedObject();
-                            try { OpenAL.alcCaptureSamples(capt_device_pointer, pointer, (int)AUDIO_FRAME_SIZE); }
-                            finally { handle.Free(); }
-
-                            if (ToxAvFunctions.SendAudio(toxav.GetPointer(), ref frame, (int)AUDIO_FRAME_SIZE) != ToxAvError.None)
-                                Console.WriteLine("Failed to send audio");
-                        }
-                        else
-                        {
-                            Thread.Sleep(1000);
-                        }
-
-                        OpenAL.alGetSourcei(source, 0x1016, out ready);
-
-                        if (ready <= 0)
-                            continue;
-
-                        dec_frame_len = ToxAvFunctions.ReceiveAudio(toxav.GetPointer(), (int)AUDIO_FRAME_SIZE, PCM);
-                        if (dec_frame_len > 0)
-                        {
-                            OpenAL.alSourceUnqueueBuffers(source, 1, new uint[] { buffer });
-                            OpenAL.alBufferData(buffer, 0x1101, PCM, dec_frame_len * 2, 48000);
-
-                            if (OpenAL.alGetError() != 0)
-                                break; //could not set buffer
-
-                            OpenAL.alSourceQueueBuffers(source, 1, new uint[] { buffer });
-
-                            if (OpenAL.alGetError() != 0)
-                                break; //could not buffer audio
-
-                            if (ready != 0x1012)
-                                OpenAL.alSourcePlay(source);
-                        }
-                    }
-
-                    OpenAL.alDeleteSources(1, new uint[] { source });
-                    OpenAL.alDeleteBuffers(openal_buffers, buffers);
-                }
-
-            });
-
-            thread.Start();
-        }
-
-        private void toxav_OnInvite(IntPtr args)
-        {
+            toxav.CallIndex = call_index;
             ToxAvError error = toxav.Answer(ToxAvCallType.Audio);
             if (error != ToxAvError.None)
             {
@@ -740,7 +604,7 @@ namespace Toxy
         {
             if (messagecount != 0)
             {
-                Bitmap bitmap = (Bitmap)Toxy.Properties.Resources.toxy;
+                Bitmap bitmap = new Bitmap((Bitmap)Toxy.Properties.Resources.toxy, new Size(10, 10));
                 Graphics g = Graphics.FromImage(bitmap);
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 g.FillEllipse(new SolidBrush(Color.FromArgb(35, 31, 30)), new Rectangle(new Point(bitmap.Size.Width - 180, bitmap.Size.Height - 275), new Size(115, 115)));
@@ -751,7 +615,7 @@ namespace Toxy
             }
             else
             {
-                this.Icon = Icon.FromHandle(Toxy.Properties.Resources.toxy.GetHicon());
+                this.Icon = Icon.FromHandle(new Bitmap((Bitmap)Toxy.Properties.Resources.toxy, new Size(10, 10)).GetHicon());
             }
         }
 
@@ -791,6 +655,9 @@ namespace Toxy
             }
             else
             {
+                if (callform != null)
+                    callform.EndCall();
+
                 connloop.Abort();
                 connloop.Join();
 
@@ -1044,6 +911,7 @@ namespace Toxy
             if (control.SelectedTab == tabGroups)
             {
                 btnInvite.Visible = true;
+                btnCall.Visible = false;
                 btnSendFile.Visible = false;
 
                 foreach (Control ctrl in panelGroups.Controls)
@@ -1080,6 +948,7 @@ namespace Toxy
             else if (tabControl.SelectedTab == tabFriends)
             {
                 btnInvite.Visible = false;
+                btnCall.Visible = true;
                 btnSendFile.Visible = true;
 
                 foreach (Control ctrl in panelFriends.Controls)
@@ -1174,6 +1043,11 @@ namespace Toxy
             }
 
             ctxMenuInvite.Show(btnInvite, new Point(0, btnInvite.Height));
+        }
+
+        private void btnCall_Click(object sender, EventArgs e)
+        {
+            toxav.Call(current_number, ToxAvCallType.Audio, 30);
         }
     }
 }

@@ -59,6 +59,7 @@
             this.ctxMenuGroup = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.ctxMenuGroupDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuInvite = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.btnCall = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabFriends.SuspendLayout();
@@ -401,6 +402,16 @@
             this.ctxMenuInvite.Name = "ctxMenuInvite";
             this.ctxMenuInvite.Size = new System.Drawing.Size(61, 4);
             // 
+            // btnCall
+            // 
+            this.btnCall.Location = new System.Drawing.Point(1007, 95);
+            this.btnCall.Name = "btnCall";
+            this.btnCall.Size = new System.Drawing.Size(75, 23);
+            this.btnCall.TabIndex = 12;
+            this.btnCall.Text = "Call";
+            this.btnCall.UseSelectable = true;
+            this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -409,6 +420,7 @@
             this.BackImagePadding = new System.Windows.Forms.Padding(170, 15, 0, 0);
             this.BackMaxSize = 40;
             this.ClientSize = new System.Drawing.Size(1178, 561);
+            this.Controls.Add(this.btnCall);
             this.Controls.Add(this.btnInvite);
             this.Controls.Add(this.btnSendFile);
             this.Controls.Add(this.lblUserstatus);
@@ -472,6 +484,7 @@
         private MetroFramework.Controls.MetroContextMenu ctxMenuGroup;
         private System.Windows.Forms.ToolStripMenuItem ctxMenuGroupDelete;
         private MetroFramework.Controls.MetroContextMenu ctxMenuInvite;
+        private MetroFramework.Controls.MetroButton btnCall;
 
     }
 }
