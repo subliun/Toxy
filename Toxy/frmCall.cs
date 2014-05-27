@@ -16,6 +16,8 @@ namespace Toxy
         private WaveOut wave_out;
         private BufferedWaveProvider wave_provider;
 
+        private Thread thread;
+
         private uint frame_size;
 
         public frmCall(Tox tox, ToxAv toxav)
@@ -43,8 +45,10 @@ namespace Toxy
             wave_source.BufferMilliseconds = (int)toxav.CodecSettings.audio_frame_duration;
             wave_source.StartRecording();
 
-            Thread thread = new Thread(receive);
+            thread = new Thread(receive);
             thread.Start();
+
+            Text = "Calling " + tox.GetName(toxav.GetPeerID(0));
         }
 
         private void wave_source_RecordingStopped(object sender, StoppedEventArgs e)
@@ -63,9 +67,7 @@ namespace Toxy
                 int received = toxav.ReceiveAudio((int)frame_size, pcm);
                 if (received > 0)
                 {
-                    byte[] bytes = new byte[pcm.Length * 2];
-                    Buffer.BlockCopy(pcm, 0, bytes, 0, pcm.Length);
-
+                    byte[] bytes = ShortArrayToByteArray(pcm);
                     wave_provider.AddSamples(bytes, 0, bytes.Length);
                 }
                 else if (received != (int)ToxAvError.None)
@@ -73,6 +75,19 @@ namespace Toxy
                     Console.WriteLine("Could not receive data: {0}", (ToxAvError)received);
                 }
             }
+        }
+
+        private byte[] ShortArrayToByteArray(short[] shorts)
+        {
+            byte[] bytes = new byte[shorts.Length * 2];
+
+            for (int i = 0; i < shorts.Length; ++i)
+            {
+                bytes[2 * i] = (byte)shorts[i];
+                bytes[2 * i + 1] = (byte)(shorts[i] >> 8);
+            }
+
+            return bytes;
         }
 
         private void wave_source_DataAvailable(object sender, WaveInEventArgs e)
@@ -89,13 +104,22 @@ namespace Toxy
 
         private void btnAbort_Click(object sender, EventArgs e)
         {
-            
-            Close();
+            Kill();
         }
 
         public void EndCall()
         {
-            
+            Kill();
+        }
+
+        private void Kill()
+        {
+            thread.Abort();
+            thread.Join();
+
+            toxav.KillTransmission();
+            toxav.Hangup();
+
             Close();
         }
     }
