@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Windows.Forms;
 
 using SharpTox;
 using MetroFramework.Forms;
@@ -20,16 +21,21 @@ namespace Toxy
 
         private uint frame_size;
 
+        public int CallIndex;
+
         public frmCall(Tox tox, ToxAv toxav)
         {
             InitializeComponent();
 
             this.tox = tox;
             this.toxav = toxav;
+        }
 
+        public void Start()
+        {
             frame_size = toxav.CodecSettings.audio_sample_rate * toxav.CodecSettings.audio_frame_duration / 1000;
 
-            toxav.PrepareTransmission(false);
+            toxav.PrepareTransmission(CallIndex, false);
 
             WaveFormat format = new WaveFormat((int)toxav.CodecSettings.audio_sample_rate, (int)toxav.CodecSettings.audio_channels);
             wave_provider = new BufferedWaveProvider(format);
@@ -48,7 +54,7 @@ namespace Toxy
             thread = new Thread(receive);
             thread.Start();
 
-            Text = "Calling " + tox.GetName(toxav.GetPeerID(0));
+            Text = "Calling " + tox.GetName(toxav.GetPeerID(CallIndex, 0));
         }
 
         private void wave_source_RecordingStopped(object sender, StoppedEventArgs e)
@@ -64,7 +70,7 @@ namespace Toxy
             {
                 short[] pcm = new short[frame_size];
 
-                int received = toxav.ReceiveAudio((int)frame_size, pcm);
+                int received = toxav.ReceiveAudio(CallIndex, (int)frame_size, pcm);
                 if (received > 0)
                 {
                     byte[] bytes = ShortArrayToByteArray(pcm);
@@ -96,31 +102,49 @@ namespace Toxy
             Buffer.BlockCopy(e.Buffer, 0, ushorts, 0, e.Buffer.Length);
 
             byte[] dest = new byte[65535];
-            int size = toxav.PrepareAudioFrame(dest, 65535, ushorts, ushorts.Length);
+            int size = toxav.PrepareAudioFrame(CallIndex, dest, 65535, ushorts, ushorts.Length);
 
-            if (toxav.SendAudio(ref dest, size) != ToxAvError.None)
+            if (toxav.SendAudio(CallIndex, ref dest, size) != ToxAvError.None)
                 Console.WriteLine("Could not send audio");
         }
 
         private void btnAbort_Click(object sender, EventArgs e)
         {
-            Kill();
+            Stop();
         }
 
         public void EndCall()
         {
-            Kill();
+            Stop();
         }
 
-        private void Kill()
+        private void Stop()
         {
             thread.Abort();
             thread.Join();
 
-            toxav.KillTransmission();
-            toxav.Hangup();
+            toxav.KillTransmission(CallIndex);
+            toxav.Hangup(CallIndex);
 
             Close();
+        }
+
+        public void Answer()
+        {
+            ToxAvError error = toxav.Answer(CallIndex, ToxAvCallType.Audio);
+            if (error != ToxAvError.None)
+            {
+                string err = error.ToString();
+                MessageBox.Show("Could not answer call! " + err);
+                Close();
+            }
+
+            Start();
+        }
+
+        public void Call(int current_number, ToxAvCallType call_type, int ringing_seconds)
+        {
+            toxav.Call(ref CallIndex, current_number, call_type, ringing_seconds);
         }
     }
 }

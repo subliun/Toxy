@@ -93,19 +93,19 @@ namespace Toxy
 
             id = tox.GetAddress();
 
-            toxav = new ToxAv(tox.GetPointer(), ToxAv.DefaultCodecSettings, 5);
+            toxav = new ToxAv(tox.GetPointer(), ToxAv.DefaultCodecSettings, 1);
             toxav.Invoker = BeginInvoke;
             toxav.OnInvite += toxav_OnInvite;
             toxav.OnStart += toxav_OnStart;
+            toxav.OnStarting += toxav_OnStart;
         }
 
         private void toxav_OnStart(int call_index, IntPtr args)
         {
-            if (callform != null)
-                throw new Exception("There is still a call in progress!");
+            if (callform == null)
+                return;
 
-            callform = new frmCall(tox, toxav);
-            callform.Show();
+            callform.Start();
         }
 
         private void toxav_OnInvite(int call_index, IntPtr args)
@@ -116,13 +116,11 @@ namespace Toxy
             if (MetroMessageBox.Show(this, "Someone is calling you, would you like to answer this call?", "Incoming call", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            toxav.CallIndex = call_index;
-            ToxAvError error = toxav.Answer(ToxAvCallType.Audio);
-            if (error != ToxAvError.None)
-            {
-                string err = error.ToString();
-                MessageBox.Show("Could not answer call! " + err);
-            }
+            callform = new frmCall(tox, toxav);
+            callform.FormClosed += callform_FormClosed;
+            callform.CallIndex = call_index;
+            callform.Show();
+            callform.Answer();
         }
 
         private void OnReadReceipt(int friendnumber, uint receipt)
@@ -1047,7 +1045,18 @@ namespace Toxy
 
         private void btnCall_Click(object sender, EventArgs e)
         {
-            toxav.Call(current_number, ToxAvCallType.Audio, 30);
+            if (callform != null)
+                return;
+
+            callform = new frmCall(tox, toxav);
+            callform.FormClosed += callform_FormClosed;
+            callform.Call(current_number, ToxAvCallType.Audio, 30);
+            callform.Show();
+        }
+
+        private void callform_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            callform = null;
         }
     }
 }
