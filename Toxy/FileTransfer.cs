@@ -20,6 +20,8 @@ namespace Toxy
 
         public FileStream Stream;
 
+        public event EventHandler OnDeleteMe;
+
         public FileTransfer(int filenumber, int friendnumber, ulong filesize, string filename)
         {
             FileNumber = filenumber;
@@ -41,6 +43,9 @@ namespace Toxy
         public void TransferFinished(bool killed)
         {
             Finished = true;
+
+            lblDescription.Text = "Transfer finished!";
+            btnCancel.Text = "Close";
             Stream.Close();
         }
 
@@ -71,6 +76,21 @@ namespace Toxy
             lblProgress.Text = string.Format("{0}/{1}", FileSize - remaining, FileSize);
 
             Stream.Write(data, 0, data.Length);
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            if (Finished)
+            {
+                OnDeleteMe(this, new EventArgs());
+            }
+            else
+            {
+                Stream.Close();
+                File.Delete(FileName);
+
+                OnDeleteMe(this, new EventArgs());
+            }
         }
     }
 }
