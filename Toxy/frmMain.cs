@@ -245,7 +245,7 @@ namespace Toxy
             if (WindowState != FormWindowState.Normal)
             {
                 unread++;
-                UpdateIcon(unread);
+                //UpdateIcon(unread);
             }
 
             if (tabControl.SelectedTab != tabGroups)
@@ -271,7 +271,7 @@ namespace Toxy
             if (WindowState != FormWindowState.Normal)
             {
                 unread++;
-                UpdateIcon(unread);
+                //UpdateIcon(unread);
             }
 
             if (tabControl.SelectedTab != tabGroups)
@@ -428,7 +428,7 @@ namespace Toxy
             if (WindowState != FormWindowState.Normal)
             {
                 unread++;
-                UpdateIcon(unread);
+                //UpdateIcon(unread);
             }
 
             if (tabControl.SelectedTab != tabFriends)
@@ -454,7 +454,7 @@ namespace Toxy
             if (WindowState != FormWindowState.Normal)
             {
                 unread++;
-                UpdateIcon(unread);
+                //UpdateIcon(unread);
             }
 
             if (tabControl.SelectedTab != tabFriends)
@@ -598,7 +598,7 @@ namespace Toxy
             InitThumbButtons();
         }
 
-        private void UpdateIcon(int messagecount)
+        /*private void UpdateIcon(int messagecount)
         {
             if (messagecount != 0)
             {
@@ -615,7 +615,7 @@ namespace Toxy
             {
                 this.Icon = Icon.FromHandle(new Bitmap((Bitmap)Toxy.Properties.Resources.toxy, new Size(10, 10)).GetHicon());
             }
-        }
+        }*/
 
         private void InitThumbButtons()
         {
@@ -1020,7 +1020,7 @@ namespace Toxy
             if (WindowState == FormWindowState.Normal)
             {
                 unread = 0;
-                UpdateIcon(unread);
+                //UpdateIcon(unread);
             }
         }
 
