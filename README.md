@@ -23,8 +23,7 @@ Feel free to contribute.
 
 ### Screenshots
 
-![Friend Tab](http://impy.me/i/9b3571.png)
-![Conversation Window](http://impy.me/i/b49dd6.png)
+![Main Window](http://impy.me/i/aca359.png)
 
 Things you'll need
 ===
