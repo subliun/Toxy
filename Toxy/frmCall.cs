@@ -13,6 +13,8 @@ namespace Toxy
         private Tox tox;
         private ToxAv toxav;
 
+        private Config config;
+
         private WaveIn wave_source;
         private WaveOut wave_out;
         private BufferedWaveProvider wave_provider;
@@ -29,10 +31,18 @@ namespace Toxy
 
             this.tox = tox;
             this.toxav = toxav;
+
+            config = Config.Instance;
         }
 
         public void Start()
         {
+            if (WaveIn.DeviceCount < 1)
+                throw new Exception("Insufficient input device(s)!");
+
+            if (WaveOut.DeviceCount < 1)
+                throw new Exception("Insufficient output device(s)!");
+
             frame_size = toxav.CodecSettings.audio_sample_rate * toxav.CodecSettings.audio_frame_duration / 1000;
 
             toxav.PrepareTransmission(CallIndex, false);
@@ -42,9 +52,11 @@ namespace Toxy
             wave_provider.DiscardOnBufferOverflow = true;
 
             wave_out = new WaveOut();
+            wave_out.DeviceNumber = config["device_out"];
             wave_out.Init(wave_provider);
 
             wave_source = new WaveIn(this.Handle);
+            wave_source.DeviceNumber = config["device_in"];
             wave_source.WaveFormat = format;
             wave_source.DataAvailable += wave_source_DataAvailable;
             wave_source.RecordingStopped += wave_source_RecordingStopped;
@@ -120,10 +132,14 @@ namespace Toxy
 
         private void Stop()
         {
-            thread.Abort();
-            thread.Join();
+            if (thread != null)
+            {
+                thread.Abort();
+                thread.Join();
 
-            toxav.KillTransmission(CallIndex);
+                toxav.KillTransmission(CallIndex);
+            }
+
             toxav.Hangup(CallIndex);
 
             Close();
@@ -138,8 +154,10 @@ namespace Toxy
                 MessageBox.Show("Could not answer call! " + err);
                 Close();
             }
-
-            Start();
+            else
+            {
+                Start();
+            }
         }
 
         public void Call(int current_number, ToxAvCallType call_type, int ringing_seconds)

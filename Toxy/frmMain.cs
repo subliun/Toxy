@@ -105,7 +105,13 @@ namespace Toxy
             if (callform == null)
                 return;
 
-            callform.Start();
+            try { callform.Start(); }
+            catch(Exception ex)
+            {
+                callform.Close();
+                callform = null;
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void toxav_OnInvite(int call_index, IntPtr args)

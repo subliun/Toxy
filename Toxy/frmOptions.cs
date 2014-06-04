@@ -2,8 +2,8 @@
 using System.Windows.Forms;
 
 using SharpTox;
-
 using MetroFramework.Forms;
+using NAudio.Wave;
 
 namespace Toxy
 {
@@ -26,6 +26,20 @@ namespace Toxy
 
             comboStyle.SelectedIndex = config["form_style"];
             comboColor.SelectedIndex = config["form_color"];
+
+            int devices = WaveIn.DeviceCount;
+            for (int i = 0; i < devices; i++)
+                comboInput.Items.Add(WaveIn.GetCapabilities(i).ProductName);
+
+            devices = WaveOut.DeviceCount;
+            for (int i = 0; i < devices; i++)
+                comboOutput.Items.Add(WaveOut.GetCapabilities(i).ProductName);
+
+            if (comboInput.Items.Count > 0)
+                comboInput.SelectedIndex = 0;
+
+            if (comboOutput.Items.Count > 0)
+                comboOutput.SelectedIndex = 0;
         }
 
         private void btnCopyID_Click(object sender, EventArgs e)
@@ -48,6 +62,9 @@ namespace Toxy
             config["form_style"] = comboStyle.SelectedIndex;
             config["form_color"] = comboColor.SelectedIndex;
             config["close_to_tray"] = toggleCloseTray.Checked;
+
+            config["device_input"] = comboInput.SelectedIndex;
+            config["device_input"] = comboOutput.SelectedIndex;
 
             config.Save("toxy.cfg");
 

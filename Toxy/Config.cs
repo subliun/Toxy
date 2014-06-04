@@ -29,6 +29,9 @@ namespace Toxy
                     instance["form_color"] = 3;
                     instance["close_to_tray"] = false;
 
+                    instance["device_output"] = 0;
+                    instance["device_input"] = 0;
+
                     /* check https://wiki.tox.im/Nodes for a list of up-to-date nodes */
                     instance["nodes"] = new ToxNode[] {
                         new ToxNode("192.254.75.98", 33445, "951C88B7E75C867418ACDB5D273821372BB5BD652740BCDF623A4FA293E75D2F", false),

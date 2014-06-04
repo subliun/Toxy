@@ -43,7 +43,7 @@
             // 
             // btnAbort
             // 
-            this.btnAbort.Location = new System.Drawing.Point(147, 293);
+            this.btnAbort.Location = new System.Drawing.Point(105, 293);
             this.btnAbort.Name = "btnAbort";
             this.btnAbort.Size = new System.Drawing.Size(75, 23);
             this.btnAbort.TabIndex = 0;
@@ -54,9 +54,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Toxy.Properties.Resources.noavatar;
-            this.pictureBox1.Location = new System.Drawing.Point(76, 63);
+            this.pictureBox1.Location = new System.Drawing.Point(75, 86);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(212, 207);
+            this.pictureBox1.Size = new System.Drawing.Size(136, 149);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -65,7 +65,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 339);
+            this.ClientSize = new System.Drawing.Size(285, 339);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnAbort);
             this.Name = "frmCall";

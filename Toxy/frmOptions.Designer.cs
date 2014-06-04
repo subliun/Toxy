@@ -47,13 +47,18 @@
             this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.toggleCloseTray = new MetroFramework.Controls.MetroToggle();
+            this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel9 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
+            this.comboInput = new MetroFramework.Controls.MetroComboBox();
+            this.comboOutput = new MetroFramework.Controls.MetroComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCopyID
             // 
             this.btnCopyID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCopyID.Location = new System.Drawing.Point(23, 221);
+            this.btnCopyID.Location = new System.Drawing.Point(23, 227);
             this.btnCopyID.Name = "btnCopyID";
             this.btnCopyID.Size = new System.Drawing.Size(75, 23);
             this.btnCopyID.TabIndex = 0;
@@ -64,7 +69,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(389, 221);
+            this.btnCancel.Location = new System.Drawing.Point(734, 227);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -75,7 +80,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(308, 221);
+            this.btnSave.Location = new System.Drawing.Point(653, 227);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 2;
@@ -254,11 +259,63 @@
             this.toggleCloseTray.Text = "Off";
             this.toggleCloseTray.UseSelectable = true;
             // 
+            // metroLabel6
+            // 
+            this.metroLabel6.AutoSize = true;
+            this.metroLabel6.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel6.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.metroLabel6.Location = new System.Drawing.Point(507, 60);
+            this.metroLabel6.Name = "metroLabel6";
+            this.metroLabel6.Size = new System.Drawing.Size(63, 25);
+            this.metroLabel6.TabIndex = 20;
+            this.metroLabel6.Text = "Audio";
+            // 
+            // metroLabel9
+            // 
+            this.metroLabel9.AutoSize = true;
+            this.metroLabel9.Location = new System.Drawing.Point(507, 91);
+            this.metroLabel9.Name = "metroLabel9";
+            this.metroLabel9.Size = new System.Drawing.Size(38, 19);
+            this.metroLabel9.TabIndex = 21;
+            this.metroLabel9.Text = "Input";
+            // 
+            // metroLabel11
+            // 
+            this.metroLabel11.AutoSize = true;
+            this.metroLabel11.Location = new System.Drawing.Point(507, 125);
+            this.metroLabel11.Name = "metroLabel11";
+            this.metroLabel11.Size = new System.Drawing.Size(50, 19);
+            this.metroLabel11.TabIndex = 22;
+            this.metroLabel11.Text = "Output";
+            // 
+            // comboInput
+            // 
+            this.comboInput.FormattingEnabled = true;
+            this.comboInput.ItemHeight = 13;
+            this.comboInput.Location = new System.Drawing.Point(586, 88);
+            this.comboInput.Name = "comboInput";
+            this.comboInput.Size = new System.Drawing.Size(221, 21);
+            this.comboInput.TabIndex = 23;
+            // 
+            // comboOutput
+            // 
+            this.comboOutput.FormattingEnabled = true;
+            this.comboOutput.ItemHeight = 13;
+            this.comboOutput.Location = new System.Drawing.Point(586, 123);
+            this.comboOutput.Name = "comboOutput";
+            this.comboOutput.Size = new System.Drawing.Size(221, 21);
+            this.comboOutput.TabIndex = 24;
+            // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(482, 267);
+            this.ClientSize = new System.Drawing.Size(827, 273);
+            this.Controls.Add(this.comboOutput);
+            this.Controls.Add(this.comboInput);
+            this.Controls.Add(this.metroLabel11);
+            this.Controls.Add(this.metroLabel9);
+            this.Controls.Add(this.metroLabel6);
             this.Controls.Add(this.toggleCloseTray);
             this.Controls.Add(this.metroLabel3);
             this.Controls.Add(this.comboColor);
@@ -306,5 +363,10 @@
         private MetroFramework.Controls.MetroLabel metroLabel10;
         private MetroFramework.Controls.MetroToggle toggleCloseTray;
         private MetroFramework.Controls.MetroLabel metroLabel3;
+        private MetroFramework.Controls.MetroLabel metroLabel11;
+        private MetroFramework.Controls.MetroLabel metroLabel9;
+        private MetroFramework.Controls.MetroLabel metroLabel6;
+        private MetroFramework.Controls.MetroComboBox comboOutput;
+        private MetroFramework.Controls.MetroComboBox comboInput;
     }
 }
