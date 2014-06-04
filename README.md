@@ -16,6 +16,7 @@ Feel free to contribute.
   - Friendlist
   - One to one conversations
   - Friendrequest listing
+* Audio calls (might be a little broken)
 * Group chats
 * File transfers (only receiving works at this point)
 * Typing detection
@@ -29,7 +30,6 @@ Things you'll need
 ===
 
 * Libraries of the [MetroFramework](https://github.com/viperneo/winforms-modernui "MetroFramework GitHub repo")
-
-* Libraries from [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
-
 * The [SharpTox library](https://github.com/Impyy/SharpTox "SharpTox GitHub repo") and its dependencies.
+
+All other dependencies can be found in the packages.config file and should be downloaded by Visual Studio automatically
