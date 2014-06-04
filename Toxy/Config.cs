@@ -25,8 +25,8 @@ namespace Toxy
 
                     //just filling the config with some default values
                     instance["typing_detection"] = true;
-                    instance["form_style"] = 3;
-                    instance["form_color"] = 2;
+                    instance["form_style"] = 1;
+                    instance["form_color"] = 3;
                     instance["close_to_tray"] = false;
 
                     /* check https://wiki.tox.im/Nodes for a list of up-to-date nodes */
