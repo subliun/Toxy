@@ -700,7 +700,14 @@ namespace Toxy
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            int friendnumber = tox.AddFriend(form.ID, form.Message);
+            int friendnumber; 
+            try { friendnumber = tox.AddFriend(form.ID, form.Message); }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.ToString()); 
+                return; 
+            }
+
             tox.SetSendsReceipts(friendnumber, true);
 
             AddFriendControl(friendnumber);
