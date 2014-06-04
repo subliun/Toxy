@@ -24,6 +24,7 @@ namespace Toxy
         {
             FriendNumber = friendnumber;
 
+            TabStop = false;
             InitializeComponent();
         }
 

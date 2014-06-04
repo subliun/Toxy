@@ -48,7 +48,7 @@
             this.metroButton1.Location = new System.Drawing.Point(411, 221);
             this.metroButton1.Name = "metroButton1";
             this.metroButton1.Size = new System.Drawing.Size(75, 23);
-            this.metroButton1.TabIndex = 1;
+            this.metroButton1.TabIndex = 2;
             this.metroButton1.Text = "Add";
             this.metroButton1.UseSelectable = true;
             this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
@@ -59,7 +59,7 @@
             this.metroButton2.Location = new System.Drawing.Point(492, 221);
             this.metroButton2.Name = "metroButton2";
             this.metroButton2.Size = new System.Drawing.Size(75, 23);
-            this.metroButton2.TabIndex = 2;
+            this.metroButton2.TabIndex = 3;
             this.metroButton2.Text = "Cancel";
             this.metroButton2.UseSelectable = true;
             this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
@@ -74,7 +74,7 @@
             this.txtID.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtID.SelectedText = "";
             this.txtID.Size = new System.Drawing.Size(543, 23);
-            this.txtID.TabIndex = 3;
+            this.txtID.TabIndex = 0;
             this.txtID.UseSelectable = true;
             // 
             // txtMessage
@@ -89,7 +89,7 @@
             this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtMessage.SelectedText = "";
             this.txtMessage.Size = new System.Drawing.Size(544, 123);
-            this.txtMessage.TabIndex = 4;
+            this.txtMessage.TabIndex = 1;
             this.txtMessage.Text = "Hello, I\'d like to add you to my friends list.";
             this.txtMessage.UseSelectable = true;
             // 

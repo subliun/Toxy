@@ -29,6 +29,7 @@ namespace Toxy
             FileSize = filesize;
             FileName = filename;
 
+            TabStop = false;
             InitializeComponent();
 
             lblDescription.Text = string.Format("Transferring {0}...", filename);

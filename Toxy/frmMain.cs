@@ -619,6 +619,7 @@ namespace Toxy
             }
 
             tabControl.SelectedTab = tabFriends;
+            txtToSend.Focus();
 
             connloop = new Thread(ConnectLoop);
             connloop.Start();
@@ -1017,6 +1018,8 @@ namespace Toxy
                     }
                 }
             }
+
+            txtToSend.Focus();
         }
 
         private void trayMenuExit_Click(object sender, EventArgs e)

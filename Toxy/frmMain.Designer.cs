@@ -101,7 +101,7 @@
             this.panelRequests.HorizontalScrollbarSize = 10;
             this.panelRequests.Location = new System.Drawing.Point(0, 12);
             this.panelRequests.Name = "panelRequests";
-            this.panelRequests.Size = new System.Drawing.Size(338, 392);
+            this.panelRequests.Size = new System.Drawing.Size(338, 405);
             this.panelRequests.TabIndex = 2;
             this.panelRequests.VerticalScrollbar = true;
             this.panelRequests.VerticalScrollbarBarColor = true;
@@ -124,9 +124,10 @@
             this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
             this.tabControl.Location = new System.Drawing.Point(23, 63);
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
+            this.tabControl.SelectedIndex = 1;
             this.tabControl.Size = new System.Drawing.Size(346, 455);
             this.tabControl.TabIndex = 2;
+            this.tabControl.TabStop = false;
             this.tabControl.UseSelectable = true;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
@@ -153,7 +154,7 @@
             this.tabRequests.HorizontalScrollbarSize = 10;
             this.tabRequests.Location = new System.Drawing.Point(4, 38);
             this.tabRequests.Name = "tabRequests";
-            this.tabRequests.Size = new System.Drawing.Size(338, 400);
+            this.tabRequests.Size = new System.Drawing.Size(338, 413);
             this.tabRequests.TabIndex = 1;
             this.tabRequests.Text = "Requests";
             this.tabRequests.VerticalScrollbarBarColor = true;
@@ -168,7 +169,7 @@
             this.tabGroups.HorizontalScrollbarSize = 10;
             this.tabGroups.Location = new System.Drawing.Point(4, 38);
             this.tabGroups.Name = "tabGroups";
-            this.tabGroups.Size = new System.Drawing.Size(338, 400);
+            this.tabGroups.Size = new System.Drawing.Size(338, 413);
             this.tabGroups.TabIndex = 2;
             this.tabGroups.Text = "Groups";
             this.tabGroups.VerticalScrollbarBarColor = true;
@@ -202,7 +203,7 @@
             this.tabTransfers.HorizontalScrollbarSize = 10;
             this.tabTransfers.Location = new System.Drawing.Point(4, 38);
             this.tabTransfers.Name = "tabTransfers";
-            this.tabTransfers.Size = new System.Drawing.Size(338, 400);
+            this.tabTransfers.Size = new System.Drawing.Size(338, 413);
             this.tabTransfers.TabIndex = 3;
             this.tabTransfers.Text = "Transfers";
             this.tabTransfers.VerticalScrollbarBarColor = true;
@@ -237,7 +238,7 @@
             this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtConversation.SelectedText = "";
             this.txtConversation.Size = new System.Drawing.Size(788, 394);
-            this.txtConversation.TabIndex = 3;
+            this.txtConversation.TabIndex = 4;
             this.txtConversation.UseSelectable = true;
             // 
             // txtToSend
@@ -265,7 +266,7 @@
             this.btnAddFriend.Location = new System.Drawing.Point(27, 524);
             this.btnAddFriend.Name = "btnAddFriend";
             this.btnAddFriend.Size = new System.Drawing.Size(113, 23);
-            this.btnAddFriend.TabIndex = 5;
+            this.btnAddFriend.TabIndex = 1;
             this.btnAddFriend.Text = "Add friend";
             this.btnAddFriend.UseSelectable = true;
             this.btnAddFriend.Click += new System.EventHandler(this.btnAddFriend_Click);
@@ -276,7 +277,7 @@
             this.btnOptions.Location = new System.Drawing.Point(265, 524);
             this.btnOptions.Name = "btnOptions";
             this.btnOptions.Size = new System.Drawing.Size(104, 23);
-            this.btnOptions.TabIndex = 6;
+            this.btnOptions.TabIndex = 3;
             this.btnOptions.Text = "Options";
             this.btnOptions.UseSelectable = true;
             this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
@@ -287,7 +288,7 @@
             this.btnNewGroup.Location = new System.Drawing.Point(146, 524);
             this.btnNewGroup.Name = "btnNewGroup";
             this.btnNewGroup.Size = new System.Drawing.Size(113, 23);
-            this.btnNewGroup.TabIndex = 7;
+            this.btnNewGroup.TabIndex = 2;
             this.btnNewGroup.Text = "Create group";
             this.btnNewGroup.UseSelectable = true;
             this.btnNewGroup.Click += new System.EventHandler(this.btnNewGroup_Click_1);
@@ -316,7 +317,7 @@
             this.btnSendFile.Location = new System.Drawing.Point(1088, 95);
             this.btnSendFile.Name = "btnSendFile";
             this.btnSendFile.Size = new System.Drawing.Size(75, 23);
-            this.btnSendFile.TabIndex = 10;
+            this.btnSendFile.TabIndex = 5;
             this.btnSendFile.Text = "Send file";
             this.btnSendFile.UseSelectable = true;
             this.btnSendFile.Click += new System.EventHandler(this.btnSendFile_Click);
@@ -349,7 +350,7 @@
             this.btnInvite.Location = new System.Drawing.Point(1065, 95);
             this.btnInvite.Name = "btnInvite";
             this.btnInvite.Size = new System.Drawing.Size(98, 23);
-            this.btnInvite.TabIndex = 11;
+            this.btnInvite.TabIndex = 6;
             this.btnInvite.Text = "Invite a friend";
             this.btnInvite.UseSelectable = true;
             this.btnInvite.Visible = false;
@@ -409,7 +410,7 @@
             this.btnCall.Location = new System.Drawing.Point(1007, 95);
             this.btnCall.Name = "btnCall";
             this.btnCall.Size = new System.Drawing.Size(75, 23);
-            this.btnCall.TabIndex = 12;
+            this.btnCall.TabIndex = 5;
             this.btnCall.Text = "Call";
             this.btnCall.UseSelectable = true;
             this.btnCall.Click += new System.EventHandler(this.btnCall_Click);

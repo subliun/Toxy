@@ -19,6 +19,7 @@ namespace Toxy
         {
             GroupNumber = groupnumber;
 
+            TabStop = false;
             InitializeComponent();
 
             GroupName = "Groupchat #" + groupnumber.ToString();

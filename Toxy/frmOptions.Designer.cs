@@ -61,7 +61,7 @@
             this.btnCopyID.Location = new System.Drawing.Point(23, 227);
             this.btnCopyID.Name = "btnCopyID";
             this.btnCopyID.Size = new System.Drawing.Size(75, 23);
-            this.btnCopyID.TabIndex = 0;
+            this.btnCopyID.TabIndex = 8;
             this.btnCopyID.Text = "Copy ID";
             this.btnCopyID.UseSelectable = true;
             this.btnCopyID.Click += new System.EventHandler(this.btnCopyID_Click);
@@ -72,7 +72,7 @@
             this.btnCancel.Location = new System.Drawing.Point(734, 227);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseSelectable = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -83,7 +83,7 @@
             this.btnSave.Location = new System.Drawing.Point(653, 227);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 2;
+            this.btnSave.TabIndex = 9;
             this.btnSave.Text = "Save";
             this.btnSave.UseSelectable = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -98,7 +98,7 @@
             this.txtUsername.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtUsername.SelectedText = "";
             this.txtUsername.Size = new System.Drawing.Size(139, 23);
-            this.txtUsername.TabIndex = 3;
+            this.txtUsername.TabIndex = 0;
             this.txtUsername.UseSelectable = true;
             // 
             // txtStatusMessage
@@ -111,7 +111,7 @@
             this.txtStatusMessage.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtStatusMessage.SelectedText = "";
             this.txtStatusMessage.Size = new System.Drawing.Size(139, 23);
-            this.txtStatusMessage.TabIndex = 4;
+            this.txtStatusMessage.TabIndex = 1;
             this.txtStatusMessage.UseSelectable = true;
             // 
             // metroLabel1
@@ -166,7 +166,7 @@
             this.toggleTypeDetection.Location = new System.Drawing.Point(168, 165);
             this.toggleTypeDetection.Name = "toggleTypeDetection";
             this.toggleTypeDetection.Size = new System.Drawing.Size(80, 17);
-            this.toggleTypeDetection.TabIndex = 10;
+            this.toggleTypeDetection.TabIndex = 2;
             this.toggleTypeDetection.Text = "Off";
             this.toggleTypeDetection.UseSelectable = true;
             // 
@@ -201,7 +201,7 @@
             this.comboStyle.Location = new System.Drawing.Point(343, 88);
             this.comboStyle.Name = "comboStyle";
             this.comboStyle.Size = new System.Drawing.Size(121, 29);
-            this.comboStyle.TabIndex = 15;
+            this.comboStyle.TabIndex = 3;
             this.comboStyle.UseSelectable = true;
             // 
             // comboColor
@@ -226,7 +226,7 @@
             this.comboColor.Location = new System.Drawing.Point(343, 123);
             this.comboColor.Name = "comboColor";
             this.comboColor.Size = new System.Drawing.Size(121, 29);
-            this.comboColor.TabIndex = 17;
+            this.comboColor.TabIndex = 4;
             this.comboColor.UseSelectable = true;
             // 
             // metroLabel10
@@ -255,7 +255,7 @@
             this.toggleCloseTray.Location = new System.Drawing.Point(379, 167);
             this.toggleCloseTray.Name = "toggleCloseTray";
             this.toggleCloseTray.Size = new System.Drawing.Size(80, 17);
-            this.toggleCloseTray.TabIndex = 19;
+            this.toggleCloseTray.TabIndex = 5;
             this.toggleCloseTray.Text = "Off";
             this.toggleCloseTray.UseSelectable = true;
             // 
@@ -291,20 +291,22 @@
             // comboInput
             // 
             this.comboInput.FormattingEnabled = true;
-            this.comboInput.ItemHeight = 13;
+            this.comboInput.ItemHeight = 23;
             this.comboInput.Location = new System.Drawing.Point(586, 88);
             this.comboInput.Name = "comboInput";
-            this.comboInput.Size = new System.Drawing.Size(221, 21);
-            this.comboInput.TabIndex = 23;
+            this.comboInput.Size = new System.Drawing.Size(221, 29);
+            this.comboInput.TabIndex = 6;
+            this.comboInput.UseSelectable = true;
             // 
             // comboOutput
             // 
             this.comboOutput.FormattingEnabled = true;
-            this.comboOutput.ItemHeight = 13;
+            this.comboOutput.ItemHeight = 23;
             this.comboOutput.Location = new System.Drawing.Point(586, 123);
             this.comboOutput.Name = "comboOutput";
-            this.comboOutput.Size = new System.Drawing.Size(221, 21);
-            this.comboOutput.TabIndex = 24;
+            this.comboOutput.Size = new System.Drawing.Size(221, 29);
+            this.comboOutput.TabIndex = 7;
+            this.comboOutput.UseSelectable = true;
             // 
             // frmOptions
             // 
