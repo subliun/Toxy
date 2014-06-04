@@ -98,6 +98,20 @@ namespace Toxy
             toxav.OnInvite += toxav_OnInvite;
             toxav.OnStart += toxav_OnStart;
             toxav.OnStarting += toxav_OnStart;
+            toxav.OnEnd += toxav_OnEnd;
+            toxav.OnEnding += toxav_OnEnd;
+            toxav.OnPeerTimeout += toxav_OnEnd;
+            toxav.OnCancel += toxav_OnEnd;
+            toxav.OnReject += toxav_OnEnd;
+            toxav.OnRequestTimeout += toxav_OnEnd;
+        }
+
+        private void toxav_OnEnd(int call_index, IntPtr args)
+        {
+            if (callform == null)
+                return;
+
+            callform.EndCall();
         }
 
         private void toxav_OnStart(int call_index, IntPtr args)
