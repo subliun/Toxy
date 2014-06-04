@@ -185,7 +185,6 @@ namespace Toxy
             FileTransfer control = new FileTransfer(filenumber, friendnumber, filesiz, filename);
             control.OnDeleteMe += control_OnDeleteMe;
             control.StyleManager = metroStyleManager1;
-            control.MouseClick += file_MouseClick;
 
             panelTransfers.Controls.Add(control);
 
@@ -198,11 +197,6 @@ namespace Toxy
         {
             panelTransfers.Controls.Remove((FileTransfer)sender);
             ReorganizePanel(panelTransfers, typeof(FileTransfer));
-        }
-
-        private void file_MouseClick(object sender, MouseEventArgs e)
-        {
-            //throw new NotImplementedException();
         }
 
         private void OnFileSendRequest(int friendnumber, int filenumber, ulong filesiz, string filename)
