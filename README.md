@@ -23,7 +23,7 @@ Feel free to contribute.
 
 ### Screenshots
 
-![Main Window](http://impy.me/i/aca359.png)
+![Main Window](http://impy.me/i/1d83d3.png)
 
 Things you'll need
 ===
