@@ -52,11 +52,11 @@ namespace Toxy
             wave_provider.DiscardOnBufferOverflow = true;
 
             wave_out = new WaveOut();
-            wave_out.DeviceNumber = config["device_out"];
+            wave_out.DeviceNumber = config["device_output"];
             wave_out.Init(wave_provider);
 
             wave_source = new WaveIn(this.Handle);
-            wave_source.DeviceNumber = config["device_in"];
+            wave_source.DeviceNumber = config["device_input"];
             wave_source.WaveFormat = format;
             wave_source.DataAvailable += wave_source_DataAvailable;
             wave_source.RecordingStopped += wave_source_RecordingStopped;
@@ -155,7 +155,7 @@ namespace Toxy
             }
             else
             {
-                Start();
+                //Start();
             }
         }
 

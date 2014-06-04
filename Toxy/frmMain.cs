@@ -442,7 +442,7 @@ namespace Toxy
             else
                 lblUsername.Text = tox.GetName(friendnumber);
         }
-
+        
         private void OnFriendAction(int friendnumber, string action)
         {
             action = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetName(friendnumber), action);
@@ -465,7 +465,7 @@ namespace Toxy
 
             if (current_number != friendnumber)
                 return;
-
+            
             txtConversation.AppendText(action);
         }
 
