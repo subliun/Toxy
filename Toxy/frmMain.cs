@@ -80,7 +80,7 @@ namespace Toxy
             }
 
             bool bootstrap_success = false;
-            foreach (ToxNode node in Nodes)
+            foreach (ToxNode node in config["nodes"])
                 if (tox.BootstrapFromNode(node))
                     bootstrap_success = true;
 
@@ -404,7 +404,7 @@ namespace Toxy
 
                     connected = false;
 
-                    foreach (ToxNode node in Nodes)
+                    foreach (ToxNode node in config["nodes"])
                         tox.BootstrapFromNode(node);
                 }
 
@@ -671,10 +671,6 @@ namespace Toxy
 
             manager.AddButtons(this.Handle, buttons);
         }
-
-        private static ToxNode[] Nodes = new ToxNode[] {
-            new ToxNode("144.76.60.215", 33445, "04119E835DF3E78BACF0F84235B300546AF8B936F035185E2A8E9E0A67C8924F", false)
-        };
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
