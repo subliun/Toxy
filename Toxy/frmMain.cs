@@ -139,7 +139,7 @@ namespace Toxy
 
             if (MetroMessageBox.Show(this, "Someone is calling you, would you like to answer this call?", "Incoming call", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
-                toxav.Reject(call_index, "Not now faggot...");
+                toxav.Reject(call_index, "I'm busy");
             }
             else
             {
