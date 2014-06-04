@@ -82,7 +82,7 @@
             this.panelFriends.HorizontalScrollbarSize = 10;
             this.panelFriends.Location = new System.Drawing.Point(0, 13);
             this.panelFriends.Name = "panelFriends";
-            this.panelFriends.Size = new System.Drawing.Size(338, 391);
+            this.panelFriends.Size = new System.Drawing.Size(342, 404);
             this.panelFriends.TabIndex = 3;
             this.panelFriends.VerticalScrollbar = true;
             this.panelFriends.VerticalScrollbarBarColor = true;
@@ -125,7 +125,7 @@
             this.tabControl.Location = new System.Drawing.Point(23, 63);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(346, 442);
+            this.tabControl.Size = new System.Drawing.Size(346, 455);
             this.tabControl.TabIndex = 2;
             this.tabControl.UseSelectable = true;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
@@ -138,7 +138,7 @@
             this.tabFriends.HorizontalScrollbarSize = 10;
             this.tabFriends.Location = new System.Drawing.Point(4, 38);
             this.tabFriends.Name = "tabFriends";
-            this.tabFriends.Size = new System.Drawing.Size(338, 400);
+            this.tabFriends.Size = new System.Drawing.Size(338, 413);
             this.tabFriends.TabIndex = 0;
             this.tabFriends.Text = "Friends";
             this.tabFriends.VerticalScrollbarBarColor = true;
@@ -233,6 +233,7 @@
             this.txtConversation.Multiline = true;
             this.txtConversation.Name = "txtConversation";
             this.txtConversation.PasswordChar = '\0';
+            this.txtConversation.ReadOnly = true;
             this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtConversation.SelectedText = "";
             this.txtConversation.Size = new System.Drawing.Size(788, 394);
@@ -261,9 +262,9 @@
             // btnAddFriend
             // 
             this.btnAddFriend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddFriend.Location = new System.Drawing.Point(27, 511);
+            this.btnAddFriend.Location = new System.Drawing.Point(27, 524);
             this.btnAddFriend.Name = "btnAddFriend";
-            this.btnAddFriend.Size = new System.Drawing.Size(113, 36);
+            this.btnAddFriend.Size = new System.Drawing.Size(113, 23);
             this.btnAddFriend.TabIndex = 5;
             this.btnAddFriend.Text = "Add friend";
             this.btnAddFriend.UseSelectable = true;
@@ -272,9 +273,9 @@
             // btnOptions
             // 
             this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOptions.Location = new System.Drawing.Point(265, 511);
+            this.btnOptions.Location = new System.Drawing.Point(265, 524);
             this.btnOptions.Name = "btnOptions";
-            this.btnOptions.Size = new System.Drawing.Size(100, 36);
+            this.btnOptions.Size = new System.Drawing.Size(104, 23);
             this.btnOptions.TabIndex = 6;
             this.btnOptions.Text = "Options";
             this.btnOptions.UseSelectable = true;
@@ -283,9 +284,9 @@
             // btnNewGroup
             // 
             this.btnNewGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnNewGroup.Location = new System.Drawing.Point(146, 511);
+            this.btnNewGroup.Location = new System.Drawing.Point(146, 524);
             this.btnNewGroup.Name = "btnNewGroup";
-            this.btnNewGroup.Size = new System.Drawing.Size(113, 36);
+            this.btnNewGroup.Size = new System.Drawing.Size(113, 23);
             this.btnNewGroup.TabIndex = 7;
             this.btnNewGroup.Text = "Create group";
             this.btnNewGroup.UseSelectable = true;

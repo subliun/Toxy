@@ -66,8 +66,9 @@ namespace Toxy
             tox.OnFileControl += OnFileControl;
 
             config = Config.Instance;
-            if (!config.Load("toxy.cfg"))
-                MessageBox.Show("Could not load toxy.cfg, using defaults", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (File.Exists("toxy.cfg"))
+                if (!config.Load("toxy.cfg"))
+                    MessageBox.Show("Error while trying to load toxy.cfg, using defaults", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             if (File.Exists("data"))
             {
@@ -579,6 +580,8 @@ namespace Toxy
 
             if (e.Button == MouseButtons.Right)
                 ctxMenuFriend.Show(Cursor.Position);
+
+            txtToSend.Focus();
         }
 
         private void RefreshFriendRequestCount()
@@ -760,6 +763,8 @@ namespace Toxy
 
             if (e.Button == MouseButtons.Right)
                 ctxMenuGroup.Show(Cursor.Position);
+
+            txtToSend.Focus();
         }
 
         private int GetGroupCount()
