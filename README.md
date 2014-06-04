@@ -1,4 +1,4 @@
-Toxy
+Toxy [![Build Status](http://jenkins.impy.me/job/Toxy/badge/icon)](http://jenkins.impy.me/job/Toxy/)
 ====
 
 Metro-style Tox client for Windows. ([Tox](https://github.com/irungentoo/ProjectTox-Core "ProjectTox GitHub repo") is a free (as in freedom) Skype replacement.)
