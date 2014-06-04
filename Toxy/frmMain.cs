@@ -94,6 +94,9 @@ namespace Toxy
 
             id = tox.GetAddress();
 
+            if (string.IsNullOrEmpty(tox.GetSelfName()))
+                tox.SetName("Toxy User");
+
             toxav = new ToxAv(tox.GetPointer(), ToxAv.DefaultCodecSettings, 1);
             toxav.Invoker = BeginInvoke;
             toxav.OnInvite += toxav_OnInvite;
