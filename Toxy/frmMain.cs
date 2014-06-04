@@ -134,13 +134,17 @@ namespace Toxy
                 return;
 
             if (MetroMessageBox.Show(this, "Someone is calling you, would you like to answer this call?", "Incoming call", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                return;
-
-            callform = new frmCall(tox, toxav);
-            callform.FormClosed += callform_FormClosed;
-            callform.CallIndex = call_index;
-            callform.Show();
-            callform.Answer();
+            {
+                toxav.Reject(call_index, "Not now faggot...");
+            }
+            else
+            {
+                callform = new frmCall(tox, toxav);
+                callform.FormClosed += callform_FormClosed;
+                callform.CallIndex = call_index;
+                callform.Show();
+                callform.Answer();
+            }
         }
 
         private void OnReadReceipt(int friendnumber, uint receipt)

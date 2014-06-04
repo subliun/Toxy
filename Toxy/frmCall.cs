@@ -138,9 +138,8 @@ namespace Toxy
                 thread.Join();
 
                 toxav.KillTransmission(CallIndex);
+                toxav.Hangup(CallIndex);
             }
-
-            toxav.Hangup(CallIndex);
 
             Close();
         }
