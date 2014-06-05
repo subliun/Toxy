@@ -269,6 +269,13 @@ namespace Toxy
             else
                 groupdic.Add(groupnumber, action);
 
+            Group control = GetGroupControlByNumber(groupnumber);
+            if (control != null && !control.Selected && !control.NewMessages)
+            {
+                control.NewMessages = true;
+                control.Invalidate();
+            }
+
             this.Flash();
 
             if (WindowState != FormWindowState.Normal)
@@ -294,6 +301,13 @@ namespace Toxy
                 groupdic[groupnumber] += message;
             else
                 groupdic.Add(groupnumber, message);
+
+            Group control = GetGroupControlByNumber(groupnumber);
+            if (control != null && !control.Selected && !control.NewMessages)
+            {
+                control.NewMessages = true;
+                control.Invalidate();
+            }
 
             this.Flash();
 
@@ -452,6 +466,13 @@ namespace Toxy
             else
                 convdic.Add(friendnumber, action);
 
+            Friend control = GetFriendControlByNumber(friendnumber);
+            if (control != null && !control.Selected && !control.NewMessages)
+            {
+                control.NewMessages = true;
+                control.Invalidate();
+            }
+
             this.Flash();
 
             if (WindowState != FormWindowState.Normal)
@@ -469,6 +490,26 @@ namespace Toxy
             txtConversation.AppendText(action);
         }
 
+        private Friend GetFriendControlByNumber(int friendnumber)
+        {
+            foreach (Control control in panelFriends.Controls)
+                if (control.GetType() == typeof(Friend))
+                    if (((Friend)control).FriendNumber == friendnumber)
+                        return (Friend)control;
+
+            return null;
+        }
+
+        private Group GetGroupControlByNumber(int groupnumber)
+        {
+            foreach (Control control in panelGroups.Controls)
+                if (control.GetType() == typeof(Group))
+                    if (((Group)control).GroupNumber == groupnumber)
+                        return (Group)control;
+
+            return null;
+        }
+
         private void OnFriendMessage(int friendnumber, string message)
         {
             message = string.Format("<{0}> {1}" + Environment.NewLine, tox.GetName(friendnumber), message);
@@ -477,6 +518,13 @@ namespace Toxy
                 convdic[friendnumber] += message;
             else
                 convdic.Add(friendnumber, message);
+
+            Friend control = GetFriendControlByNumber(friendnumber);
+            if (control != null && !control.Selected && !control.NewMessages)
+            {
+                control.NewMessages = true;
+                control.Invalidate();
+            }
 
             this.Flash();
 
@@ -568,6 +616,7 @@ namespace Toxy
             }
 
             Friend friend = (Friend)sender;
+            friend.NewMessages = false;
             friend.Selected = true;
             friend.Invalidate();
 
@@ -755,6 +804,7 @@ namespace Toxy
             }
 
             Group group = (Group)sender;
+            group.NewMessages = false;
             group.Selected = true;
             group.Invalidate();
 

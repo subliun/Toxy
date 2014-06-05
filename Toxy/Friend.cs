@@ -14,10 +14,12 @@ namespace Toxy
         public int FriendNumber;
 
         public ToxUserStatus Status;
+
         public string StatusMessage;
         public string Username;
-        public bool IsOnline = false;
 
+        public bool IsOnline = false;
+        public bool NewMessages = false;
         public bool Selected = false;
 
         public Friend(int friendnumber)
@@ -72,6 +74,9 @@ namespace Toxy
                 }
 
                 e.Graphics.FillEllipse(new SolidBrush(statuscolor), new Rectangle(new Point(Size.Width - 30, Size.Height / 2 - 10), new Size(15, 15)));
+
+                if (NewMessages)
+                    e.Graphics.DrawEllipse(new Pen(statuscolor) { Width = 2 }, new Rectangle(new Point(Size.Width - 34, Size.Height / 2 - 14), new Size(23, 23)));
             }
             else
             {

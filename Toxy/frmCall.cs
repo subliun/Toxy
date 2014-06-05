@@ -153,10 +153,6 @@ namespace Toxy
                 MessageBox.Show("Could not answer call! " + err);
                 Close();
             }
-            else
-            {
-                //Start();
-            }
         }
 
         public void Call(int current_number, ToxAvCallType call_type, int ringing_seconds)

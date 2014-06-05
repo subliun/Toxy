@@ -14,6 +14,7 @@ namespace Toxy
         public string GroupName;
 
         public bool Selected = false;
+        public bool NewMessages = false;
 
         public Group(int groupnumber)
         {
@@ -40,6 +41,9 @@ namespace Toxy
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             e.Graphics.FillEllipse(new SolidBrush(Color.LimeGreen), new Rectangle(new Point(Size.Width - 30, Size.Height / 2 - 10), new Size(15, 15)));
+
+            if (NewMessages)
+                e.Graphics.DrawEllipse(new Pen(Color.LimeGreen) { Width = 2 }, new Rectangle(new Point(Size.Width - 34, Size.Height / 2 - 14), new Size(23, 23)));
 
             //draw border
             Color bordercolor;
