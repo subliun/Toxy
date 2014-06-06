@@ -35,7 +35,6 @@ namespace Toxy
 
         private int current_number; //can be a groupnumber or a friendnumber
         private bool typing = false;
-        private int unread = 0;
 
         private frmCall callform;
 
@@ -194,17 +193,12 @@ namespace Toxy
 
         private void OnFileData(int friendnumber, int filenumber, byte[] data)
         {
-            foreach (Control control in panelTransfers.Controls)
+            foreach (FileTransfer ft in GetFileTransferControls())
             {
-                if (control.GetType() == typeof(FileTransfer))
-                {
-                    FileTransfer ft = (FileTransfer)control;
+                if (!(ft.FileNumber == filenumber && ft.FriendNumber == friendnumber && !ft.Finished))
+                    continue;
 
-                    if (!(ft.FileNumber == filenumber && ft.FriendNumber == friendnumber && !ft.Finished))
-                        continue;
-
-                    ft.AddData(data, tox.FileDataRemaining(friendnumber, filenumber, 1));
-                }
+                ft.AddData(data, tox.FileDataRemaining(friendnumber, filenumber, 1));
             }
         }
 
@@ -244,16 +238,12 @@ namespace Toxy
 
         private void OnGroupNamelistChange(int groupnumber, int peernumber, ToxChatChange change)
         {
-            foreach (Control control in panelGroups.Controls)
-            {
-                if (control.GetType() == typeof(Group))
-                {
-                    Group group = (Group)control;
+            Group group = GetGroupControlByNumber(groupnumber);
 
-                    if (group.GroupNumber == groupnumber)
-                        group.ChangePeerCount(tox.GetGroupMemberCount(groupnumber));
-                }
-            }
+            if (group == null)
+                return;
+            
+            group.ChangePeerCount(tox.GetGroupMemberCount(groupnumber));
 
             if (tabControl.SelectedTab == tabGroups)
                 if (current_number == groupnumber)
@@ -277,12 +267,6 @@ namespace Toxy
             }
 
             this.Flash();
-
-            if (WindowState != FormWindowState.Normal)
-            {
-                unread++;
-                //UpdateIcon(unread);
-            }
 
             if (tabControl.SelectedTab != tabGroups)
                 return;
@@ -311,12 +295,6 @@ namespace Toxy
 
             this.Flash();
 
-            if (WindowState != FormWindowState.Normal)
-            {
-                unread++;
-                //UpdateIcon(unread);
-            }
-
             if (tabControl.SelectedTab != tabGroups)
                 return;
 
@@ -341,36 +319,30 @@ namespace Toxy
 
         private void OnConnectionStatusChanged(int friendnumber, byte status)
         {
-            foreach (Control control in panelFriends.Controls)
-            {
-                if (control.GetType() == typeof(Friend))
-                {
-                    Friend friend = (Friend)control;
+            Friend friend = GetFriendControlByNumber(friendnumber);
 
-                    if (friend.FriendNumber == friendnumber)
-                    {
-                        friend.IsOnline = status != 0;
-                        friend.Invalidate();
-                    }
-                }
+            if (friend == null)
+                return;
+            
+            if (status == 0)
+            {
+                DateTime time = tox.GetLastOnline(friendnumber);
+                friend.SetStatusMessage("Last online: " + time.ToShortDateString() + " " + time.ToShortTimeString());
             }
+
+            friend.IsOnline = status != 0;
+            friend.Invalidate();
         }
 
         private void OnNameChange(int friendnumber, string newname)
         {
-            foreach (Control control in panelFriends.Controls)
-            {
-                if (control.GetType() == typeof(Friend))
-                {
-                    Friend friend = (Friend)control;
+            Friend friend = GetFriendControlByNumber(friendnumber);
 
-                    if (friend.FriendNumber == friendnumber)
-                    {
-                        friend.SetUsername(newname);
-                        friend.Invalidate();
-                    }
-                }
-            }
+            if (friend == null)
+                return;
+
+            friend.SetUsername(newname);
+            friend.Invalidate();
 
             if (tabControl.SelectedTab == tabFriends)
                 if (current_number == friendnumber)
@@ -379,19 +351,13 @@ namespace Toxy
 
         private void OnStatusMessage(int friendnumber, string newstatus)
         {
-            foreach (Control control in panelFriends.Controls)
-            {
-                if (control.GetType() == typeof(Friend))
-                {
-                    Friend friend = (Friend)control;
+            Friend friend = GetFriendControlByNumber(friendnumber);
 
-                    if (friend.FriendNumber == friendnumber)
-                    {
-                        friend.SetStatusMessage(newstatus);
-                        friend.Invalidate();
-                    }
-                }
-            }
+            if (friend == null)
+                return;
+
+            friend.SetStatusMessage(newstatus);
+            friend.Invalidate();
 
             if (tabControl.SelectedTab == tabFriends)
                 if (current_number == friendnumber)
@@ -428,19 +394,13 @@ namespace Toxy
 
         private void OnUserStatus(int friendnumber, ToxUserStatus status)
         {
-            foreach (Control control in panelFriends.Controls)
-            {
-                if (control.GetType() == typeof(Friend))
-                {
-                    Friend friend = (Friend)control;
+            Friend friend = GetFriendControlByNumber(friendnumber);
 
-                    if (friend.FriendNumber == friendnumber)
-                    {
-                        friend.Status = status;
-                        friend.Invalidate();
-                    }
-                }
-            }
+            if (friend == null)
+                return;
+
+            friend.Status = status;
+            friend.Invalidate();
         }
 
         private void OnTypingChange(int friendnumber, bool is_typing)
@@ -474,12 +434,6 @@ namespace Toxy
             }
 
             this.Flash();
-
-            if (WindowState != FormWindowState.Normal)
-            {
-                unread++;
-                //UpdateIcon(unread);
-            }
 
             if (tabControl.SelectedTab != tabFriends)
                 return;
@@ -527,12 +481,6 @@ namespace Toxy
             }
 
             this.Flash();
-
-            if (WindowState != FormWindowState.Normal)
-            {
-                unread++;
-                //UpdateIcon(unread);
-            }
 
             if (tabControl.SelectedTab != tabFriends)
                 return;
@@ -605,15 +553,7 @@ namespace Toxy
             if (!(e.Button == MouseButtons.Left || e.Button == MouseButtons.Right))
                 return;
 
-            foreach (Control control in panelFriends.Controls)
-            {
-                if (control.GetType() == typeof(Friend))
-                {
-                    Friend f = (Friend)control;
-                    f.Selected = false;
-                    f.Invalidate();
-                }
-            }
+            DeselectAllFriends();
 
             Friend friend = (Friend)sender;
             friend.NewMessages = false;
@@ -647,56 +587,34 @@ namespace Toxy
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            int[] friends = tox.GetFriendlist();
-            for (int i = 0; i < friends.Length; i++)
+            InitThumbButtons();
+
+            int[] numbers = tox.GetFriendlist();
+            for (int i = 0; i < numbers.Length; i++)
             {
-                tox.SetSendsReceipts(friends[i], true);
-                AddFriendControl(friends[i]);
+                tox.SetSendsReceipts(numbers[i], true);
+                AddFriendControl(numbers[i]);
             }
 
-            foreach (Control control in panelFriends.Controls)
+            Friend[] friends = GetFriendControls();
+
+            if (friends.Length > 0)
             {
-                if (control.GetType() == typeof(Friend))
-                {
-                    Friend friend = (Friend)control;
-                    friend.Selected = true;
-                    friend.Invalidate();
+                Friend friend = friends[0];
+                friend.Selected = true;
+                friend.Invalidate();
 
-                    lblUsername.Text = tox.GetName(friend.FriendNumber);
-                    lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
+                lblUsername.Text = tox.GetName(friend.FriendNumber);
+                lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
 
-                    current_number = friend.FriendNumber;
-                    break;
-                }
+                current_number = friend.FriendNumber;
             }
 
             tabControl.SelectedTab = tabFriends;
-            txtToSend.Focus();
 
             connloop = new Thread(ConnectLoop);
             connloop.Start();
-
-            InitThumbButtons();
         }
-
-        /*private void UpdateIcon(int messagecount)
-        {
-            if (messagecount != 0)
-            {
-                Bitmap bitmap = new Bitmap((Bitmap)Toxy.Properties.Resources.toxy, new Size(10, 10));
-                Graphics g = Graphics.FromImage(bitmap);
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                g.FillEllipse(new SolidBrush(Color.FromArgb(35, 31, 30)), new Rectangle(new Point(bitmap.Size.Width - 180, bitmap.Size.Height - 275), new Size(115, 115)));
-                g.DrawString(messagecount.ToString(), new Font("Monospace", 115f, FontStyle.Bold), new SolidBrush(Color.White), new Point(bitmap.Size.Width - 178, bitmap.Size.Height - 285));
-                g.Dispose();
-
-                this.Icon = Icon.FromHandle(bitmap.GetHicon());
-            }
-            else
-            {
-                this.Icon = Icon.FromHandle(new Bitmap((Bitmap)Toxy.Properties.Resources.toxy, new Size(10, 10)).GetHicon());
-            }
-        }*/
 
         private void InitThumbButtons()
         {
@@ -788,20 +706,36 @@ namespace Toxy
             ReorganizePanel(panelGroups, typeof(Group));
         }
 
+        private void DeselectAllGroups()
+        {
+            foreach (Group g in GetGroupControls())
+            {
+                if (g.Selected)
+                {
+                    g.Selected = false;
+                    g.Invalidate();
+                }
+            }
+        }
+
+        private void DeselectAllFriends()
+        {
+            foreach (Friend friend in GetFriendControls())
+            {
+                if (friend.Selected)
+                {
+                    friend.Selected = false;
+                    friend.Invalidate();
+                }
+            }
+        }
+
         private void group_MouseClick(object sender, MouseEventArgs e)
         {
             if (!(e.Button == MouseButtons.Left || e.Button == MouseButtons.Right))
                 return;
 
-            foreach (Control control in panelGroups.Controls)
-            {
-                if (control.GetType() == typeof(Group))
-                {
-                    Group g = (Group)control;
-                    g.Selected = false;
-                    g.Invalidate();
-                }
-            }
+            DeselectAllGroups();
 
             Group group = (Group)sender;
             group.NewMessages = false;
@@ -822,17 +756,6 @@ namespace Toxy
                 ctxMenuGroup.Show(Cursor.Position);
 
             txtToSend.Focus();
-        }
-
-        private int GetGroupCount()
-        {
-            int count = 0;
-
-            foreach (Control control in panelGroups.Controls)
-                if (control.GetType() == typeof(Group))
-                    count++;
-
-            return count;
         }
 
         private void txtToSend_KeyPress(object sender, KeyPressEventArgs e)
@@ -909,10 +832,9 @@ namespace Toxy
 
         private Friend GetSelectedFriend()
         {
-            foreach (Control control in panelFriends.Controls)
-                if (control.GetType() == typeof(Friend))
-                    if (((Friend)control).Selected)
-                        return (Friend)control;
+            foreach (Friend friend in GetFriendControls())
+                if (friend.Selected)
+                    return friend;
 
             return null;
         }
@@ -930,8 +852,6 @@ namespace Toxy
                     count++;
                 }
             }
-
-            //panel.Invalidate();
         }
 
         private void ctxMenuFriendDelete_Click(object sender, EventArgs e)
@@ -999,36 +919,25 @@ namespace Toxy
                 btnCall.Visible = false;
                 btnSendFile.Visible = false;
 
-                foreach (Control ctrl in panelGroups.Controls)
-                {
-                    if (ctrl.GetType() == typeof(Group))
-                    {
-                        //this doesn't make any sense, I know, will fix this later
-                        foreach (Control c in panelGroups.Controls)
-                        {
-                            if (c.GetType() == typeof(Group))
-                            {
-                                Group g = (Group)c;
-                                g.Selected = false;
-                                g.Invalidate();
-                            }
-                        }
+                Group[] groups = GetGroupControls();
 
-                        Group group = (Group)ctrl;
-                        group.Selected = true;
-                        group.Invalidate();
+                if (groups.Length < 1)
+                    return;
 
-                        lblUsername.Text = group.GroupName;
-                        lblUserstatus.Text = "Members: " + string.Join(", ", tox.GetGroupNames(group.GroupNumber));
+                DeselectAllGroups();
 
-                        current_number = group.GroupNumber;
+                Group group = groups[0];
+                group.Selected = true;
+                group.Invalidate();
 
-                        if (groupdic.ContainsKey(current_number))
-                            txtConversation.Text = groupdic[current_number];
+                lblUsername.Text = group.GroupName;
+                lblUserstatus.Text = "Members: " + string.Join(", ", tox.GetGroupNames(group.GroupNumber));
 
-                        break;
-                    }
-                }
+                current_number = group.GroupNumber;
+
+                if (groupdic.ContainsKey(current_number))
+                    txtConversation.Text = groupdic[current_number];
+
             }
             else if (tabControl.SelectedTab == tabFriends)
             {
@@ -1036,36 +945,25 @@ namespace Toxy
                 btnCall.Visible = true;
                 btnSendFile.Visible = true;
 
-                foreach (Control ctrl in panelFriends.Controls)
-                {
-                    if (ctrl.GetType() == typeof(Friend))
-                    {
-                        //this doesn't make any sense, I know, will fix this later
-                        foreach (Control c in panelFriends.Controls)
-                        {
-                            if (c.GetType() == typeof(Friend))
-                            {
-                                Friend f = (Friend)c;
-                                f.Selected = false;
-                                f.Invalidate();
-                            }
-                        }
+                Friend[] friends = GetFriendControls();
 
-                        Friend friend = (Friend)ctrl;
-                        friend.Selected = true;
-                        friend.Invalidate();
+                if (friends.Length < 1)
+                    return;
 
-                        lblUsername.Text = tox.GetName(friend.FriendNumber);
-                        lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
+                DeselectAllFriends();
 
-                        current_number = friend.FriendNumber;
+                Friend friend = friends[0];
+                friend.Selected = true;
+                friend.Invalidate();
 
-                        if (convdic.ContainsKey(current_number))
-                            txtConversation.Text = convdic[current_number];
+                lblUsername.Text = tox.GetName(friend.FriendNumber);
+                lblUserstatus.Text = tox.GetStatusMessage(friend.FriendNumber);
 
-                        break;
-                    }
-                }
+                current_number = friend.FriendNumber;
+
+                if (convdic.ContainsKey(current_number))
+                    txtConversation.Text = convdic[current_number];
+
             }
 
             txtToSend.Focus();
@@ -1093,24 +991,46 @@ namespace Toxy
             ReorganizePanel(panelGroups, typeof(Group));
         }
 
-        private Group GetSelectedGroup()
+        private Friend[] GetFriendControls()
         {
-            foreach (Control control in panelGroups.Controls)
-                if (control.GetType() == typeof(Group))
-                    if (((Group)control).Selected)
-                        return (Group)control;
+            List<Friend> friends = new List<Friend>();
 
-            return null;
+            foreach (Control control in panelFriends.Controls)
+                if (control.GetType() == typeof(Friend))
+                    friends.Add((Friend)control);
+
+            return friends.ToArray();
         }
 
-        private void frmMain_Resize(object sender, EventArgs e)
+        private Group[] GetGroupControls()
         {
-            //gotta use this for now, apparently the gotfocus event doesn't even work
-            if (WindowState == FormWindowState.Normal)
-            {
-                unread = 0;
-                //UpdateIcon(unread);
-            }
+            List<Group> groups = new List<Group>();
+
+            foreach (Control control in panelGroups.Controls)
+                if (control.GetType() == typeof(Group))
+                    groups.Add((Group)control);
+
+            return groups.ToArray();
+        }
+
+        private FileTransfer[] GetFileTransferControls()
+        {
+            List<FileTransfer> transfers = new List<FileTransfer>();
+
+            foreach (Control control in panelTransfers.Controls)
+                if (control.GetType() == typeof(FileTransfer))
+                    transfers.Add((FileTransfer)control);
+
+            return transfers.ToArray();
+        }
+
+        private Group GetSelectedGroup()
+        {
+            foreach (Group group in GetGroupControls())
+                if (group.Selected)
+                    return group;
+
+            return null;
         }
 
         private void btnInvite_Click(object sender, EventArgs e)
