@@ -898,7 +898,29 @@ namespace Toxy
 
         private void btnSendFile_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This functionality has not been implemented yet. Friends can send files to you though.");
+            //MessageBox.Show("This functionality has not been implemented yet. Friends can send files to you though.");
+
+            if (tabControl.SelectedTab != tabFriends)
+                return;
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = false;
+            dialog.InitialDirectory = Environment.CurrentDirectory;
+
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            string path = dialog.FileName;
+
+            if (string.IsNullOrEmpty(path))
+                return;
+
+            long filesize = new FileInfo(path).Length;
+
+            string filename = path.Split('\\')[path.Split('\\').Length - 1];
+            int filenumber = tox.NewFileSender(current_number, (ulong)filesize, filename);
+
+            FileTransfer transfer = new FileTransfer(filenumber, current_number, (ulong)filesize, filename);
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)

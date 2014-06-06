@@ -235,7 +235,7 @@
             this.txtConversation.Name = "txtConversation";
             this.txtConversation.PasswordChar = '\0';
             this.txtConversation.ReadOnly = true;
-            this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtConversation.SelectedText = "";
             this.txtConversation.Size = new System.Drawing.Size(788, 394);
             this.txtConversation.TabIndex = 4;
