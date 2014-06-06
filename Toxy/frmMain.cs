@@ -446,20 +446,18 @@ namespace Toxy
 
         private Friend GetFriendControlByNumber(int friendnumber)
         {
-            foreach (Control control in panelFriends.Controls)
-                if (control.GetType() == typeof(Friend))
-                    if (((Friend)control).FriendNumber == friendnumber)
-                        return (Friend)control;
+            foreach (Friend friend in GetFriendControls())
+                    if (friend.FriendNumber == friendnumber)
+                        return friend;
 
             return null;
         }
 
         private Group GetGroupControlByNumber(int groupnumber)
         {
-            foreach (Control control in panelGroups.Controls)
-                if (control.GetType() == typeof(Group))
-                    if (((Group)control).GroupNumber == groupnumber)
-                        return (Group)control;
+            foreach (Group group in GetGroupControls())
+                    if (group.GroupNumber == groupnumber)
+                        return group;
 
             return null;
         }
@@ -963,7 +961,6 @@ namespace Toxy
 
                 if (convdic.ContainsKey(current_number))
                     txtConversation.Text = convdic[current_number];
-
             }
 
             txtToSend.Focus();
