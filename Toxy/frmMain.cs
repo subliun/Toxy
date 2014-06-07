@@ -157,36 +157,31 @@ namespace Toxy
 
         private void OnFileControl(int friendnumber, int receive_send, int filenumber, int control_type, byte[] data)
         {
-            foreach (Control control in panelTransfers.Controls)
+            foreach (FileTransfer ft in GetFileTransferControls())
             {
-                if (control.GetType() == typeof(FileTransfer))
+                if (!(ft.FileNumber == filenumber && ft.FriendNumber == friendnumber && !ft.Finished))
+                    continue;
+
+                switch ((ToxFileControl)control_type)
                 {
-                    FileTransfer ft = (FileTransfer)control;
+                    case ToxFileControl.FINISHED:
+                        {
+                            if (ft.Stream != null)
+                                ft.Stream.Close();
 
-                    if (!(ft.FileNumber == filenumber && ft.FriendNumber == friendnumber && !ft.Finished))
-                        continue;
-
-                    switch ((ToxFileControl)control_type)
-                    {
-                        case ToxFileControl.FINISHED:
-                            {
-                                if (ft.Stream != null)
-                                    ft.Stream.Close();
-
-                                ft.TransferFinished(false);
-                                break;
-                            }
-                        case ToxFileControl.KILL:
-                            {
-                                if (ft.Stream != null)
-                                    ft.Stream.Close();
-
-                                ft.TransferFinished(true);
-                                break;
-                            }
-                        case ToxFileControl.ACCEPT:
+                            ft.TransferFinished(false);
                             break;
-                    }
+                        }
+                    case ToxFileControl.KILL:
+                        {
+                            if (ft.Stream != null)
+                                ft.Stream.Close();
+
+                            ft.TransferFinished(true);
+                            break;
+                        }
+                    case ToxFileControl.ACCEPT:
+                        break;
                 }
             }
         }
