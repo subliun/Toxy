@@ -181,8 +181,22 @@ namespace Toxy
                             break;
                         }
                     case ToxFileControl.ACCEPT:
+                        {
+                            Thread thread = new Thread(SendData);
+                            thread.Start();
+                        }
                         break;
                 }
+            }
+        }
+
+        private void SendData(object ft)
+        {
+
+
+            while (true)
+            {
+
             }
         }
 
@@ -193,13 +207,24 @@ namespace Toxy
                 if (!(ft.FileNumber == filenumber && ft.FriendNumber == friendnumber && !ft.Finished))
                     continue;
 
-                ft.AddData(data, tox.FileDataRemaining(friendnumber, filenumber, 1));
+                if (ft.Stream == null)
+                    throw new Exception("Unexpectedly received data");
+
+                ulong remaining = tox.FileDataRemaining(friendnumber, filenumber, 1);
+                double value = (double)remaining / (double)ft.FileSize;
+
+                ft.ChangeProgress(100 - (int)(value * 100));
+                ft.ChangeStatus(string.Format("{0}/{1}", ft.FileSize - remaining, ft.FileSize));
+
+                ft.Stream.Write(data, 0, data.Length);
+
+                //ft.AddData(data, tox.FileDataRemaining(friendnumber, filenumber, 1));
             }
         }
 
-        private FileTransfer AddFileTransferControl(int friendnumber, int filenumber, ulong filesiz, string filename)
+        private FileTransfer AddFileTransferControl(int friendnumber, int filenumber, ulong filesiz, string filename, bool sending)
         {
-            FileTransfer control = new FileTransfer(filenumber, friendnumber, filesiz, filename);
+            FileTransfer control = new FileTransfer(filenumber, friendnumber, filesiz, filename, sending);
             control.OnDeleteMe += control_OnDeleteMe;
             control.StyleManager = metroStyleManager1;
 
@@ -225,7 +250,7 @@ namespace Toxy
 
             tox.FileSendControl(friendnumber, 1, filenumber, (int)ToxFileControl.ACCEPT, new byte[0]);
 
-            FileTransfer control = AddFileTransferControl(friendnumber, filenumber, filesiz, filename);
+            FileTransfer control = AddFileTransferControl(friendnumber, filenumber, filesiz, filename, false);
             control.Stream = new FileStream(filename, FileMode.Create);
 
             tabControl.SelectedTab = tabTransfers;
@@ -920,7 +945,7 @@ namespace Toxy
             string filename = path.Split('\\')[path.Split('\\').Length - 1];
             int filenumber = tox.NewFileSender(current_number, (ulong)filesize, filename);
 
-            FileTransfer transfer = new FileTransfer(filenumber, current_number, (ulong)filesize, filename);
+            AddFileTransferControl(filenumber, current_number, (ulong)filesize, filename, true);
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
