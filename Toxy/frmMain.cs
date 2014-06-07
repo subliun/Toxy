@@ -123,7 +123,7 @@ namespace Toxy
                 return;
 
             try { callform.Start(); }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 callform.Close();
                 callform = null;
@@ -183,6 +183,7 @@ namespace Toxy
                     case ToxFileControl.ACCEPT:
                         {
                             Thread thread = new Thread(SendData);
+                            ft.Thread = thread;
                             thread.Start(ft);
                         }
                         break;
@@ -206,7 +207,11 @@ namespace Toxy
                 if (read != chunk_size)
                     break;
 
-                Thread.Sleep(25);
+                ulong remaining = tox.FileDataRemaining(transfer.FriendNumber, transfer.FileNumber, 0);
+                transfer.ChangeProgress(100 - (int)(((double)remaining / (double)transfer.FileSize) * 100));
+                transfer.ChangeStatus(string.Format("{0}/{1}", transfer.FileSize - remaining, transfer.FileSize));
+
+                Thread.Sleep(10);
             }
 
             tox.FileSendControl(transfer.FriendNumber, 0, transfer.FileNumber, ToxFileControl.FINISHED, new byte[0]);
@@ -230,8 +235,6 @@ namespace Toxy
                 ft.ChangeStatus(string.Format("{0}/{1}", ft.FileSize - remaining, ft.FileSize));
 
                 ft.Stream.Write(data, 0, data.Length);
-
-                //ft.AddData(data, tox.FileDataRemaining(friendnumber, filenumber, 1));
             }
         }
 
@@ -275,7 +278,7 @@ namespace Toxy
 
             if (group == null)
                 return;
-            
+
             group.ChangePeerCount(tox.GetGroupMemberCount(groupnumber));
 
             if (tabControl.SelectedTab == tabGroups)
@@ -356,7 +359,7 @@ namespace Toxy
 
             if (friend == null)
                 return;
-            
+
             if (status == 0)
             {
                 DateTime time = tox.GetLastOnline(friendnumber);
@@ -449,7 +452,7 @@ namespace Toxy
             else
                 lblUsername.Text = tox.GetName(friendnumber);
         }
-        
+
         private void OnFriendAction(int friendnumber, string action)
         {
             action = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetName(friendnumber), action);
@@ -473,15 +476,15 @@ namespace Toxy
 
             if (current_number != friendnumber)
                 return;
-            
+
             txtConversation.AppendText(action);
         }
 
         private Friend GetFriendControlByNumber(int friendnumber)
         {
             foreach (Friend friend in GetFriendControls())
-                    if (friend.FriendNumber == friendnumber)
-                        return friend;
+                if (friend.FriendNumber == friendnumber)
+                    return friend;
 
             return null;
         }
@@ -489,8 +492,8 @@ namespace Toxy
         private Group GetGroupControlByNumber(int groupnumber)
         {
             foreach (Group group in GetGroupControls())
-                    if (group.GroupNumber == groupnumber)
-                        return group;
+                if (group.GroupNumber == groupnumber)
+                    return group;
 
             return null;
         }
@@ -685,6 +688,15 @@ namespace Toxy
                 connloop.Abort();
                 connloop.Join();
 
+                foreach (FileTransfer transfer in GetFileTransferControls())
+                {
+                    if (transfer.Thread != null)
+                    {
+                        transfer.Thread.Abort();
+                        transfer.Thread.Join();
+                    }
+                }
+
                 config.Save("toxy.cfg");
 
                 tox.Save("data");
@@ -698,12 +710,12 @@ namespace Toxy
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            int friendnumber; 
+            int friendnumber;
             try { friendnumber = tox.AddFriend(form.ID, form.Message); }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString()); 
-                return; 
+                MessageBox.Show(ex.ToString());
+                return;
             }
 
             tox.SetSendsReceipts(friendnumber, true);
@@ -1093,7 +1105,7 @@ namespace Toxy
 
             ctxMenuInvite.Items.Clear();
 
-            foreach(int friend in tox.GetFriendlist())
+            foreach (int friend in tox.GetFriendlist())
             {
                 ToolStripMenuItem item = new ToolStripMenuItem(tox.GetName(friend));
                 item.Click += delegate(object s, EventArgs args) { if (!tox.InviteFriend(friend, current_number)) { MessageBox.Show("Could not send invite. Did you select a group?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } };

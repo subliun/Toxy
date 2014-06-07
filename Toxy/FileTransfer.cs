@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 
 using SharpTox;
 
@@ -21,6 +22,7 @@ namespace Toxy
         public bool Sending = false;
 
         public FileStream Stream;
+        public Thread Thread;
 
         public event EventHandler OnDeleteMe;
 
@@ -45,20 +47,23 @@ namespace Toxy
 
         public void ChangeProgress(int value)
         {
-            progressBar.Value = value;
+            BeginInvoke(((Action)(() => progressBar.Value = value)));
         }
 
         public void ChangeStatus(string status)
         {
-            lblProgress.Text = status;
+            BeginInvoke(((Action)(() => lblProgress.Text = status)));
         }
 
         public void TransferFinished(bool killed)
         {
             Finished = true;
 
-            lblDescription.Text = "Transfer finished!";
-            btnCancel.Text = "Close";
+            BeginInvoke(((Action)(() =>
+                {
+                    lblDescription.Text = "Transfer finished!";
+                    btnCancel.Text = "Close";
+                })));
 
             if (Stream != null)
                 Stream.Close();
