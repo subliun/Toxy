@@ -183,7 +183,7 @@ namespace Toxy
                     case ToxFileControl.ACCEPT:
                         {
                             Thread thread = new Thread(SendData);
-                            thread.Start();
+                            thread.Start(ft);
                         }
                         break;
                 }
@@ -192,12 +192,25 @@ namespace Toxy
 
         private void SendData(object ft)
         {
+            FileTransfer transfer = (FileTransfer)ft;
+            Stream stream = transfer.Stream = new FileStream(transfer.FileName, FileMode.Open, FileAccess.Read);
 
+            int chunk_size = tox.FileDataSize(transfer.FriendNumber);
+            byte[] buffer = new byte[chunk_size];
 
-            while (true)
+            int read;
+            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
             {
+                tox.FileSendData(transfer.FriendNumber, transfer.FileNumber, buffer);
 
+                if (read != chunk_size)
+                    break;
+
+                Thread.Sleep(25);
             }
+
+            tox.FileSendControl(transfer.FriendNumber, 0, transfer.FileNumber, ToxFileControl.FINISHED, new byte[0]);
+            transfer.TransferFinished(false);
         }
 
         private void OnFileData(int friendnumber, int filenumber, byte[] data)
@@ -224,7 +237,7 @@ namespace Toxy
 
         private FileTransfer AddFileTransferControl(int friendnumber, int filenumber, ulong filesiz, string filename, bool sending)
         {
-            FileTransfer control = new FileTransfer(filenumber, friendnumber, filesiz, filename, sending);
+            FileTransfer control = new FileTransfer(tox, filenumber, friendnumber, filesiz, filename, sending);
             control.OnDeleteMe += control_OnDeleteMe;
             control.StyleManager = metroStyleManager1;
 
@@ -945,7 +958,8 @@ namespace Toxy
             string filename = path.Split('\\')[path.Split('\\').Length - 1];
             int filenumber = tox.NewFileSender(current_number, (ulong)filesize, filename);
 
-            AddFileTransferControl(filenumber, current_number, (ulong)filesize, filename, true);
+            AddFileTransferControl(current_number, filenumber, (ulong)filesize, path, true);
+            tabControl.SelectedTab = tabTransfers;
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)

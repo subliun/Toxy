@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.IO;
 
+using SharpTox;
+
 using MetroFramework.Controls;
 using MetroFramework.Drawing;
 
@@ -22,13 +24,17 @@ namespace Toxy
 
         public event EventHandler OnDeleteMe;
 
-        public FileTransfer(int filenumber, int friendnumber, ulong filesize, string filename, bool sending)
+        private Tox tox;
+
+        public FileTransfer(Tox tox, int filenumber, int friendnumber, ulong filesize, string filename, bool sending)
         {
             FileNumber = filenumber;
             FriendNumber = friendnumber;
             FileSize = filesize;
             FileName = filename;
             Sending = sending;
+
+            this.tox = tox;
 
             TabStop = false;
             InitializeComponent();
@@ -53,7 +59,9 @@ namespace Toxy
 
             lblDescription.Text = "Transfer finished!";
             btnCancel.Text = "Close";
-            Stream.Close();
+
+            if (Stream != null)
+                Stream.Close();
         }
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
@@ -80,8 +88,13 @@ namespace Toxy
             }
             else
             {
-                Stream.Close();
-                File.Delete(FileName);
+                if (Stream != null)
+                    Stream.Close();
+
+                if (!Sending)
+                    File.Delete(FileName);
+
+                tox.FileSendControl(FriendNumber, Sending ? 0 : 1, FileNumber, ToxFileControl.KILL, new byte[0]);
 
                 OnDeleteMe(this, new EventArgs());
             }
