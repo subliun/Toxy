@@ -650,6 +650,10 @@ namespace Toxy
 
             tabControl.SelectedTab = tabFriends;
 
+            dataConversation.BackgroundColor = MetroFramework.Drawing.MetroPaint.BackColor.Button.Normal(Theme);
+            dataConversation.DefaultCellStyle.BackColor = MetroFramework.Drawing.MetroPaint.BackColor.Button.Normal(Theme);
+
+
             connloop = new Thread(ConnectLoop);
             connloop.Start();
         }
@@ -1065,6 +1069,7 @@ namespace Toxy
             ReorganizePanel(panelGroups, typeof(Group));
         }
 
+        //this should be refactored too
         private Friend[] GetFriendControls()
         {
             List<Friend> friends = new List<Friend>();

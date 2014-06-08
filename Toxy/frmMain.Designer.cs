@@ -64,6 +64,7 @@
             this.dataConversation = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.styleExtender = new MetroFramework.Components.MetroStyleExtender(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabFriends.SuspendLayout();
@@ -129,7 +130,7 @@
             this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
             this.tabControl.Location = new System.Drawing.Point(23, 63);
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 1;
+            this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(346, 455);
             this.tabControl.TabIndex = 2;
             this.tabControl.TabStop = false;
@@ -404,6 +405,7 @@
             // 
             // dataConversation
             // 
+            this.styleExtender.SetApplyMetroTheme(this.dataConversation, true);
             this.dataConversation.AllowUserToAddRows = false;
             this.dataConversation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -442,6 +444,10 @@
             this.Column2.DefaultCellStyle = dataGridViewCellStyle2;
             this.Column2.HeaderText = "Messages";
             this.Column2.Name = "Column2";
+            // 
+            // styleExtender
+            // 
+            this.styleExtender.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // frmMain
             // 
@@ -518,6 +524,7 @@
         private System.Windows.Forms.DataGridView dataConversation;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private MetroFramework.Components.MetroStyleExtender styleExtender;
 
     }
 }
