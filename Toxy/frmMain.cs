@@ -956,9 +956,10 @@ namespace Toxy
 
         private void btnSendFile_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("This functionality has not been implemented yet. Friends can send files to you though.");
-
             if (tabControl.SelectedTab != tabFriends)
+                return;
+
+            if (tox.GetFriendConnectionStatus(current_number) == 0)
                 return;
 
             OpenFileDialog dialog = new OpenFileDialog();
@@ -1131,6 +1132,9 @@ namespace Toxy
         private void btnCall_Click(object sender, EventArgs e)
         {
             if (callform != null)
+                return;
+
+            if (tox.GetFriendConnectionStatus(current_number) == 0)
                 return;
 
             callform = new frmCall(tox, toxav);
