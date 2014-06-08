@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.panelFriends = new MetroFramework.Controls.MetroPanel();
             this.panelRequests = new MetroFramework.Controls.MetroPanel();
@@ -40,7 +42,6 @@
             this.panelGroups = new MetroFramework.Controls.MetroPanel();
             this.tabTransfers = new MetroFramework.Controls.MetroTabPage();
             this.panelTransfers = new MetroFramework.Controls.MetroPanel();
-            this.txtConversation = new MetroFramework.Controls.MetroTextBox();
             this.txtToSend = new MetroFramework.Controls.MetroTextBox();
             this.btnAddFriend = new MetroFramework.Controls.MetroButton();
             this.btnOptions = new MetroFramework.Controls.MetroButton();
@@ -60,6 +61,9 @@
             this.ctxMenuGroupDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuInvite = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.btnCall = new MetroFramework.Controls.MetroButton();
+            this.dataConversation = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabFriends.SuspendLayout();
@@ -69,6 +73,7 @@
             this.ctxMenuFriend.SuspendLayout();
             this.trayMenu.SuspendLayout();
             this.ctxMenuGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataConversation)).BeginInit();
             this.SuspendLayout();
             // 
             // panelFriends
@@ -222,24 +227,6 @@
             this.panelTransfers.VerticalScrollbarBarColor = true;
             this.panelTransfers.VerticalScrollbarHighlightOnWheel = false;
             this.panelTransfers.VerticalScrollbarSize = 10;
-            // 
-            // txtConversation
-            // 
-            this.txtConversation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtConversation.Lines = new string[0];
-            this.txtConversation.Location = new System.Drawing.Point(375, 124);
-            this.txtConversation.MaxLength = 32767;
-            this.txtConversation.Multiline = true;
-            this.txtConversation.Name = "txtConversation";
-            this.txtConversation.PasswordChar = '\0';
-            this.txtConversation.ReadOnly = true;
-            this.txtConversation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtConversation.SelectedText = "";
-            this.txtConversation.Size = new System.Drawing.Size(788, 394);
-            this.txtConversation.TabIndex = 4;
-            this.txtConversation.UseSelectable = true;
             // 
             // txtToSend
             // 
@@ -415,6 +402,47 @@
             this.btnCall.UseSelectable = true;
             this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
             // 
+            // dataConversation
+            // 
+            this.dataConversation.AllowUserToAddRows = false;
+            this.dataConversation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataConversation.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataConversation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataConversation.ColumnHeadersVisible = false;
+            this.dataConversation.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
+            this.dataConversation.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataConversation.Location = new System.Drawing.Point(375, 124);
+            this.dataConversation.MultiSelect = false;
+            this.dataConversation.Name = "dataConversation";
+            this.dataConversation.RowHeadersVisible = false;
+            this.dataConversation.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataConversation.ShowEditingIcon = false;
+            this.dataConversation.Size = new System.Drawing.Size(788, 390);
+            this.dataConversation.TabIndex = 10;
+            this.dataConversation.SelectionChanged += new System.EventHandler(this.dataConversation_SelectionChanged);
+            // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Column1.HeaderText = "Username";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 5;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Column2.HeaderText = "Messages";
+            this.Column2.Name = "Column2";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -423,6 +451,7 @@
             this.BackImagePadding = new System.Windows.Forms.Padding(170, 15, 0, 0);
             this.BackMaxSize = 40;
             this.ClientSize = new System.Drawing.Size(1178, 561);
+            this.Controls.Add(this.dataConversation);
             this.Controls.Add(this.btnCall);
             this.Controls.Add(this.btnInvite);
             this.Controls.Add(this.btnSendFile);
@@ -432,7 +461,6 @@
             this.Controls.Add(this.btnOptions);
             this.Controls.Add(this.txtToSend);
             this.Controls.Add(this.btnAddFriend);
-            this.Controls.Add(this.txtConversation);
             this.Controls.Add(this.tabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
@@ -450,6 +478,7 @@
             this.ctxMenuFriend.ResumeLayout(false);
             this.trayMenu.ResumeLayout(false);
             this.ctxMenuGroup.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataConversation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,7 +493,6 @@
         private MetroFramework.Controls.MetroTabPage tabFriends;
         private MetroFramework.Controls.MetroTabPage tabRequests;
         private MetroFramework.Controls.MetroTextBox txtToSend;
-        private MetroFramework.Controls.MetroTextBox txtConversation;
         private MetroFramework.Controls.MetroButton btnOptions;
         private MetroFramework.Controls.MetroButton btnAddFriend;
         private MetroFramework.Controls.MetroButton btnNewGroup;
@@ -487,6 +515,9 @@
         private System.Windows.Forms.ToolStripMenuItem ctxMenuGroupDelete;
         private MetroFramework.Controls.MetroContextMenu ctxMenuInvite;
         private MetroFramework.Controls.MetroButton btnCall;
+        private System.Windows.Forms.DataGridView dataConversation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
 
     }
 }

@@ -28,8 +28,8 @@ namespace Toxy
         private string id;
         private Thread connloop;
 
-        private Dictionary<int, string> convdic = new Dictionary<int, string>();
-        private Dictionary<int, string> groupdic = new Dictionary<int, string>();
+        private Dictionary<int, List<DataGridViewRow>> convdic = new Dictionary<int, List<DataGridViewRow>>();
+        private Dictionary<int, List<DataGridViewRow>> groupdic = new Dictionary<int, List<DataGridViewRow>>();
 
         private Config config;
 
@@ -288,12 +288,13 @@ namespace Toxy
 
         private void OnGroupAction(int groupnumber, int friendgroupnumber, string action)
         {
-            action = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetGroupMemberName(groupnumber, friendgroupnumber), action);
+            DataGridViewRow row = new DataGridViewRow();
+            row.CreateCells(dataConversation, "*", string.Format("{0} {1}", tox.GetGroupMemberName(groupnumber, friendgroupnumber), action));
 
             if (groupdic.ContainsKey(groupnumber))
-                groupdic[groupnumber] += action;
+                groupdic[groupnumber].Add(row);
             else
-                groupdic.Add(groupnumber, action);
+                groupdic.Add(groupnumber, new List<DataGridViewRow>() { row });
 
             Group control = GetGroupControlByNumber(groupnumber);
             if (control != null && !control.Selected && !control.NewMessages)
@@ -310,17 +311,18 @@ namespace Toxy
             if (current_number != groupnumber)
                 return;
 
-            txtConversation.AppendText(action);
+            dataConversation.Rows.Add(row);
         }
 
         private void OnGroupMessage(int groupnumber, int friendgroupnumber, string message)
         {
-            message = string.Format("<{0}> {1}" + Environment.NewLine, tox.GetGroupMemberName(groupnumber, friendgroupnumber), message);
+            DataGridViewRow row = new DataGridViewRow();
+            row.CreateCells(dataConversation, tox.GetGroupMemberName(groupnumber, friendgroupnumber), message);
 
             if (groupdic.ContainsKey(groupnumber))
-                groupdic[groupnumber] += message;
+                groupdic[groupnumber].Add(row);
             else
-                groupdic.Add(groupnumber, message);
+                groupdic.Add(groupnumber, new List<DataGridViewRow>() { row });
 
             Group control = GetGroupControlByNumber(groupnumber);
             if (control != null && !control.Selected && !control.NewMessages)
@@ -337,7 +339,7 @@ namespace Toxy
             if (current_number != groupnumber)
                 return;
 
-            txtConversation.AppendText(message);
+            dataConversation.Rows.Add(row);
         }
 
         private void OnGroupInvite(int friendnumber, string group_public_key)
@@ -455,12 +457,13 @@ namespace Toxy
 
         private void OnFriendAction(int friendnumber, string action)
         {
-            action = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetName(friendnumber), action);
+            DataGridViewRow row = new DataGridViewRow();
+            row.CreateCells(dataConversation, "*", string.Format("{0} {1}", tox.GetName(friendnumber), action));
 
             if (convdic.ContainsKey(friendnumber))
-                convdic[friendnumber] += action;
+                convdic[friendnumber].Add(row);
             else
-                convdic.Add(friendnumber, action);
+                convdic.Add(friendnumber, new List<DataGridViewRow>() { row });
 
             Friend control = GetFriendControlByNumber(friendnumber);
             if (control != null && !control.Selected && !control.NewMessages)
@@ -477,7 +480,7 @@ namespace Toxy
             if (current_number != friendnumber)
                 return;
 
-            txtConversation.AppendText(action);
+            dataConversation.Rows.Add(row);
         }
 
         private Friend GetFriendControlByNumber(int friendnumber)
@@ -500,12 +503,13 @@ namespace Toxy
 
         private void OnFriendMessage(int friendnumber, string message)
         {
-            message = string.Format("<{0}> {1}" + Environment.NewLine, tox.GetName(friendnumber), message);
+            DataGridViewRow row = new DataGridViewRow();
+            row.CreateCells(dataConversation, tox.GetName(friendnumber), message);
 
             if (convdic.ContainsKey(friendnumber))
-                convdic[friendnumber] += message;
+                convdic[friendnumber].Add(row);
             else
-                convdic.Add(friendnumber, message);
+                convdic.Add(friendnumber, new List<DataGridViewRow>() { row });
 
             Friend control = GetFriendControlByNumber(friendnumber);
             if (control != null && !control.Selected && !control.NewMessages)
@@ -522,7 +526,7 @@ namespace Toxy
             if (current_number != friendnumber)
                 return;
 
-            txtConversation.AppendText(message);
+            dataConversation.Rows.Add(row);
         }
 
         private void OnFriendRequest(string id, string message)
@@ -599,10 +603,10 @@ namespace Toxy
 
             current_number = friend.FriendNumber;
 
-            txtConversation.Text = "";
+            dataConversation.Rows.Clear();
 
             if (convdic.ContainsKey(current_number))
-                txtConversation.Text = convdic[current_number];
+                dataConversation.Rows.AddRange(convdic[current_number].ToArray());
 
             if (e.Button == MouseButtons.Right)
                 ctxMenuFriend.Show(Cursor.Position);
@@ -790,10 +794,10 @@ namespace Toxy
 
             current_number = group.GroupNumber;
 
-            txtConversation.Text = "";
+            dataConversation.Rows.Clear();
 
             if (groupdic.ContainsKey(current_number))
-                txtConversation.Text = groupdic[current_number];
+                dataConversation.Rows.AddRange(groupdic[current_number].ToArray());
 
             if (e.Button == MouseButtons.Right)
                 ctxMenuGroup.Show(Cursor.Position);
@@ -818,15 +822,17 @@ namespace Toxy
                     string action = box.Text.Substring(4);
                     tox.SendAction(current_number, action);
 
-                    string line = string.Format(" * {0} {1}" + Environment.NewLine, tox.GetSelfName(), action);
+                    DataGridViewRow row = new DataGridViewRow();
+                    row.CreateCells(dataConversation, "*", string.Format("{0} {1}", tox.GetSelfName(), action));
 
-                    txtConversation.AppendText(line);
+                    dataConversation.Rows.Add(row);
+
                     box.Text = "";
 
                     if (convdic.ContainsKey(current_number))
-                        convdic[current_number] += line;
+                        convdic[current_number].Add(row);
                     else
-                        convdic.Add(current_number, line);
+                        convdic.Add(current_number, new List<DataGridViewRow>() { row });
 
                     e.Handled = true;
                 }
@@ -834,15 +840,17 @@ namespace Toxy
                 {
                     tox.SendMessage(current_number, txtToSend.Text);
 
-                    string line = string.Format("<{0}> {1}" + Environment.NewLine, tox.GetSelfName(), txtToSend.Text);
+                    DataGridViewRow row = new DataGridViewRow();
+                    row.CreateCells(dataConversation, tox.GetSelfName(), box.Text);
 
-                    txtConversation.AppendText(line);
-                    txtToSend.Text = "";
+                    dataConversation.Rows.Add(row);
+
+                    box.Text = "";
 
                     if (convdic.ContainsKey(current_number))
-                        convdic[current_number] += line;
+                        convdic[current_number].Add(row);
                     else
-                        convdic.Add(current_number, line);
+                        convdic.Add(current_number, new List<DataGridViewRow>() { row });
 
                     e.Handled = true;
                 }
@@ -976,7 +984,7 @@ namespace Toxy
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtConversation.Text = "";
+            dataConversation.Rows.Clear();
             MetroTabControl control = (MetroTabControl)sender;
 
             if (control.SelectedTab == tabGroups)
@@ -1002,7 +1010,7 @@ namespace Toxy
                 current_number = group.GroupNumber;
 
                 if (groupdic.ContainsKey(current_number))
-                    txtConversation.Text = groupdic[current_number];
+                    dataConversation.Rows.AddRange(groupdic[current_number].ToArray());
 
             }
             else if (tabControl.SelectedTab == tabFriends)
@@ -1028,7 +1036,7 @@ namespace Toxy
                 current_number = friend.FriendNumber;
 
                 if (convdic.ContainsKey(current_number))
-                    txtConversation.Text = convdic[current_number];
+                    dataConversation.Rows.AddRange(convdic[current_number].ToArray());
             }
 
             txtToSend.Focus();
@@ -1107,6 +1115,9 @@ namespace Toxy
 
             foreach (int friend in tox.GetFriendlist())
             {
+                if (tox.GetFriendConnectionStatus(friend) == 0)
+                    continue;
+
                 ToolStripMenuItem item = new ToolStripMenuItem(tox.GetName(friend));
                 item.Click += delegate(object s, EventArgs args) { if (!tox.InviteFriend(friend, current_number)) { MessageBox.Show("Could not send invite. Did you select a group?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } };
                 item.Tag = friend;
@@ -1131,6 +1142,11 @@ namespace Toxy
         private void callform_FormClosed(object sender, FormClosedEventArgs e)
         {
             callform = null;
+        }
+
+        private void dataConversation_SelectionChanged(object sender, EventArgs e)
+        {
+            dataConversation.ClearSelection();
         }
     }
 }
