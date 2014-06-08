@@ -12,6 +12,7 @@ using MetroFramework;
 using MetroFramework.Forms;
 using MetroFramework.Controls;
 using MetroFramework.Interfaces;
+using MetroFramework.Drawing;
 using MetroMessageBox = MetroFramework.MetroMessageBox;
 
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -650,9 +651,10 @@ namespace Toxy
 
             tabControl.SelectedTab = tabFriends;
 
-            dataConversation.BackgroundColor = MetroFramework.Drawing.MetroPaint.BackColor.Button.Normal(Theme);
-            dataConversation.DefaultCellStyle.BackColor = MetroFramework.Drawing.MetroPaint.BackColor.Button.Normal(Theme);
-
+            dataConversation.BackgroundColor = MetroPaint.BackColor.Button.Normal(Theme);
+            dataConversation.DefaultCellStyle.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
+            dataConversation.Font = MetroFonts.TextBox(MetroTextBoxSize.Small, MetroTextBoxWeight.Regular);
+            dataConversation.GridColor = MetroPaint.BorderColor.Button.Normal(Theme);
 
             connloop = new Thread(ConnectLoop);
             connloop.Start();
