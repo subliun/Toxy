@@ -405,11 +405,12 @@
             // 
             // dataConversation
             // 
-            this.styleExtender.SetApplyMetroTheme(this.dataConversation, true);
             this.dataConversation.AllowUserToAddRows = false;
             this.dataConversation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.styleExtender.SetApplyMetroTheme(this.dataConversation, true);
+            this.dataConversation.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataConversation.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataConversation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataConversation.ColumnHeadersVisible = false;

@@ -317,13 +317,32 @@ namespace Toxy
 
         private void OnGroupMessage(int groupnumber, int friendgroupnumber, string message)
         {
-            DataGridViewRow row = new DataGridViewRow();
-            row.CreateCells(dataConversation, tox.GetGroupMemberName(groupnumber, friendgroupnumber), message);
+            if (groupdic.ContainsKey(current_number))
+            {
+                DataGridViewRow last_row = groupdic[current_number][groupdic[current_number].Count - 1];
+                if ((string)last_row.Cells[0].Value == tox.GetGroupMemberName(groupnumber, friendgroupnumber))
+                    last_row.Cells[1].Value += Environment.NewLine + message;
+                else
+                {
+                    DataGridViewRow row = new DataGridViewRow();
+                    row.CreateCells(dataConversation, tox.GetGroupMemberName(groupnumber, friendgroupnumber), message);
 
-            if (groupdic.ContainsKey(groupnumber))
-                groupdic[groupnumber].Add(row);
+                    groupdic[current_number].Add(row);
+
+                    if (current_number == groupnumber && tabControl.SelectedTab == tabGroups)
+                        dataConversation.Rows.Add(row);
+                }
+            }
             else
-                groupdic.Add(groupnumber, new List<DataGridViewRow>() { row });
+            {
+                DataGridViewRow row = new DataGridViewRow();
+                row.CreateCells(dataConversation, tox.GetGroupMemberName(groupnumber, friendgroupnumber), message);
+
+                groupdic.Add(current_number, new List<DataGridViewRow>() { row });
+
+                if (current_number == groupnumber && tabControl.SelectedTab == tabGroups)
+                    dataConversation.Rows.Add(row);
+            }
 
             Group control = GetGroupControlByNumber(groupnumber);
             if (control != null && !control.Selected && !control.NewMessages)
@@ -333,14 +352,6 @@ namespace Toxy
             }
 
             this.Flash();
-
-            if (tabControl.SelectedTab != tabGroups)
-                return;
-
-            if (current_number != groupnumber)
-                return;
-
-            dataConversation.Rows.Add(row);
         }
 
         private void OnGroupInvite(int friendnumber, string group_public_key)
@@ -504,13 +515,32 @@ namespace Toxy
 
         private void OnFriendMessage(int friendnumber, string message)
         {
-            DataGridViewRow row = new DataGridViewRow();
-            row.CreateCells(dataConversation, tox.GetName(friendnumber), message);
-
             if (convdic.ContainsKey(friendnumber))
-                convdic[friendnumber].Add(row);
+            {
+                DataGridViewRow last_row = convdic[friendnumber][convdic[friendnumber].Count - 1];
+                if ((string)last_row.Cells[0].Value == tox.GetName(friendnumber))
+                    last_row.Cells[1].Value += Environment.NewLine + message;
+                else
+                {
+                    DataGridViewRow row = new DataGridViewRow();
+                    row.CreateCells(dataConversation, tox.GetName(friendnumber), message);
+
+                    convdic[friendnumber].Add(row);
+
+                    if (current_number == friendnumber && tabControl.SelectedTab == tabFriends)
+                        dataConversation.Rows.Add(row);
+                }
+            }
             else
+            {
+                DataGridViewRow row = new DataGridViewRow();
+                row.CreateCells(dataConversation, tox.GetName(friendnumber), message);
+
                 convdic.Add(friendnumber, new List<DataGridViewRow>() { row });
+
+                if (current_number == friendnumber && tabControl.SelectedTab == tabFriends)
+                    dataConversation.Rows.Add(row);
+            }
 
             Friend control = GetFriendControlByNumber(friendnumber);
             if (control != null && !control.Selected && !control.NewMessages)
@@ -520,14 +550,6 @@ namespace Toxy
             }
 
             this.Flash();
-
-            if (tabControl.SelectedTab != tabFriends)
-                return;
-
-            if (current_number != friendnumber)
-                return;
-
-            dataConversation.Rows.Add(row);
         }
 
         private void OnFriendRequest(string id, string message)
@@ -846,18 +868,30 @@ namespace Toxy
                 {
                     tox.SendMessage(current_number, txtToSend.Text);
 
-                    DataGridViewRow row = new DataGridViewRow();
-                    row.CreateCells(dataConversation, tox.GetSelfName(), box.Text);
+                    if (convdic.ContainsKey(current_number))
+                    {
+                        DataGridViewRow last_row = convdic[current_number][convdic[current_number].Count - 1];
+                        if ((string)last_row.Cells[0].Value == tox.GetSelfName())
+                            last_row.Cells[1].Value += Environment.NewLine + box.Text;
+                        else
+                        {
+                            DataGridViewRow row = new DataGridViewRow();
+                            row.CreateCells(dataConversation, tox.GetSelfName(), box.Text);
 
-                    dataConversation.Rows.Add(row);
+                            convdic[current_number].Add(row);
+                            dataConversation.Rows.Add(row);
+                        }
+                    }
+                    else
+                    {
+                        DataGridViewRow row = new DataGridViewRow();
+                        row.CreateCells(dataConversation, tox.GetSelfName(), box.Text);
+
+                        convdic.Add(current_number, new List<DataGridViewRow>() { row });
+                        dataConversation.Rows.Add(row);
+                    }
 
                     box.Text = "";
-
-                    if (convdic.ContainsKey(current_number))
-                        convdic[current_number].Add(row);
-                    else
-                        convdic.Add(current_number, new List<DataGridViewRow>() { row });
-
                     e.Handled = true;
                 }
             }
