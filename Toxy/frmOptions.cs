@@ -35,11 +35,17 @@ namespace Toxy
             for (int i = 0; i < devices; i++)
                 comboOutput.Items.Add(WaveOut.GetCapabilities(i).ProductName);
 
-            if (comboInput.Items.Count > 0)
-                comboInput.SelectedIndex = 0;
+            if (comboInput.Items.Count != 0)
+            {
+                if (comboInput.Items.Count > (int)config["device_input"])
+                    comboInput.SelectedIndex = config["device_input"];
+            }
 
-            if (comboOutput.Items.Count > 0)
-                comboOutput.SelectedIndex = 0;
+            if (comboOutput.Items.Count != 0)
+            {
+                if (comboOutput.Items.Count > (int)config["device_output"])
+                    comboOutput.SelectedIndex = config["device_output"];
+            }
         }
 
         private void btnCopyID_Click(object sender, EventArgs e)
@@ -64,7 +70,7 @@ namespace Toxy
             config["close_to_tray"] = toggleCloseTray.Checked;
 
             config["device_input"] = comboInput.SelectedIndex;
-            config["device_input"] = comboOutput.SelectedIndex;
+            config["device_output"] = comboOutput.SelectedIndex;
 
             config.Save("toxy.cfg");
 
