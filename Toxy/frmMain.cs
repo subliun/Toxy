@@ -154,6 +154,12 @@ namespace Toxy
         private void OnReadReceipt(int friendnumber, uint receipt)
         {
             Console.WriteLine("{0} has received message #{1}", tox.GetName(friendnumber), receipt);
+            foreach(DataGridViewRow row in convdic[friendnumber])
+            {
+                if (row.Tag != null)
+                    if ((int)row.Tag == (int)receipt)
+                        row.Cells[2].Value = "\u2713";
+            }
         }
 
         private void OnFileControl(int friendnumber, int receive_send, int filenumber, int control_type, byte[] data)
@@ -848,10 +854,11 @@ namespace Toxy
                 if (box.Text.StartsWith("/me "))
                 {
                     string action = box.Text.Substring(4);
-                    tox.SendAction(current_number, action);
+                    int messageid = tox.SendAction(current_number, action);
 
                     DataGridViewRow row = new DataGridViewRow();
-                    row.CreateCells(dataConversation, "*", string.Format("{0} {1}", tox.GetSelfName(), action));
+                    row.Tag = messageid;
+                    row.CreateCells(dataConversation, "*", string.Format("{0} {1}", tox.GetSelfName(), action, ""));
 
                     dataConversation.Rows.Add(row);
 
@@ -866,7 +873,7 @@ namespace Toxy
                 }
                 else
                 {
-                    tox.SendMessage(current_number, txtToSend.Text);
+                    int messageid = tox.SendMessage(current_number, txtToSend.Text);
 
                     if (convdic.ContainsKey(current_number))
                     {
@@ -876,7 +883,8 @@ namespace Toxy
                         else
                         {
                             DataGridViewRow row = new DataGridViewRow();
-                            row.CreateCells(dataConversation, tox.GetSelfName(), box.Text);
+                            row.Tag = messageid;
+                            row.CreateCells(dataConversation, tox.GetSelfName(), box.Text, "");
 
                             convdic[current_number].Add(row);
                             dataConversation.Rows.Add(row);
@@ -885,7 +893,8 @@ namespace Toxy
                     else
                     {
                         DataGridViewRow row = new DataGridViewRow();
-                        row.CreateCells(dataConversation, tox.GetSelfName(), box.Text);
+                        row.Tag = messageid;
+                        row.CreateCells(dataConversation, tox.GetSelfName(), box.Text, "");
 
                         convdic.Add(current_number, new List<DataGridViewRow>() { row });
                         dataConversation.Rows.Add(row);

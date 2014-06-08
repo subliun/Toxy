@@ -64,6 +64,7 @@
             this.dataConversation = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.styleExtender = new MetroFramework.Components.MetroStyleExtender(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabControl.SuspendLayout();
@@ -88,7 +89,7 @@
             this.panelFriends.HorizontalScrollbarSize = 10;
             this.panelFriends.Location = new System.Drawing.Point(0, 13);
             this.panelFriends.Name = "panelFriends";
-            this.panelFriends.Size = new System.Drawing.Size(342, 404);
+            this.panelFriends.Size = new System.Drawing.Size(342, 321);
             this.panelFriends.TabIndex = 3;
             this.panelFriends.VerticalScrollbar = true;
             this.panelFriends.VerticalScrollbarBarColor = true;
@@ -131,7 +132,7 @@
             this.tabControl.Location = new System.Drawing.Point(23, 63);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(346, 455);
+            this.tabControl.Size = new System.Drawing.Size(346, 372);
             this.tabControl.TabIndex = 2;
             this.tabControl.TabStop = false;
             this.tabControl.UseSelectable = true;
@@ -145,7 +146,7 @@
             this.tabFriends.HorizontalScrollbarSize = 10;
             this.tabFriends.Location = new System.Drawing.Point(4, 38);
             this.tabFriends.Name = "tabFriends";
-            this.tabFriends.Size = new System.Drawing.Size(338, 413);
+            this.tabFriends.Size = new System.Drawing.Size(338, 330);
             this.tabFriends.TabIndex = 0;
             this.tabFriends.Text = "Friends";
             this.tabFriends.VerticalScrollbarBarColor = true;
@@ -234,13 +235,13 @@
             this.txtToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtToSend.Lines = new string[0];
-            this.txtToSend.Location = new System.Drawing.Point(375, 524);
+            this.txtToSend.Location = new System.Drawing.Point(375, 441);
             this.txtToSend.MaxLength = 32767;
             this.txtToSend.Name = "txtToSend";
             this.txtToSend.PasswordChar = '\0';
             this.txtToSend.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtToSend.SelectedText = "";
-            this.txtToSend.Size = new System.Drawing.Size(788, 23);
+            this.txtToSend.Size = new System.Drawing.Size(549, 23);
             this.txtToSend.Style = MetroFramework.MetroColorStyle.Blue;
             this.txtToSend.TabIndex = 0;
             this.txtToSend.UseSelectable = true;
@@ -251,7 +252,7 @@
             // btnAddFriend
             // 
             this.btnAddFriend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddFriend.Location = new System.Drawing.Point(27, 524);
+            this.btnAddFriend.Location = new System.Drawing.Point(27, 441);
             this.btnAddFriend.Name = "btnAddFriend";
             this.btnAddFriend.Size = new System.Drawing.Size(113, 23);
             this.btnAddFriend.TabIndex = 1;
@@ -262,7 +263,7 @@
             // btnOptions
             // 
             this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOptions.Location = new System.Drawing.Point(265, 524);
+            this.btnOptions.Location = new System.Drawing.Point(265, 441);
             this.btnOptions.Name = "btnOptions";
             this.btnOptions.Size = new System.Drawing.Size(104, 23);
             this.btnOptions.TabIndex = 3;
@@ -273,7 +274,7 @@
             // btnNewGroup
             // 
             this.btnNewGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnNewGroup.Location = new System.Drawing.Point(146, 524);
+            this.btnNewGroup.Location = new System.Drawing.Point(146, 441);
             this.btnNewGroup.Name = "btnNewGroup";
             this.btnNewGroup.Size = new System.Drawing.Size(113, 23);
             this.btnNewGroup.TabIndex = 2;
@@ -302,7 +303,7 @@
             // btnSendFile
             // 
             this.btnSendFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendFile.Location = new System.Drawing.Point(1088, 95);
+            this.btnSendFile.Location = new System.Drawing.Point(849, 95);
             this.btnSendFile.Name = "btnSendFile";
             this.btnSendFile.Size = new System.Drawing.Size(75, 23);
             this.btnSendFile.TabIndex = 5;
@@ -335,7 +336,7 @@
             // btnInvite
             // 
             this.btnInvite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInvite.Location = new System.Drawing.Point(1065, 95);
+            this.btnInvite.Location = new System.Drawing.Point(826, 95);
             this.btnInvite.Name = "btnInvite";
             this.btnInvite.Size = new System.Drawing.Size(98, 23);
             this.btnInvite.TabIndex = 6;
@@ -395,7 +396,7 @@
             // btnCall
             // 
             this.btnCall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCall.Location = new System.Drawing.Point(1007, 95);
+            this.btnCall.Location = new System.Drawing.Point(768, 95);
             this.btnCall.Name = "btnCall";
             this.btnCall.Size = new System.Drawing.Size(75, 23);
             this.btnCall.TabIndex = 5;
@@ -416,7 +417,8 @@
             this.dataConversation.ColumnHeadersVisible = false;
             this.dataConversation.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
-            this.Column2});
+            this.Column2,
+            this.Column3});
             this.dataConversation.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataConversation.Location = new System.Drawing.Point(375, 124);
             this.dataConversation.MultiSelect = false;
@@ -424,7 +426,7 @@
             this.dataConversation.RowHeadersVisible = false;
             this.dataConversation.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataConversation.ShowEditingIcon = false;
-            this.dataConversation.Size = new System.Drawing.Size(788, 390);
+            this.dataConversation.Size = new System.Drawing.Size(549, 307);
             this.dataConversation.TabIndex = 10;
             this.dataConversation.SelectionChanged += new System.EventHandler(this.dataConversation_SelectionChanged);
             // 
@@ -446,6 +448,13 @@
             this.Column2.HeaderText = "Messages";
             this.Column2.Name = "Column2";
             // 
+            // Column3
+            // 
+            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Column3.HeaderText = "Read";
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 5;
+            // 
             // styleExtender
             // 
             this.styleExtender.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -457,7 +466,7 @@
             this.BackImage = global::Toxy.Properties.Resources.toxy2;
             this.BackImagePadding = new System.Windows.Forms.Padding(170, 15, 0, 0);
             this.BackMaxSize = 40;
-            this.ClientSize = new System.Drawing.Size(1178, 561);
+            this.ClientSize = new System.Drawing.Size(939, 478);
             this.Controls.Add(this.dataConversation);
             this.Controls.Add(this.btnCall);
             this.Controls.Add(this.btnInvite);
@@ -523,9 +532,10 @@
         private MetroFramework.Controls.MetroContextMenu ctxMenuInvite;
         private MetroFramework.Controls.MetroButton btnCall;
         private System.Windows.Forms.DataGridView dataConversation;
+        private MetroFramework.Components.MetroStyleExtender styleExtender;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private MetroFramework.Components.MetroStyleExtender styleExtender;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
 
     }
 }
