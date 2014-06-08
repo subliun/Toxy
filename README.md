@@ -16,16 +16,20 @@ Feel free to contribute.
   - Friendlist
   - One to one conversations
   - Friendrequest listing
-* Audio calls (might be a little broken)
+* Audio calls
 * Group chats
-* File transfers (only receiving works at this point)
+* File transfers
 * Typing detection
 
 ### Screenshots
 
 ![Main Window](http://impy.me/i/1d83d3.png)
 
-Things you'll need
+Binaries
+===
+A pre-compiled version of Toxy can be found [here](http://jenkins.impy.me/job/Toxy/lastSuccessfulBuild/artifact/toxy.zip "Toxy Binaries"). This includes all of the dependencies.
+
+Things you'll need to compile
 ===
 
 * Libraries of the [MetroFramework](https://github.com/viperneo/winforms-modernui "MetroFramework GitHub repo")
