@@ -879,7 +879,11 @@ namespace Toxy
                     {
                         DataGridViewRow last_row = convdic[current_number][convdic[current_number].Count - 1];
                         if ((string)last_row.Cells[0].Value == tox.GetSelfName())
+                        {
                             last_row.Cells[1].Value += Environment.NewLine + box.Text;
+                            last_row.Tag = messageid;
+                            last_row.Cells[2].Value = "";
+                        }
                         else
                         {
                             DataGridViewRow row = new DataGridViewRow();

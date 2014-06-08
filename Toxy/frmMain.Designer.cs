@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.panelFriends = new MetroFramework.Controls.MetroPanel();
             this.panelRequests = new MetroFramework.Controls.MetroPanel();
@@ -62,10 +63,10 @@
             this.ctxMenuInvite = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.btnCall = new MetroFramework.Controls.MetroButton();
             this.dataConversation = new System.Windows.Forms.DataGridView();
+            this.styleExtender = new MetroFramework.Components.MetroStyleExtender(this.components);
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.styleExtender = new MetroFramework.Components.MetroStyleExtender(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabFriends.SuspendLayout();
@@ -430,6 +431,10 @@
             this.dataConversation.TabIndex = 10;
             this.dataConversation.SelectionChanged += new System.EventHandler(this.dataConversation_SelectionChanged);
             // 
+            // styleExtender
+            // 
+            this.styleExtender.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
             // Column1
             // 
             this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -451,13 +456,11 @@
             // Column3
             // 
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column3.HeaderText = "Read";
             this.Column3.Name = "Column3";
             this.Column3.Width = 5;
-            // 
-            // styleExtender
-            // 
-            this.styleExtender.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // frmMain
             // 
