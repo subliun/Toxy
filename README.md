@@ -20,7 +20,8 @@ Feel free to contribute.
 * Group chats
 * File transfers
 * Typing detection
-* Changing the nospam value
+* Nospam value customization
+* Basic DNS discovery
 
 ### Screenshots
 
