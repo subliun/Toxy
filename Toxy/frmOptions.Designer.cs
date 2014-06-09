@@ -52,15 +52,17 @@
             this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
             this.comboInput = new MetroFramework.Controls.MetroComboBox();
             this.comboOutput = new MetroFramework.Controls.MetroComboBox();
+            this.txtNospam = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCopyID
             // 
             this.btnCopyID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCopyID.Location = new System.Drawing.Point(23, 227);
+            this.btnCopyID.Location = new System.Drawing.Point(507, 185);
             this.btnCopyID.Name = "btnCopyID";
-            this.btnCopyID.Size = new System.Drawing.Size(75, 23);
+            this.btnCopyID.Size = new System.Drawing.Size(140, 23);
             this.btnCopyID.TabIndex = 8;
             this.btnCopyID.Text = "Copy ID";
             this.btnCopyID.UseSelectable = true;
@@ -69,7 +71,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(734, 227);
+            this.btnCancel.Location = new System.Drawing.Point(734, 185);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 10;
@@ -80,7 +82,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(653, 227);
+            this.btnSave.Location = new System.Drawing.Point(653, 185);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -138,7 +140,7 @@
             // 
             this.metroLabel4.AutoSize = true;
             this.metroLabel4.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel4.Location = new System.Drawing.Point(23, 163);
+            this.metroLabel4.Location = new System.Drawing.Point(23, 187);
             this.metroLabel4.Name = "metroLabel4";
             this.metroLabel4.Size = new System.Drawing.Size(111, 19);
             this.metroLabel4.TabIndex = 8;
@@ -163,7 +165,7 @@
             // toggleTypeDetection
             // 
             this.toggleTypeDetection.AutoSize = true;
-            this.toggleTypeDetection.Location = new System.Drawing.Point(168, 165);
+            this.toggleTypeDetection.Location = new System.Drawing.Point(171, 189);
             this.toggleTypeDetection.Name = "toggleTypeDetection";
             this.toggleTypeDetection.Size = new System.Drawing.Size(80, 17);
             this.toggleTypeDetection.TabIndex = 2;
@@ -308,11 +310,35 @@
             this.comboOutput.TabIndex = 7;
             this.comboOutput.UseSelectable = true;
             // 
+            // txtNospam
+            // 
+            this.txtNospam.Lines = new string[0];
+            this.txtNospam.Location = new System.Drawing.Point(112, 149);
+            this.txtNospam.MaxLength = 32767;
+            this.txtNospam.Name = "txtNospam";
+            this.txtNospam.PasswordChar = '\0';
+            this.txtNospam.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtNospam.SelectedText = "";
+            this.txtNospam.Size = new System.Drawing.Size(139, 23);
+            this.txtNospam.TabIndex = 23;
+            this.txtNospam.UseSelectable = true;
+            // 
+            // metroLabel12
+            // 
+            this.metroLabel12.AutoSize = true;
+            this.metroLabel12.Location = new System.Drawing.Point(23, 151);
+            this.metroLabel12.Name = "metroLabel12";
+            this.metroLabel12.Size = new System.Drawing.Size(59, 19);
+            this.metroLabel12.TabIndex = 24;
+            this.metroLabel12.Text = "Nospam";
+            // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 273);
+            this.ClientSize = new System.Drawing.Size(827, 231);
+            this.Controls.Add(this.metroLabel12);
+            this.Controls.Add(this.txtNospam);
             this.Controls.Add(this.comboOutput);
             this.Controls.Add(this.comboInput);
             this.Controls.Add(this.metroLabel11);
@@ -370,5 +396,7 @@
         private MetroFramework.Controls.MetroLabel metroLabel6;
         private MetroFramework.Controls.MetroComboBox comboOutput;
         private MetroFramework.Controls.MetroComboBox comboInput;
+        private MetroFramework.Controls.MetroLabel metroLabel12;
+        private MetroFramework.Controls.MetroTextBox txtNospam;
     }
 }

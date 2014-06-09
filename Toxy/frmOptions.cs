@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Globalization;
 
 using SharpTox;
 using MetroFramework.Forms;
@@ -20,6 +21,7 @@ namespace Toxy
 
             txtUsername.Text = tox.GetSelfName();
             txtStatusMessage.Text = tox.GetSelfStatusMessage();
+            txtNospam.Text = tox.GetNospam().ToString();
 
             toggleTypeDetection.Checked = config["typing_detection"];
             toggleCloseTray.Checked = config["close_to_tray"];
@@ -62,6 +64,14 @@ namespace Toxy
         {
             tox.SetName(txtUsername.Text);
             tox.SetStatusMessage(txtStatusMessage.Text);
+
+            uint nospam;
+            if (!uint.TryParse(txtNospam.Text, out nospam))
+            {
+                MessageBox.Show("The nospam value you've entered doesn't seem valid!", "Invalid nospam value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else { tox.SetNospam(nospam); }
 
             config["typing_detection"] = toggleTypeDetection.Checked;
 
