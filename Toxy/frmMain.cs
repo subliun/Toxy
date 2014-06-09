@@ -889,6 +889,7 @@ namespace Toxy
                             DataGridViewRow row = new DataGridViewRow();
                             row.Tag = messageid;
                             row.CreateCells(dataConversation, tox.GetSelfName(), box.Text, "");
+                            row.Cells[0].Style.Font = new Font(dataConversation.Font, FontStyle.Bold);
 
                             convdic[current_number].Add(row);
                             dataConversation.Rows.Add(row);
@@ -899,6 +900,7 @@ namespace Toxy
                         DataGridViewRow row = new DataGridViewRow();
                         row.Tag = messageid;
                         row.CreateCells(dataConversation, tox.GetSelfName(), box.Text, "");
+                        row.Cells[0].Style.Font = new Font(dataConversation.Font, FontStyle.Bold);
 
                         convdic.Add(current_number, new List<DataGridViewRow>() { row });
                         dataConversation.Rows.Add(row);
