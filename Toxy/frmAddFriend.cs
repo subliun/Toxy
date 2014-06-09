@@ -19,6 +19,21 @@ namespace Toxy
             if (!(!string.IsNullOrEmpty(txtID.Text) && !string.IsNullOrEmpty(txtMessage.Text)))
                 return;
 
+            if (txtID.Text.Contains("@"))
+            {
+                try
+                {
+                    string id = DnsTools.DiscoverToxID(txtID.Text);
+                    txtID.Text = id;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Could not find a tox id:\n" + ex.ToString());
+                }
+
+                return;
+            }
+
             ID = txtID.Text;
             Message = txtMessage.Text;
 

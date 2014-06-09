@@ -154,7 +154,7 @@ namespace Toxy
         private void OnReadReceipt(int friendnumber, uint receipt)
         {
             Console.WriteLine("{0} has received message #{1}", tox.GetName(friendnumber), receipt);
-            foreach(DataGridViewRow row in convdic[friendnumber])
+            foreach (DataGridViewRow row in convdic[friendnumber])
             {
                 if (row.Tag != null)
                     if ((int)row.Tag == (int)receipt)

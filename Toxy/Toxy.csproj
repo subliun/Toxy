@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="DnsTools.cs" />
     <Compile Include="FileTransfer.cs">
       <SubType>UserControl</SubType>
     </Compile>
