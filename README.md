@@ -21,7 +21,7 @@ Feel free to contribute.
 * File transfers
 * Typing detection
 * Nospam value customization
-* Basic DNS discovery
+* DNS discovery (tox1 and tox3)
 
 ### Screenshots
 
