@@ -46,11 +46,15 @@ namespace Toxy
                             if (name == "id")
                             {
                                 string result = tox_dns.DecryptDns3TXT(value, request_id);
+
+                                tox_dns.Kill();
                                 return result;
                             }
                         }
                     }
                 }
+
+                tox_dns.Kill();
             }
             else if (domain.Contains("@"))
             {
