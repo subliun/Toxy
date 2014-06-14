@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using SharpTox;
 using MetroFramework.Forms;
 
 namespace Toxy
