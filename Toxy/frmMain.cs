@@ -373,7 +373,7 @@ namespace Toxy
             }
         }
 
-        private void OnConnectionStatusChanged(int friendnumber, byte status)
+        private void OnConnectionStatusChanged(int friendnumber, int status)
         {
             Friend friend = GetFriendControlByNumber(friendnumber);
 
